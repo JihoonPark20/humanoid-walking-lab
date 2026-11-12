@@ -30,10 +30,11 @@ def execute_trajectory(
     obstacle_specs: tuple[ObstacleSpec, ...] | list[ObstacleSpec] | None = None,
     Kp: float = 400.0,
     Kd: float = 40.0,
+    include_table: bool = True,
     frame_callback: Callable[[mujoco.MjModel, mujoco.MjData, dict], None] | None = None,
 ) -> dict[str, np.ndarray]:
     """Execute a timed trajectory using joint-space PD plus gravity compensation."""
-    mj_model, mj_data = load_mujoco_model(scene_path, obstacle_specs=obstacle_specs)
+    mj_model, mj_data = load_mujoco_model(scene_path, obstacle_specs=obstacle_specs, include_table=include_table)
     pin_model, pin_data, _ = load_pinocchio_model()
 
     mj_data.qpos[:NUM_JOINTS] = q_traj[0]

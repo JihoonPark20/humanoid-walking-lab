@@ -2,7 +2,7 @@
 
 [English](VISUAL_GUIDE.md) · [한국어](VISUAL_GUIDE.ko.md) · [简体中文](VISUAL_GUIDE.zh-CN.md)
 
-Lab 5–10은 텍스트나 별도 패널 없이 MuJoCo 장면 안에 직접 표시합니다. 지면의 원은 접촉점이 아니라 CoM의 수직 투영입니다. 궤적과 지지 영역은 실제 world 좌표를 사용하며 카메라는 로봇을 따라갑니다.
+Lab 5–13은 텍스트나 별도 패널 없이 MuJoCo 장면 안에 직접 표시합니다. 지면의 원은 접촉점이 아니라 CoM의 수직 투영입니다. 궤적과 지지 영역은 실제 world 좌표를 사용하며 카메라는 로봇을 따라갑니다.
 
 | Lab | 관찰할 내용 |
 |---|---|
@@ -12,6 +12,9 @@ Lab 5–10은 텍스트나 별도 패널 없이 MuJoCo 장면 안에 직접 표�
 | 8 · Centroidal dynamics | 떠 있는 질량과 계획 접촉력, CoM 높이·각운동량의 관계를 봅니다. Whole-body 시뮬레이션이 아닌 축소 모델 애니메이션입니다. |
 | 9 · MPC/RTI | 제어기 갱신마다 바뀌는 보라색 CoM 예측을 회색 원래 계획과 비교합니다. 빨간 외란 전·중·후를 살펴보세요. 반투명 구는 현재 예측 구간의 CoM 표본입니다. |
 | 10 · Whole-body OCP | 보라색 ghost는 +0.25/+0.50초 후의 최적화된 관절 자세입니다. Configuration manifold 위에서 보간하며 실제 로봇은 MuJoCo에서 feedback으로 추종합니다. 계획 끝 이후의 ghost는 표시하지 않습니다. |
+| 11 · 접촉을 고려한 보행 | 공중의 남은 Swing reference와 지면의 착지점, 실제 지지 영역을 비교합니다. |
+| 12 · 물리 보행 강건성 평가 | 빨간 실제 외란과 측정 CoM/DCM·접촉 ZMP를 봅니다. 외란 전후의 반응을 비교하세요. |
+| 13 · 온라인 발 위치 조정 | 회색 원래 발자국과 보라 수정 착지점을 비교합니다. 조정 뒤 남은 Swing 궤적도 바뀝니다. |
 
 **색상:** 청록 = 실제 CoM(Lab 8은 계획된 질량 위치), 흰색 = 기준값, 보라 = 계획·예측(Lab 6은 DCM), 주황 = 접촉 ZMP, 초록 = 지지 영역·계획 접촉력, 빨강 = 외란.
 
@@ -19,6 +22,6 @@ Lab 5–10은 텍스트나 별도 패널 없이 MuJoCo 장면 안에 직접 표�
 
 Centroidal MPC는 CoM·운동량·접촉력을 예측하며 관절 자세는 예측하지 않습니다. 따라서 Lab 9의 반투명 구는 CoM 예측이고, 로봇 전체 ghost는 실제 관절 계획이 있는 Lab 10에 표시합니다. Lab 10은 feedback을 결합한 오프라인 OCP이며 Whole-body MPC는 아닙니다.
 
-표시는 렌더링 장면에만 추가하고 ghost는 별도 simulator data를 사용하므로 제어 중인 로봇 상태를 바꾸지 않습니다. 각 Lab의 **실습과 측정 결과**에서 원본 해상도 영상과 같은 실행의 통과 결과를 확인할 수 있습니다. README의 데모 명령으로 녹화한 뒤 `python tools/build_gallery.py`로 GIF를 갱신합니다.
+각 Lab의 **데모** 페이지에서 원본 해상도 영상, 비교 그래프와 선택 참고 데이터를 볼 수 있습니다. README 명령으로 녹화한 뒤 `python tools/build_gallery.py`로 GIF를 갱신하세요.
 
 [← Curriculum](../README.ko.md)

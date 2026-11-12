@@ -5,18 +5,20 @@
     "final_configuration": true,
     "clearance": true,
     "no_contacts": true,
+    "rrt_avoidance_verified": true,
     "executed_mesh_clearance": true
   },
-  "rms_error_rad": 0.0005820822760545899,
-  "final_error_rad": 0.0001533567374485239,
-  "min_sampled_clearance_m": 0.03045310367225975,
+  "rms_error_rad": 0.0005848728546180457,
+  "final_error_rad": 0.00033843885305272453,
+  "min_sampled_clearance_m": 0.03179669864487775,
   "clearance_samples": 360,
   "max_contact_count": 0,
-  "min_executed_geometry_clearance_m": 0.030345221781801403,
-  "geometry_clearance_samples": 67850,
+  "min_executed_geometry_clearance_m": 0.03168340566295321,
+  "geometry_clearance_samples": 75635,
   "geometry_clearance_interval_s": 0.001,
-  "duration_s": 67.849,
+  "duration_s": 75.634,
+  "planning_audit_sha256": "2d87c2be42f738968b0d8047cab87d84dcd3d512f3fe36c31c35ead5eb8e54ba",
   "fps": 30,
-  "frames": 2036,
-  "video_sha256": "95d3ecfacdad6a03385a2383ff3b5f90c1423a5866dc3492a931b980b45e8768"
+  "frames": 2270,
+  "video_sha256": "2b949c6a24f7c60fb8c66097518f9481c78c77430a2c0f2c2f4778c1ffe0a700"
 }

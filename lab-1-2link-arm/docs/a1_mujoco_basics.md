@@ -1,5 +1,7 @@
 # A1: MuJoCo Environment Setup — Study Notes
 
+[English](a1_mujoco_basics.md) · [한국어](a1_mujoco_basics.ko.md) · [简体中文](a1_mujoco_basics.zh-CN.md)
+
 ## What Is MuJoCo?
 
 **MuJoCo** = "Multi-Joint dynamics with Contact". A physics engine built for robotics simulation.

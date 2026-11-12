@@ -6,13 +6,13 @@ RNEA, CRBA, 중력 보상, impedance와 접촉력 제어를 익힙니다.
 
 ![Demo](media/gallery/hero.gif)
 
-닫힌 그리퍼와 강체 probe로 평판(μ=0.05)에서 5 N·50 mm를 추종합니다. 전체 실행 1배속, 원시 접촉력 허용 구간 93.0%.
+닫힌 그리퍼의 강체 probe가 평판을 따라 이동하면서 수직 접촉력 5 N을 유지하는 모습을 보세요(1배속).
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
+[데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md)
 
 ## 실행
 
-[설치](../docs/SETUP.md)
+[설치](../docs/SETUP.ko.md)
 
 ```bash
 python lab-3-dynamics-force-control/src/record_lab3_demo.py

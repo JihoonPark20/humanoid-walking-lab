@@ -8,7 +8,7 @@ MuJoCo로 배우는 로봇 공학 기초, 균형 제어와 모델 기반 휴머�
 
 ## 커리큘럼
 
-Pinocchio는 Kinematics·Dynamics를 계산하고 MuJoCo는 접촉과 운동을 시뮬레이션합니다. Lab 1–10 순서로 진행하세요.
+Pinocchio는 Kinematics·Dynamics를 계산하고 MuJoCo는 접촉과 운동을 시뮬레이션합니다. Lab 1–13 순서로 진행하세요.
 
 | Lab | 커리큘럼 |
 |---|---|
@@ -22,6 +22,9 @@ Pinocchio는 Kinematics·Dynamics를 계산하고 MuJoCo는 접촉과 운동을 
 | 8 | [Centroidal 최적화](lab-8-centroidal-optimization/README.ko.md) |
 | 9 | [MPC·RTI·관측 강인성](lab-9-model-predictive-control/README.ko.md) |
 | 10 | [Whole-body 최적제어](lab-10-whole-body-optimal-control/README.ko.md) |
+| 11 | [접촉을 고려한 보행](lab-11-contact-transitions/README.ko.md) |
+| 12 | [물리 보행 강건성 평가](lab-12-walking-robustness/README.ko.md) |
+| 13 | [온라인 발 위치 조정](lab-13-adaptive-footsteps/README.ko.md) |
 
 ## 빠른 시작
 
@@ -34,8 +37,6 @@ bash tools/setup_env.sh
 python lab-9-model-predictive-control/src/g1_mpc.py --mode rti --video
 ```
 
-검증한 평지 조건: **MPC/RTI 16개 · 관측 실험 24개 · Whole-body 추종 12개**.
-
-[시각화 읽는 법](docs/VISUAL_GUIDE.ko.md) · [설치](docs/SETUP.md) · [검증](docs/VALIDATION.md) · [공통 개념](docs/CONCEPTS.md)
+[시각화 읽는 법](docs/VISUAL_GUIDE.ko.md) · [설치](docs/SETUP.ko.md) · [실험 해석](docs/VALIDATION.ko.md) · [공통 개념](docs/CONCEPTS.ko.md)
 
 [M. Ozkan Ceylan의 robotics labs](https://github.com/ozkannceylan/mujoco-robotics-lab)를 바탕으로 합니다. [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Model licenses](THIRD_PARTY_NOTICES.md)

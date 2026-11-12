@@ -1,15 +1,40 @@
 {
   "passed": true,
   "checks": {
+    "all_cube_edges_only": true,
+    "edge_distance_below_5mm": true,
+    "no_contacts": true,
     "rms_below_1mm": true,
     "peak_below_5mm": true,
     "complete": true
   },
-  "rms_error_m": 8.790233595851292e-05,
-  "max_error_m": 0.00023434921159580464,
-  "max_torque_nm": 16.504877854808456,
-  "simulation_duration_s": 24.0,
-  "frames": 707,
+  "rms_error_m": 0.0001232304708143882,
+  "max_error_m": 0.00023143978233379107,
+  "max_torque_nm": 16.874255713470575,
+  "vertex_path": [
+    0,
+    1,
+    2,
+    3,
+    0,
+    4,
+    5,
+    1,
+    5,
+    6,
+    2,
+    6,
+    7,
+    3,
+    7,
+    4
+  ],
+  "max_geometric_edge_distance_m": 0.004728700131478119,
+  "max_contact_count": 0,
+  "unique_edges": 12,
+  "segments": 15,
+  "simulation_duration_s": 30.0,
+  "frames": 901,
   "fps": 30,
-  "video_sha256": "fb27e2d27e1bc7f7882d3f940d474116b79033c1429588a53f725d70cc1aee3c"
+  "video_sha256": "bfea97f49640e33dc22aed1ba197f28cdcbf6d729779de2ccc1d8fceb19df134"
 }

@@ -1,5 +1,7 @@
 # B3: Joint Constraints and Safety
 
+[English](b3_constraints.md) · [한국어](b3_constraints.ko.md) · [简体中文](b3_constraints.zh-CN.md)
+
 ## Goal
 
 Add a safety layer that enforces joint limits, velocity limits, torque saturation, and self-collision avoidance before commands reach the UR5e.

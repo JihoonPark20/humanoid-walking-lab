@@ -14,14 +14,15 @@ Constraint residuals are checked independently of solver status."""
 
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass, field
+from types import SimpleNamespace
 
 import numpy as np
 import osqp
 import pinocchio as pin
-from scipy import sparse
-
 from lab6_common import NU, NV
+from scipy import sparse
 
 __all__ = ["ContactSpec", "IDQPResult", "WholeBodyIDQP"]
 
@@ -111,6 +112,11 @@ class WholeBodyIDQP:
         acc_regularisation: λ_a on ‖q̈‖².
         force_regularisation: λ_f on ‖f‖² — prefers the smallest wrench that
             does the job, which also keeps the two feet from fighting.
+        backend: OSQP for the original curriculum; optional dense ProxQP in Lab 11.
+        torque_margin: Inner actuator margin in N·m; actual limits are audited separately.
+        contact_velocity_gain: Optional stance velocity damping in s⁻¹.
+        contact_orientation_gain: Optional flat-world-foot rotation stabilization in s⁻².
+            These contact gains are for flat, fixed-yaw walking, not tilted terrain.
     """
 
     def __init__(
@@ -123,7 +129,14 @@ class WholeBodyIDQP:
         force_regularisation: float = 1e-5,
         tolerance: float = 1e-4,
         max_iterations: int = 2000,
+        torque_margin: float = 0.0,
+        contact_velocity_gain: float = 0.0,
+        contact_orientation_gain: float = 0.0,
+        backend: str = "osqp",
     ) -> None:
+        if backend not in ("osqp", "proxqp"):
+            raise ValueError("Unknown QP backend")
+        self.backend = backend
         self.model = model
         self.data = data
         self.contacts = list(contacts)
@@ -132,6 +145,15 @@ class WholeBodyIDQP:
         self.force_reg = float(force_regularisation)
         self.tolerance = float(tolerance)
         self.max_iterations = int(max_iterations)
+        self.torque_margin = torque_margin
+        self.contact_velocity_gain = contact_velocity_gain
+        self.contact_orientation_gain = contact_orientation_gain
+        if not np.isfinite(contact_velocity_gain) or contact_velocity_gain < 0:
+            raise ValueError("Contact velocity gain must be finite and nonnegative")
+        if not np.isfinite(contact_orientation_gain) or contact_orientation_gain < 0:
+            raise ValueError("Contact orientation gain must be finite and nonnegative")
+        if not np.isfinite(torque_margin) or torque_margin < 0:
+            raise ValueError("Torque margin must be finite and nonnegative")
 
         self._solver: osqp.OSQP | None = None
         self.set_contacts(self.contacts)
@@ -151,6 +173,7 @@ class WholeBodyIDQP:
         self.n_vars = NV + self.n_forces
         self._triu_rows, self._triu_cols = np.triu_indices(self.n_vars)
         self._solver = None
+        self._dense_solver = None
 
     @property
     def contact_frames(self) -> list[str]:
@@ -231,6 +254,10 @@ class WholeBodyIDQP:
         nonlinear = pin.nonLinearEffects(self.model, self.data, q, v)
 
         contact_jac, contact_drift = self._contact_jacobian(q, v)
+        contact_drift = contact_drift + self.contact_velocity_gain * (contact_jac @ v)
+        if self.contact_orientation_gain:
+            for index, frame in enumerate(self.contact_ids):
+                contact_drift[6*index+3:6*index+6] += self.contact_orientation_gain * pin.log3(self.data.oMf[frame].rotation)
 
         # ---- cost -------------------------------------------------------
         hessian = np.zeros((self.n_vars, self.n_vars))
@@ -277,46 +304,75 @@ class WholeBodyIDQP:
         torque_rows[:, :NV] = mass_matrix[6:, :]
         torque_rows[:, NV:] = -contact_jac.T[6:, :]
         rows_a.append(torque_rows)
-        rows_l.append(self.torque_limits[:, 0] - nonlinear[6:])
-        rows_u.append(self.torque_limits[:, 1] - nonlinear[6:])
+        rows_l.append(self.torque_limits[:, 0] + self.torque_margin - nonlinear[6:])
+        rows_u.append(self.torque_limits[:, 1] - self.torque_margin - nonlinear[6:])
 
+        names = ["base_dynamics", "contact_acceleration", "contact_wrench", "raw_torque"]
         constraint = np.vstack(rows_a)
         lower = np.concatenate(rows_l)
         upper = np.concatenate(rows_u)
 
         # ---- solve -------------------------------------------------------
-        p_values = hessian[self._triu_rows, self._triu_cols]
-        p_sparse = sparse.csc_matrix(
-            (p_values, (self._triu_rows, self._triu_cols)), shape=(self.n_vars, self.n_vars)
-        )
-        a_sparse = sparse.csc_matrix(constraint)
-
-        if self._solver is None:
-            self._solver = osqp.OSQP()
-            self._solver.setup(
-                P=p_sparse, q=gradient, A=a_sparse, l=lower, u=upper,
-                verbose=False, polishing=False,
-                eps_abs=self.tolerance, eps_rel=self.tolerance,
-                max_iter=self.max_iterations,
-            )
-            self._a_nnz = a_sparse.nnz
-        elif a_sparse.nnz != self._a_nnz:
-            # Contact set changed shape — rebuild rather than corrupt the solver.
-            self._solver = osqp.OSQP()
-            self._solver.setup(
-                P=p_sparse, q=gradient, A=a_sparse, l=lower, u=upper,
-                verbose=False, polishing=False,
-                eps_abs=self.tolerance, eps_rel=self.tolerance,
-                max_iter=self.max_iterations,
-            )
-            self._a_nnz = a_sparse.nnz
+        if self.backend == "proxqp":
+            import proxsuite
+            equality_rows = 6 + contact_jac.shape[0]
+            ne, ni = equality_rows, len(lower) - equality_rows
+            kwargs = {"H": hessian, "g": gradient, "A": constraint[:ne], "b": lower[:ne],
+                          "C": constraint[ne:], "l": lower[ne:], "u": upper[ne:]}
+            if self._dense_solver is None:
+                self._dense_solver = proxsuite.proxqp.dense.QP(self.n_vars, ne, ni)
+                self._dense_solver.settings.eps_abs = self.tolerance
+                self._dense_solver.settings.eps_rel = 0.0
+                self._dense_solver.settings.max_iter = self.max_iterations
+                self._dense_solver.init(**kwargs)
+            else:
+                self._dense_solver.settings.initial_guess = proxsuite.proxqp.InitialGuess.WARM_START_WITH_PREVIOUS_RESULT
+                self._dense_solver.update(**kwargs, update_preconditioner=True)
+            started = time.perf_counter()
+            self._dense_solver.solve()
+            result = self._dense_solver.results
+            status = "solved" if result.info.status == proxsuite.proxqp.QPSolverOutput.PROXQP_SOLVED else str(result.info.status)
+            solution = SimpleNamespace(x=np.asarray(result.x).copy(), info=SimpleNamespace(
+                status=status, iter=result.info.iter, solve_time=time.perf_counter()-started))
         else:
-            self._solver.update(Px=p_sparse.data, q=gradient, Ax=a_sparse.data, l=lower, u=upper)
+            p_values = hessian[self._triu_rows, self._triu_cols]
+            p_sparse = sparse.csc_matrix(
+                (p_values, (self._triu_rows, self._triu_cols)), shape=(self.n_vars, self.n_vars)
+            )
+            a_sparse = sparse.csc_matrix(constraint)
 
-        solution = self._solver.solve()
+            if self._solver is None:
+                self._solver = osqp.OSQP()
+                self._solver.setup(
+                    P=p_sparse, q=gradient, A=a_sparse, l=lower, u=upper,
+                    verbose=False, polishing=False,
+                    eps_abs=self.tolerance, eps_rel=self.tolerance,
+                    max_iter=self.max_iterations,
+                )
+                self._a_nnz = a_sparse.nnz
+                self._a_indices = a_sparse.indices.copy()
+                self._a_indptr = a_sparse.indptr.copy()
+            elif (a_sparse.nnz != self._a_nnz or
+                  not np.array_equal(a_sparse.indices, self._a_indices) or
+                  not np.array_equal(a_sparse.indptr, self._a_indptr)):
+                # Contact set changed shape — rebuild rather than corrupt the solver.
+                self._solver = osqp.OSQP()
+                self._solver.setup(
+                    P=p_sparse, q=gradient, A=a_sparse, l=lower, u=upper,
+                    verbose=False, polishing=False,
+                    eps_abs=self.tolerance, eps_rel=self.tolerance,
+                    max_iter=self.max_iterations,
+                )
+                self._a_nnz = a_sparse.nnz
+                self._a_indices = a_sparse.indices.copy()
+                self._a_indptr = a_sparse.indptr.copy()
+            else:
+                self._solver.update(Px=p_sparse.data, q=gradient, Ax=a_sparse.data, l=lower, u=upper)
+
+            solution = self._solver.solve()
         status = str(solution.info.status)
         if solution.x is None or not np.all(np.isfinite(solution.x)):
-            raise QPInfeasible(f"OSQP returned no usable solution (status='{status}')")
+            raise QPInfeasible(f"QP backend returned no usable solution (status='{status}')")
 
         qddot = np.asarray(solution.x[:NV], dtype=float)
         forces = np.asarray(solution.x[NV:], dtype=float)
@@ -324,11 +380,14 @@ class WholeBodyIDQP:
         # 토크 clipping 이전의 해를 검사해야 solver 잔차를 숨기지 않는다.
         violations = {}
         for name, matrix, lo, hi in zip(
-            ("base_dynamics", "contact_acceleration", "contact_wrench", "raw_torque"),
+            names,
             rows_a, rows_l, rows_u,
         ):
             value = matrix @ solution.x
             violations[name] = float(np.maximum(np.maximum(lo - value, value - hi), 0.0).max())
+        if self.torque_margin:
+            violations["torque_buffer"] = violations["raw_torque"]
+            violations["raw_torque"] = float(np.maximum(np.maximum(self.torque_limits[:, 0]-tau, tau-self.torque_limits[:, 1]), 0).max())
 
         return IDQPResult(
             tau=np.clip(tau, self.torque_limits[:, 0], self.torque_limits[:, 1]),

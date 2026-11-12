@@ -1,5 +1,7 @@
 # A5: Dynamics Basics — Study Notes
 
+[English](a5_dynamics.md) · [한국어](a5_dynamics.ko.md) · [简体中文](a5_dynamics.zh-CN.md)
+
 ## Fundamental Equation
 
 The robot dynamics equation:

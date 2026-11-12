@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-完整正方形跟踪：RMS 误差 0.008 mm；指标来自录像对应的运行。
+观察关节运动如何形成末端的正方形路径，尤其注意转角处的运动。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 mjpython lab-1-2link-arm/src/c1_draw_square.py

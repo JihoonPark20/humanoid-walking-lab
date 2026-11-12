@@ -8,11 +8,11 @@ Nonlinear multiple shooting으로 CoM 높이·운동량·contact wrench를 최�
 
 접촉력 화살표와 질량 중심의 높이·각운동량 변화를 보세요. 최적화된 축소 모델의 애니메이션이며 로봇 rollout은 아닙니다.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
+[데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 
 ## 실행
 
-[설치](../docs/SETUP.md)
+[설치](../docs/SETUP.ko.md)
 
 ```bash
 python lab-8-centroidal-optimization/src/offline_centroidal.py

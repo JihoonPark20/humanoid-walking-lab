@@ -36,10 +36,9 @@ import mujoco
 import mujoco.viewer
 import numpy as np
 import pinocchio as pin
-
-from ur5e_common import NUM_JOINTS, Q_HOME, load_pinocchio_model
 from a4_inverse_kinematics import ik_damped_least_squares
-from b1_trajectory_generation import quintic_trajectory, JointTrajectoryPoint
+from b1_trajectory_generation import JointTrajectoryPoint, quintic_trajectory
+from ur5e_common import NUM_JOINTS, Q_HOME, load_pinocchio_model
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Configuration
@@ -89,35 +88,19 @@ def cube_vertices(center: np.ndarray, side: float) -> list[np.ndarray]:
 
 
 def cube_edges() -> list[tuple[int, int]]:
-    """Return the 12 edges of a cube as vertex index pairs.
-
-    The order traces a path that visits all edges with minimal redundancy:
-    bottom face, vertical pillars, top face.
-    """
-    return [
-        # Bottom face
-        (0, 1), (1, 2), (2, 3), (3, 0),
-        # Vertical pillars
-        (0, 4), (4, 5), (5, 1),
-        # Back to top
-        (5, 6), (6, 2),
-        # Remaining top edges
-        (6, 7), (7, 3),
-        # Last pillar
-        (7, 4),
-    ]
+    """Return the twelve undirected geometric cube edges."""
+    return [(0, 1), (1, 2), (2, 3), (3, 0),
+            (4, 5), (5, 6), (6, 7), (7, 4),
+            (0, 4), (1, 5), (2, 6), (3, 7)]
 
 
 def cube_drawing_path() -> list[int]:
-    """Return a vertex visitation order that draws the entire cube continuously.
+    """Cover all twelve edges, repeating three to avoid diagonal transitions.
 
-    This Eulerian-like path visits all 12 edges without lifting the pen.
+    A cube has eight odd-degree vertices, so a continuous traversal cannot
+    visit every edge exactly once. This open walk uses fifteen segments.
     """
-    edges = cube_edges()
-    path = [edges[0][0]]
-    for a, b in edges:
-        path.append(b)
-    return path
+    return [0, 1, 2, 3, 0, 4, 5, 1, 5, 6, 2, 6, 7, 3, 7, 4]
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -184,7 +167,8 @@ def build_cube_trajectory(joint_waypoints: list[np.ndarray],
             joint_waypoints[i], joint_waypoints[i + 1],
             SEGMENT_DURATION, dt,
         )
-        for pt in seg:
+        # Shared endpoints belong to the following segment; keep time strictly increasing.
+        for pt in (seg if i == len(joint_waypoints) - 2 else seg[:-1]):
             all_points.append(JointTrajectoryPoint(
                 t=pt.t + t_offset, q=pt.q, qd=pt.qd, qdd=pt.qdd,
             ))
@@ -216,6 +200,12 @@ def _add_line(scn, a, b, width: float, rgba):
     """Draw a thin capsule line between two 3D points."""
     if scn.ngeom >= scn.maxgeom:
         return
+    # A reused scene slot may contain mesh/material IDs; reset all fields first.
+    mujoco.mjv_initGeom(
+        scn.geoms[scn.ngeom], mujoco.mjtGeom.mjGEOM_CAPSULE,
+        np.zeros(3), np.zeros(3), np.eye(3).flatten(),
+        np.asarray(rgba, dtype=np.float32),
+    )
     mujoco.mjv_connector(
         scn.geoms[scn.ngeom],
         mujoco.mjtGeom.mjGEOM_CAPSULE,

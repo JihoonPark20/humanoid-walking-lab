@@ -8,7 +8,7 @@ Optimize CoM height, momentum and contact wrenches with nonlinear multiple shoot
 
 Contact-force arrows lift and redirect a floating mass; watch CoM height and angular momentum. Animation of the optimized reduced model, not a robot rollout.
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 
 ## Run
 

@@ -10,9 +10,10 @@ Usage:
 
 from __future__ import annotations
 
-import math
-import json
 import hashlib
+import itertools
+import json
+import math
 import sys
 from pathlib import Path
 
@@ -24,8 +25,6 @@ import imageio.v2 as iio
 import mujoco
 import numpy as np
 import pinocchio as pin
-
-from ur5e_common import MJCF_SCENE_PATH, MEDIA_DIR, NUM_JOINTS, Q_HOME, load_pinocchio_model
 from c3_draw_cube import (
     CUBE_CENTER,
     CUBE_SIDE,
@@ -33,19 +32,25 @@ from c3_draw_cube import (
     KD,
     KP,
     SEGMENT_DURATION,
-    TRAIL_COLOR,
     TRAIL_DECIMATE,
     _add_sphere,
     _draw_cube_wireframe,
     _draw_trail,
     build_cube_trajectory,
     cube_drawing_path,
+    cube_edges,
     cube_vertices,
     solve_cube_ik,
 )
+from ur5e_common import (
+    MEDIA_DIR,
+    MJCF_SCENE_PATH,
+    NUM_JOINTS,
+    load_pinocchio_model,
+)
 
 # ── Video settings ────────────────────────────────────────────────────────
-WIDTH, HEIGHT = 1280, 720
+WIDTH, HEIGHT = 960, 640
 FPS = 30
 OUT_PATH = MEDIA_DIR / "c3_draw_cube.mp4"
 
@@ -61,7 +66,6 @@ def main() -> None:
     # Cube geometry
     verts = cube_vertices(CUBE_CENTER, CUBE_SIDE)
     path = cube_drawing_path()
-    n_edges = len(path) - 1
 
     # Solve IK
     print("\n  Solving IK for cube path...")
@@ -72,11 +76,10 @@ def main() -> None:
     dt = 0.002
     traj = build_cube_trajectory(joint_wps, dt)
     total_time = traj[-1].t
-    steps_per_frame = max(1, round(1.0 / (FPS * dt)))
 
     print(f"\n  Recording {total_time:.1f}s → {OUT_PATH}")
     print(f"  Resolution: {WIDTH}x{HEIGHT} @ {FPS} fps")
-    print(f"  Sim steps/frame: {steps_per_frame} (dt={dt})")
+    print(f"  Simulation dt={dt}; frames sampled by simulation time")
 
     # MuJoCo model
     model = mujoco.MjModel.from_xml_path(str(MJCF_SCENE_PATH))
@@ -114,10 +117,13 @@ def main() -> None:
     # Simulation + rendering loop
     trail: list[np.ndarray] = []
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    writer = iio.get_writer(str(OUT_PATH), fps=FPS, codec="libx264")
+    pending = OUT_PATH.with_name(OUT_PATH.stem + ".pending.mp4")
+    writer = iio.get_writer(str(pending), fps=FPS, codec="libx264")
     frame_count = 0
     cart_errors: list[float] = []
     max_torque = 0.0
+    max_edge_distance = 0.0
+    max_contacts = 0
 
     for step in range(len(traj)):
         tp = traj[step]
@@ -127,6 +133,8 @@ def main() -> None:
         data.ctrl[:NUM_JOINTS] = tp.q + g / KP + KD * tp.qd / KP
         mujoco.mj_step(model, data)
 
+        mujoco.mj_forward(model, data)
+
         # Metrics
         ee = data.site_xpos[ee_site_id].copy()
         pin.forwardKinematics(pin_model, pin_data, tp.q)
@@ -134,6 +142,11 @@ def main() -> None:
         ee_des = pin_data.oMf[ee_fid].translation.copy()
         err = np.linalg.norm(ee_des - ee)
         cart_errors.append(err)
+        segment = min(int(tp.t / SEGMENT_DURATION), len(path) - 2)
+        a, b = verts[path[segment]], verts[path[segment + 1]]
+        fraction = np.clip(np.dot(ee - a, b - a) / np.dot(b - a, b - a), 0., 1.)
+        max_edge_distance = max(max_edge_distance, float(np.linalg.norm(ee - (a + fraction * (b - a)))))
+        max_contacts = max(max_contacts, data.ncon)
         act_force = data.qfrc_actuator[:NUM_JOINTS]
         max_torque = max(max_torque, float(np.max(np.abs(act_force))))
 
@@ -141,7 +154,7 @@ def main() -> None:
             trail.append(ee.copy())
 
         # Render frame
-        if step % steps_per_frame == 0:
+        if tp.t + 1e-9 >= frame_count / FPS:
             renderer.update_scene(data, cam)
 
             # Add overlay geoms
@@ -167,17 +180,26 @@ def main() -> None:
     print(f"  RMS error : {rms * 1000:.3f} mm")
     print(f"  Max error : {max(cart_errors) * 1000:.3f} mm")
     print(f"  Max torque: {max_torque:.2f} N·m")
-    checks = {"rms_below_1mm": rms < 0.001,
+    traversed = {tuple(sorted(edge)) for edge in itertools.pairwise(path)}
+    expected = {tuple(sorted(edge)) for edge in cube_edges()}
+    checks = {"all_cube_edges_only": traversed == expected,
+              "edge_distance_below_5mm": max_edge_distance < .005,
+              "no_contacts": max_contacts == 0,
+              "rms_below_1mm": rms < 0.001,
               "peak_below_5mm": bool(max(cart_errors) < 0.005),
               "complete": len(cart_errors) == len(traj)}
     summary = {"passed": all(checks.values()), "checks": checks,
                "rms_error_m": rms, "max_error_m": float(max(cart_errors)),
-               "max_torque_nm": max_torque, "simulation_duration_s": float(total_time),
+               "max_torque_nm": max_torque, "vertex_path": path,
+               "max_geometric_edge_distance_m": max_edge_distance, "max_contact_count": max_contacts,
+               "unique_edges": len(traversed), "segments": len(path) - 1, "simulation_duration_s": float(total_time),
                "frames": frame_count, "fps": FPS,
-               "video_sha256": hashlib.sha256(OUT_PATH.read_bytes()).hexdigest()}
-    OUT_PATH.with_suffix(".json").write_text(json.dumps(summary, indent=2) + "\n")
+               "video_sha256": hashlib.sha256(pending.read_bytes()).hexdigest()}
     if not summary["passed"]:
+        pending.unlink(missing_ok=True)
         raise SystemExit("Recorded trajectory did not pass the tracking checks.")
+    pending.replace(OUT_PATH)
+    OUT_PATH.with_suffix(".json").write_text(json.dumps(summary, indent=2) + "\n")
 
 
     print("\n" + "=" * 72)

@@ -408,8 +408,8 @@ class GaitSchedule:
         """Swing foot position/velocity/acceleration.
 
         Horizontal: raised-cosine (zero velocity at lift-off and touchdown, so
-        the foot neither scuffs nor slams). Vertical: a sine arc, which unlike
-        Lab 5's parabola also has zero vertical velocity at both ends.
+        the foot neither scuffs nor slams). Vertical: a sine arc with nonzero endpoint velocity.
+        Lab 11 compares this legacy profile with a C2 swing reference.
 
         Feedforward matters here for the same reason it did on M1's hand
         circle (L-M1-b): without ẋ_ref/ẍ_ref the swing foot is chased, and a

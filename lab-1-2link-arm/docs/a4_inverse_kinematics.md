@@ -1,5 +1,7 @@
 # A4: Inverse Kinematics — Study Notes
 
+[English](a4_inverse_kinematics.md) · [한국어](a4_inverse_kinematics.ko.md) · [简体中文](a4_inverse_kinematics.zh-CN.md)
+
 ## Problem
 
 The IK question:

@@ -50,3 +50,15 @@ class ObstacleClearance:
                 float(mujoco.mj_geomDistance(self.model, data, i, j, limit, None)),
             )
         return distance
+
+    def is_clear(self, data: mujoco.MjData, margin: float) -> bool:
+        """Check a threshold without solving unnecessary far-away distance queries."""
+        if not len(self.pairs):
+            return True
+        centers = data.geom_xpos[self.pairs]
+        lower = np.linalg.norm(centers[:, 0] - centers[:, 1], axis=1) - self.radii
+        for index in np.flatnonzero(lower < margin):
+            i, j = self.pairs[index]
+            if mujoco.mj_geomDistance(self.model, data, i, j, margin, None) < margin:
+                return False
+        return True

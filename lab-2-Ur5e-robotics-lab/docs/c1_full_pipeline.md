@@ -1,5 +1,7 @@
 # C1: Integrated Pick-and-Place Pipeline
 
+[English](c1_full_pipeline.md) · [한국어](c1_full_pipeline.ko.md) · [简体中文](c1_full_pipeline.zh-CN.md)
+
 ## Goal
 
 Combine the previous modules into a complete manipulation pipeline: solve Cartesian waypoints with IK, connect them with smooth joint trajectories, execute them in MuJoCo with model-based control, and log safety and tracking metrics.

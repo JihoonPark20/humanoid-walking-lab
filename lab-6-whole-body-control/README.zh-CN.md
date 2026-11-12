@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-观察单脚与双脚支撑区域的切换，以及 DCM（紫色）和接触 ZMP（橙色）的变化。12 步、1.182 m，完整过程、1 倍速。
+观察单脚与双脚支撑区域的切换，以及 DCM（紫色）和接触 ZMP（橙色）的变化（1 倍速）。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 python lab-6-whole-body-control/src/m3_walking.py

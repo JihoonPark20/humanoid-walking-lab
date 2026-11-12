@@ -23,23 +23,27 @@ if str(_LAB3_SRC_DIR) not in sys.path:
     sys.path.insert(0, str(_LAB3_SRC_DIR))
 
 from lab3_common import (  # noqa: E402
-    DT,
+    DT,  # noqa: F401 - re-exported simulation timestep
     NUM_JOINTS,
     Q_HOME,
     TORQUE_LIMITS,
     VELOCITY_LIMITS,
     build_mujoco_scene_spec,
     get_mj_ee_site_id,
-    load_pinocchio_model as load_lab3_pinocchio_model,
+)
+from lab3_common import (
     apply_arm_torques as apply_lab3_arm_torques,
 )
-
+from lab3_common import (
+    load_pinocchio_model as load_lab3_pinocchio_model,
+)
 
 ACC_LIMITS = np.array([8.0, 8.0, 8.0, 16.0, 16.0, 16.0])
 VEL_LIMITS = VELOCITY_LIMITS.copy()
 
 JOINT_LOWER = np.full(NUM_JOINTS, -2 * math.pi)
 JOINT_UPPER = np.full(NUM_JOINTS, 2 * math.pi)
+JOINT_LOWER[2], JOINT_UPPER[2] = -math.pi, math.pi
 
 
 @dataclass(frozen=True)
@@ -60,11 +64,12 @@ OBSTACLES = (
     ObstacleSpec("box_2", (0.50,  0.15, 0.415), (0.05, 0.05, 0.10), (0.85, 0.45, 0.10, 1.0)),
     ObstacleSpec("box_3", (0.60, -0.15, 0.415), (0.05, 0.05, 0.10), (0.85, 0.22, 0.22, 1.0)),
     ObstacleSpec("box_4", (0.70,  0.15, 0.415), (0.05, 0.05, 0.10), (0.85, 0.45, 0.10, 1.0)),
+    # 이 기둥이 직선 joint-space 보간을 실제로 막는지 대조 실험으로 검사한다.
+    ObstacleSpec("blocking_post", (0.455, -0.135, 0.448), (0.02, 0.02, 0.133), (0.55, 0.2, 0.7, 1.0)),
 )
 
 # Forward-only slalom waypoints with gap-midpoint via-points at z = 0.56.
-# Gap midpoints (Y~0) between consecutive boxes split each crossing into
-# two short segments, preventing RRT* from solving long narrow corridors.
+# Task via poses specify a slalom; each segment still samples the full joint domain.
 # Verified reachable with collision-free IK and min clearance > 0.03 m.
 SLALOM_WAYPOINTS = (
     np.array([0.32, -0.30, 0.56]),   # 0  Start
@@ -88,15 +93,7 @@ TABLE_SPEC = ObstacleSpec(
     (0.55, 0.38, 0.20, 1.0),
 )
 
-# ── Slalom planning parameters ──────────────────────────────────────────
-PLANNER_STEP_SIZE = 0.16
-PLANNER_GOAL_BIAS = 0.20
-PLANNER_REWIRE_RADIUS = 0.90
-PLANNER_GOAL_TOLERANCE = 0.10
-PLANNER_MAX_ITER = 2000
-PLANNER_SAMPLING_MARGIN = np.full(NUM_JOINTS, np.pi * 0.75)
-PLANNER_SEED_BANK = (42, 17, 7, 100, 200, 333, 500)
-SHORTCUT_ITER = 220
+# ── Task acceptance and final slalom timing ─────────────────────────────
 IK_ERROR_TOL = 2e-3
 MIN_CLEARANCE_M = 0.03
 VEL_SCALE = 0.18

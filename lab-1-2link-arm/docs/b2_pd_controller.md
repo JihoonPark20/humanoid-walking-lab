@@ -1,5 +1,7 @@
 # B2: PD Controller — Study Notes
 
+[English](b2_pd_controller.md) · [한국어](b2_pd_controller.ko.md) · [简体中文](b2_pd_controller.zh-CN.md)
+
 ## Control Law
 
 The basic control used in this module:

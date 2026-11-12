@@ -1,5 +1,7 @@
 # Unitree G1 — Joint Map & DOF Layout
 
+[English](g1_joint_map.md) · [한국어](g1_joint_map.ko.md) · [简体中文](g1_joint_map.zh-CN.md)
+
 Model: **Unitree G1 29-DOF** from MuJoCo Menagerie (`unitree_g1/scene.xml`)
 
 ---
@@ -202,13 +204,13 @@ This gives a ~17cm toe-to-heel support base per foot.
 
 ---
 
-## Key Differences from Labs 1-6
+## Key Differences from Labs 1–4
 
-| Property | Labs 2-6 (UR5e) | Lab 5 (G1) |
+| Property | Labs 2–4 (UR5e) | Lab 5 (G1) |
 |----------|----------------|------------|
 | Base | Fixed (bolted) | Floating (freejoint) |
 | Total DOF | 6 | 35 (6 base + 29 joints) |
 | Actuated | 6 | 29 (15 for locomotion) |
 | Mass | ~28 kg | 33.34 kg |
 | Primary challenge | Reach targets | Don't fall |
-| Gravity | Torque to compensate | Existential threat |
+| Gravity | Torque to compensate | Balance through ground contacts |

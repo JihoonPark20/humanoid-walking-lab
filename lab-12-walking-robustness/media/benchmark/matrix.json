@@ -1,0 +1,2062 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "meaning": "Coverage and at least 8/10 safe completed cases, including preselected nominal and left push; not universal robustness.",
+  "cases": [
+    {
+      "name": "nominal",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.0,
+      "push_force": 0.0,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "push_left",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.0,
+      "push_force": 10,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "push_right",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.0,
+      "push_force": -10,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "push_forward",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.0,
+      "push_force": 10,
+      "push_axis": 0,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "push_backward",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.0,
+      "push_force": -10,
+      "push_axis": 0,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "friction_04",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.4,
+      "mass_ratio": 1.0,
+      "push_force": 0.0,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "mass_plus_5pct",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.05,
+      "push_force": 0.0,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "mass_minus_5pct",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 0.95,
+      "push_force": 0.0,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    },
+    {
+      "name": "later_push",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.6,
+      "mass_ratio": 1.0,
+      "push_force": 10,
+      "push_axis": 1,
+      "push_start": 2.5,
+      "push_duration": 0.15
+    },
+    {
+      "name": "combined",
+      "steps": 4,
+      "step_length": 0.08,
+      "friction": 0.4,
+      "mass_ratio": 1.05,
+      "push_force": 10,
+      "push_axis": 1,
+      "push_start": 1.6,
+      "push_duration": 0.15
+    }
+  ],
+  "total": 10,
+  "successful_cases": 9,
+  "reports": [
+    {
+      "case": {
+        "name": "nominal",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.0,
+        "push_force": 0.0,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        0.0
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 12.046468209009618,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.207,
+          "vertical_velocity_m_s": -0.074397537314419
+        },
+        {
+          "time_s": 3.362,
+          "vertical_velocity_m_s": -0.09307083537957173
+        },
+        {
+          "time_s": 3.919,
+          "vertical_velocity_m_s": 0.028811699991249107
+        },
+        {
+          "time_s": 5.115,
+          "vertical_velocity_m_s": 0.03489262774891699
+        }
+      ],
+      "minimum_swing_peak_m": 0.02379361049455908,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07996010818701456,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15996010818701456,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23996010818701458,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199601081870146,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.015152054426538773,
+      "distance_m": 0.30799189027263696,
+      "planned_distance_m": 0.2800000029619828,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.9602564102564103,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.903006992217911e-08,
+        "contact_acceleration": 9.986734092470861e-08,
+        "contact_wrench": 9.914816079259481e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008547514264020225,
+      "recovery_dcm_rms_m": 0.0048358167414157835,
+      "peak_contact_force_n": 221.407050121247,
+      "qp_p95_ms": 1.1276732431724648,
+      "telemetry_sha256": "05038861ca8e4646884609c56e399351e1f3e448cc02bccfc69e65f837710e1c",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "push_left",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.0,
+        "push_force": 10,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        1.5
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 11.317199166864157,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.1999999999999997,
+          "vertical_velocity_m_s": -0.07755791815156066
+        },
+        {
+          "time_s": 3.362,
+          "vertical_velocity_m_s": -0.09306347854209918
+        },
+        {
+          "time_s": 3.92,
+          "vertical_velocity_m_s": 0.028934644451306113
+        },
+        {
+          "time_s": 5.115,
+          "vertical_velocity_m_s": 0.034996761329453285
+        }
+      ],
+      "minimum_swing_peak_m": 0.023756232053752657,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07996010818701456,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15996010818701456,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23996010818701458,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199601081870146,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.015188545198005938,
+      "distance_m": 0.3079973026383358,
+      "planned_distance_m": 0.2800000029619828,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.958076923076923,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.876252127227758e-08,
+        "contact_acceleration": 9.997992173049752e-08,
+        "contact_wrench": 9.975115666804868e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.009852889852971898,
+      "recovery_dcm_rms_m": 0.005092630509626903,
+      "peak_contact_force_n": 219.86251716960092,
+      "qp_p95_ms": 0.760947226081043,
+      "telemetry_sha256": "9044cf012fff8aa892c478dcec4c47c25d2e25a14b4d11c4e6058d296831cd71",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "push_right",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.0,
+        "push_force": -10,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        -1.5
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 11.946407792158425,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.209,
+          "vertical_velocity_m_s": -0.07342115408703886
+        },
+        {
+          "time_s": 3.3609999999999998,
+          "vertical_velocity_m_s": -0.09332439401754655
+        },
+        {
+          "time_s": 3.917,
+          "vertical_velocity_m_s": 0.02921179908177418
+        },
+        {
+          "time_s": 5.1160000000000005,
+          "vertical_velocity_m_s": 0.038378886680234814
+        }
+      ],
+      "minimum_swing_peak_m": 0.023806776847995592,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07996010818701456,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15996010818701456,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23996010818701458,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199601081870146,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.013613386876417834,
+      "distance_m": 0.3079947371195671,
+      "planned_distance_m": 0.2800000029619828,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.9787179487179487,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.884807461446599e-08,
+        "contact_acceleration": 9.986734092470861e-08,
+        "contact_wrench": 9.355028751656391e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008507642482358021,
+      "recovery_dcm_rms_m": 0.004883004469172469,
+      "peak_contact_force_n": 262.70784778570396,
+      "qp_p95_ms": 1.2354580336250347,
+      "telemetry_sha256": "8b1ebe15c5737afd6e8dbb36ee421bab31b08d42101af6465ffed00f643bfb40",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "push_forward",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.0,
+        "push_force": 10,
+        "push_axis": 0,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        1.5,
+        0.0
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 10.686426708009094,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.211,
+          "vertical_velocity_m_s": -0.07233308435028452
+        },
+        {
+          "time_s": 3.3609999999999998,
+          "vertical_velocity_m_s": -0.0932905835547837
+        },
+        {
+          "time_s": 3.919,
+          "vertical_velocity_m_s": 0.029412047733323732
+        },
+        {
+          "time_s": 5.114000000000001,
+          "vertical_velocity_m_s": 0.03325027899026001
+        }
+      ],
+      "minimum_swing_peak_m": 0.02378447287851926,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07996010818701456,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15996010818701456,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23996010818701458,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199601081870146,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.013526760648709203,
+      "distance_m": 0.3079376011457902,
+      "planned_distance_m": 0.2800000029619828,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.9726923076923077,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.982614912473764e-08,
+        "contact_acceleration": 9.986734092470861e-08,
+        "contact_wrench": 9.377940113353134e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008539073702442545,
+      "recovery_dcm_rms_m": 0.004786642382361986,
+      "peak_contact_force_n": 248.21251771468383,
+      "qp_p95_ms": 0.6252554827369736,
+      "telemetry_sha256": "4a7c060daecc48a33321d053c964694481c2afa951fac9909656bac793923237",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "push_backward",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.0,
+        "push_force": -10,
+        "push_axis": 0,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        -1.5,
+        0.0
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 11.134172833990306,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.203,
+          "vertical_velocity_m_s": -0.07637530316273455
+        },
+        {
+          "time_s": 2.709,
+          "vertical_velocity_m_s": 0.027444853978320083
+        },
+        {
+          "time_s": 3.918,
+          "vertical_velocity_m_s": 0.028552022798278287
+        },
+        {
+          "time_s": 5.115,
+          "vertical_velocity_m_s": 0.034691202298264834
+        }
+      ],
+      "minimum_swing_peak_m": 0.023795111433650762,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07996010818701456,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15996010818701456,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23996010818701458,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199601081870146,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.013979807676727716,
+      "distance_m": 0.3080005597132703,
+      "planned_distance_m": 0.2800000029619828,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.9665384615384616,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.759795549513228e-08,
+        "contact_acceleration": 9.986734092470861e-08,
+        "contact_wrench": 9.713413717804542e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008796227271543635,
+      "recovery_dcm_rms_m": 0.004902997400169644,
+      "peak_contact_force_n": 244.57604466982815,
+      "qp_p95_ms": 0.631447962950914,
+      "telemetry_sha256": "6350f44285d99ac95dbcdd1957c67745452960ab1454b0fb1823fc9f106d9f73",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "friction_04",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.4,
+        "mass_ratio": 1.0,
+        "push_force": 0.0,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        0.0
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 12.484500624937937,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.207,
+          "vertical_velocity_m_s": -0.0742712566998982
+        },
+        {
+          "time_s": 3.364,
+          "vertical_velocity_m_s": -0.0926931852600621
+        },
+        {
+          "time_s": 4.57,
+          "vertical_velocity_m_s": -0.09408858966564182
+        },
+        {
+          "time_s": 5.753,
+          "vertical_velocity_m_s": -0.09423403967756538
+        }
+      ],
+      "minimum_swing_peak_m": 0.023794635969521583,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.0799815425363204,
+            0.06149356948416154,
+            0.0348978596142685
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.1599815425363204,
+            -0.11850643051583845,
+            0.03489798568960856
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23998154253632042,
+            0.06149356948416154,
+            0.0348978596142685
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.31998154253632044,
+            -0.11850643051583845,
+            0.03489798568960856
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.014355265920271141,
+      "distance_m": 0.30773334903329247,
+      "planned_distance_m": 0.2800000015746579,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.992948717948718,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.941978174055066e-08,
+        "contact_acceleration": 9.99968529230566e-08,
+        "contact_wrench": 9.817439483583712e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.00853189350486903,
+      "recovery_dcm_rms_m": 0.004860880237310151,
+      "peak_contact_force_n": 300.3237237609998,
+      "qp_p95_ms": 0.9425752912648018,
+      "telemetry_sha256": "fcf403671565fc2b4c023f3e440bbf17b30a315e86259ae10835d71975325817",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "mass_plus_5pct",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.05,
+        "push_force": 0.0,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        0.0
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 11.391011832980439,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.162,
+          "vertical_velocity_m_s": -0.09264763928007458
+        },
+        {
+          "time_s": 3.35,
+          "vertical_velocity_m_s": -0.09683885425038063
+        },
+        {
+          "time_s": 3.941,
+          "vertical_velocity_m_s": 0.008295580744444031
+        },
+        {
+          "time_s": 5.136,
+          "vertical_velocity_m_s": 0.009429569226448997
+        }
+      ],
+      "minimum_swing_peak_m": 0.022460874197637093,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07995945062934819,
+            0.06148928754796504,
+            0.0347497142555393
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.1599594506293482,
+            -0.11851071245203496,
+            0.03474999901309972
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.2399594506293482,
+            0.06148928754796504,
+            0.0347497142555393
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199594506293482,
+            -0.11851071245203496,
+            0.03474999901309972
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.007025205480987611,
+      "distance_m": 0.310629829696773,
+      "planned_distance_m": 0.28000000294574434,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.9396153846153846,
+      "joint_limit_violation_rad": 0.03687233144170865,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.903834796709532e-08,
+        "contact_acceleration": 9.992400265557144e-08,
+        "contact_wrench": 9.598556260925761e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008844407379466455,
+      "recovery_dcm_rms_m": 0.00635496306522883,
+      "peak_contact_force_n": 251.88425206108343,
+      "qp_p95_ms": 0.7172079640440606,
+      "telemetry_sha256": "c51539997017646d4e3570ca6594e4674ea2bcd44e0b6a74ac88ca36f6ee7409",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": false,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": false
+    },
+    {
+      "case": {
+        "name": "mass_minus_5pct",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 0.95,
+        "push_force": 0.0,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        0.0
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 10.716736417030916,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.2279999999999998,
+          "vertical_velocity_m_s": -0.061973503630685656
+        },
+        {
+          "time_s": 3.375,
+          "vertical_velocity_m_s": -0.08769991294510504
+        },
+        {
+          "time_s": 4.585000000000001,
+          "vertical_velocity_m_s": -0.08408694669159722
+        },
+        {
+          "time_s": 5.771000000000001,
+          "vertical_velocity_m_s": -0.09116022327804174
+        }
+      ],
+      "minimum_swing_peak_m": 0.025307715076323456,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.0799607757371588,
+            0.06149792058770348,
+            0.03475191347765605
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.1599607757371588,
+            -0.11850207941229651,
+            0.03475219420524722
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.2399607757371588,
+            0.06149792058770348,
+            0.03475191347765605
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199607757371588,
+            -0.11850207941229651,
+            0.03475219420524722
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.023443274599618372,
+      "distance_m": 0.3068081176532584,
+      "planned_distance_m": 0.28000000294803556,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.975,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.469699824293798e-08,
+        "contact_acceleration": 9.992482082055165e-08,
+        "contact_wrench": 9.781695542443458e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.012027666462504865,
+      "recovery_dcm_rms_m": 0.0070141299601025366,
+      "peak_contact_force_n": 212.79432943991915,
+      "qp_p95_ms": 0.6634414545260354,
+      "telemetry_sha256": "f69d090ce4195da9536688e030f77fffb41ae0ba438135040b6e327115af4f85",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "later_push",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.6,
+        "mass_ratio": 1.0,
+        "push_force": 10,
+        "push_axis": 1,
+        "push_start": 2.5,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        1.5
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 10.317875667009503,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.207,
+          "vertical_velocity_m_s": -0.074397537314419
+        },
+        {
+          "time_s": 3.364,
+          "vertical_velocity_m_s": -0.09267108383492761
+        },
+        {
+          "time_s": 3.918,
+          "vertical_velocity_m_s": 0.028674568460784755
+        },
+        {
+          "time_s": 5.115,
+          "vertical_velocity_m_s": 0.034658839512369255
+        }
+      ],
+      "minimum_swing_peak_m": 0.02379361049455908,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07996010818701456,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15996010818701456,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23996010818701458,
+            0.0614935971017386,
+            0.03475078223689254
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199601081870146,
+            -0.11850640289826139,
+            0.03475106501848657
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.014691208001430152,
+      "distance_m": 0.3080117401376803,
+      "planned_distance_m": 0.2800000029619828,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.958076923076923,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.923638000230994e-08,
+        "contact_acceleration": 9.986734092470861e-08,
+        "contact_wrench": 9.553855662147726e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008551671881392728,
+      "recovery_dcm_rms_m": 0.004846228062215096,
+      "peak_contact_force_n": 218.61427596344333,
+      "qp_p95_ms": 0.6045063142664729,
+      "telemetry_sha256": "dddae6e671e0abaca8a01faf981d38c7798d59b0bb26ebe10cf99fd1489aca19",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    },
+    {
+      "case": {
+        "name": "combined",
+        "steps": 4,
+        "step_length": 0.08,
+        "friction": 0.4,
+        "mass_ratio": 1.05,
+        "push_force": 10,
+        "push_axis": 1,
+        "push_start": 1.6,
+        "push_duration": 0.15
+      },
+      "profile": "smooth",
+      "failure": null,
+      "source_sha256": {
+        "lab-11-contact-transitions/src/contact_walk.py": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b",
+        "lab-11-contact-transitions/src/smooth_swing.py": "03499a4a614346fa6172a3f2b80f712f20e85a171c10d1107ef75a89abcaaa04",
+        "lab-12-walking-robustness/src/walking_benchmark.py": "cb576bd6502a385c13c4163e87377e834648bbff7f840694f5c161ae62d5026e",
+        "lab-13-adaptive-footsteps/src/adaptive_walk.py": "53e0f5af5703b69ec738b155d7cf61d5eb5e735babe77306c1d2a6ef13e7a527",
+        "lab-13-adaptive-footsteps/src/step_adjustment.py": "0cdd45b2a2706ae4ae5bb7c5177bb179d91e23f5655e8530f8fb13e4fc34bbd7",
+        "lab-5-locomotion/src/lab5_common.py": "b498e7a322688506e3597a68ed712a2504fa0f2bf67b0cc6d8ca8102a8bf2457",
+        "lab-5-locomotion/src/lipm_planner.py": "6a7888dc46d817b4324a1ac74a0c36dfe0562a62aaf41e90a44a07291939d44b",
+        "lab-5-locomotion/src/lipm_preview_control.py": "0345f34b333e9fe61deb6a78eba0c4554c7f351424b49f59fc0eae4af0238e46",
+        "lab-5-locomotion/src/m0_explore_g1.py": "e311b57d14aa49e6c3ed25f83a6669e1ae8d9c6b52f064eb0f80ca81897aa8e9",
+        "lab-5-locomotion/src/m1_standing.py": "70a79fcaec1568a3841daba5c412800f5008e67166254c3e56a931efd0baa6fb",
+        "lab-5-locomotion/src/m2_com_balance.py": "9bd0ae714145b4fa1b5ee60bb7a111fe1c0a0cb1ac22e0bafe5dbde5fed240f4",
+        "lab-5-locomotion/src/m3a_pinocchio_validation.py": "ff085495060fef171cb38d4d0d2eeed81ed77da40a88393668008d9bfceca003",
+        "lab-5-locomotion/src/m3b_foot_fk_validation.py": "6d81935df7e84cab543c1007f90823c4873517549561b80fbb7bf9eea90a1ddc",
+        "lab-5-locomotion/src/m3c_static_ik.py": "4c0526c06c16c910d23d39e4f699844debbc6106b49d4d66e6caffa1431ff950",
+        "lab-5-locomotion/src/m3d_weight_shift.py": "b63d27d4ef8e0c964df5611631e189dc1464a08273e06924a282a4639c7e668e",
+        "lab-5-locomotion/src/m5_capstone_demo.py": "582ce7e38897888d85cd23e0d99de0aa45325ac73f1033c249a430e6b688be1c",
+        "lab-5-locomotion/src/standing_controller.py": "edfb179c17b305f69aaf2c26c3d2f340cb6af2b8fda5c05a6689e28fa1644b83",
+        "lab-5-locomotion/src/swing_trajectory.py": "9584fa9f32ca69ab1195498524a04647b426ef0c314c5c55a3cf5921574dd47e",
+        "lab-5-locomotion/src/whole_body_ik.py": "124b0a535513624696fba8ed85c05afe7b1b5d578549454eef832ded1d860c55",
+        "lab-5-locomotion/src/zmp_reference.py": "f4ecede8640ea11379f9ce2b3c37fc285660984342102284365c2ffcb49d695e",
+        "lab-6-whole-body-control/src/dcm_planner.py": "2b988712d6e77bfb5747978b2dd7a220b798e4c596f6db7a60c8daae34f500a2",
+        "lab-6-whole-body-control/src/g1_torque_model.py": "2af6ea1ef68186f328234b187f31c69d3c879904d8074e50545412f611b8cc45",
+        "lab-6-whole-body-control/src/gait_planner.py": "121c1285cf662f2531dfbaf941b2b1ebc5e67b849a3ee757dcc710af07aa387a",
+        "lab-6-whole-body-control/src/inverse_dynamics.py": "0a52cd5d1d43d19d25f4c70307cd6d98c3e69ea252273131c79c8dddeab4921e",
+        "lab-6-whole-body-control/src/lab6_common.py": "70d43d3d91ba9b6b5f45c34bfcad4ffd48ba4624f6f26b0d767f425f00a5d6b7",
+        "lab-6-whole-body-control/src/locomotion_controller.py": "df906dbc91d50b9eb5ebbead3cecdfc83280d19c50a0a6119e01a48cb9e51a8d",
+        "lab-6-whole-body-control/src/m0_torque_standing.py": "a228b35052d5cfeb00f5a0d733a53121e76abc00c130623e9284fc9b4967a01f",
+        "lab-6-whole-body-control/src/m1_standing_reach.py": "b19bb638e56df4f59d2b3cdeffcdc0156c9e4aff9da3f623717987722f9209b2",
+        "lab-6-whole-body-control/src/m2_stepping.py": "320af7437c83601142d2bf51eefeb03239efb66691ecfb7006ee9e02ad8d906b",
+        "lab-6-whole-body-control/src/m3_walking.py": "f3b55cb0d42591473acecbcf5b9d234ff7f9149ddfbdbfc8ba45d8d087a70d4e",
+        "lab-6-whole-body-control/src/wb_id_qp.py": "9310d3a29ef8dde6d4f45752da001c835b80cd1ae179b89876ec90f673b8f1c7",
+        "lab-6-whole-body-control/src/wb_qp.py": "9e1c112ba31ba1a45b77bc3ae831f1acd733968d1451e9d252b8a68cae5768dd",
+        "lab-6-whole-body-control/src/wb_standing_controller.py": "b9c098948a927dab726d681b97a2279fd52c15b576980668f26c9503c1874053",
+        "lab-6-whole-body-control/src/wb_tasks.py": "0ab1e8da92a78af69f2b0447a9ef4ab4f5fb11c4625871c9ff44ac08a6661c23",
+        "requirements.txt": "322e310effc4d6208cdcbbf0c128ed0b9b56f28d5590612a8256afd6e95c595f",
+        "tools/walking_evidence.py": "bce64864752f7ec83ed2e59d623edc0d071d334e67cfc9e8b9d67cf06d736ac3",
+        "tools/walking_visuals.py": "c22ddbb37867127afd227025a8fb66671e7e685346ac161898a59a739594b87e"
+      },
+      "environment": {
+        "python": "3.14.2",
+        "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+        "mujoco": "4.0.0",
+        "numpy": "2.5.4",
+        "model_xml_sha256": "106adfe8ad759da081d4eaef3a34fc28d6c4c99f3c7f4a385decbac402a51489"
+      },
+      "applied_impulse_ns": [
+        0.0,
+        1.5
+      ],
+      "controller_settings": {
+        "backend": "proxqp",
+        "qp_tolerance": 1e-07,
+        "qp_max_iterations": 100,
+        "torque_margin_nm": 0.1,
+        "contact_velocity_gain": 20.0,
+        "contact_orientation_gain": 80.0,
+        "step_width": 0.18,
+        "single_support_s": 0.85,
+        "double_support_s": 0.35,
+        "step_height_m": 0.025,
+        "swing_orientation_weight": 1000.0,
+        "swing_orientation_gain": 60.0,
+        "contact_sync_before_tasks": true,
+        "contact_detection": "positive ground normal force",
+        "com_height_weight": 100.0,
+        "com_height_gain": 40.0
+      },
+      "completed": true,
+      "duration_s": 7.799999999999999,
+      "elapsed_s": 7.800000000000001,
+      "wall_seconds": 10.184128208085895,
+      "sample_interval_s": 0.001,
+      "planned_landings": 4,
+      "landings_completed": 4,
+      "airborne_swings": 4,
+      "touchdowns": [
+        {
+          "time_s": 2.16,
+          "vertical_velocity_m_s": -0.0931150647334178
+        },
+        {
+          "time_s": 2.727,
+          "vertical_velocity_m_s": 0.006754941843767348
+        },
+        {
+          "time_s": 3.937,
+          "vertical_velocity_m_s": 0.005238578633326441
+        },
+        {
+          "time_s": 5.133,
+          "vertical_velocity_m_s": 0.006441508243137939
+        }
+      ],
+      "minimum_swing_peak_m": 0.02241593555178667,
+      "landings": [
+        {
+          "side": "left",
+          "start_s": 1.5,
+          "end_s": 2.35,
+          "target": [
+            0.07998089842254824,
+            0.06148925551293062,
+            0.034897350802590155
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 2.7,
+          "end_s": 3.5500000000000003,
+          "target": [
+            0.15998089842254826,
+            -0.11851074448706937,
+            0.03489747788274755
+          ]
+        },
+        {
+          "side": "left",
+          "start_s": 3.9000000000000004,
+          "end_s": 4.75,
+          "target": [
+            0.23998089842254827,
+            0.06148925551293062,
+            0.034897350802590155
+          ]
+        },
+        {
+          "side": "right",
+          "start_s": 5.1,
+          "end_s": 5.949999999999999,
+          "target": [
+            0.3199808984225483,
+            -0.11851074448706937,
+            0.03489747788274755
+          ]
+        }
+      ],
+      "max_landing_error_m": 0.0075396981145012445,
+      "distance_m": 0.30962710681901684,
+      "planned_distance_m": 0.28000000320181456,
+      "flight_ticks": 0,
+      "zmp_inside_fraction": 0.9401282051282052,
+      "joint_limit_violation_rad": 0.0,
+      "clipped_ticks": 0,
+      "qp_nonconverged_ticks": 0,
+      "qp_violations": {
+        "base_dynamics": 9.885573470924669e-08,
+        "contact_acceleration": 9.995090671788276e-08,
+        "contact_wrench": 9.269909551079536e-08,
+        "raw_torque": 0.0,
+        "torque_buffer": 0.0
+      },
+      "unexpected_contact_ticks": 0,
+      "dcm_rms_m": 0.008322942560628006,
+      "recovery_dcm_rms_m": 0.005051527361234087,
+      "peak_contact_force_n": 276.27181899838536,
+      "qp_p95_ms": 0.5867687403224406,
+      "telemetry_sha256": "7f497727e6f5857be03fa923182b0ba0daaddd206b51441837726deb4f822937",
+      "adaptation": [],
+      "checks": {
+        "complete": true,
+        "no_flight": true,
+        "all_landings": true,
+        "actual_liftoff": true,
+        "swing_clearance": true,
+        "landing_accuracy": true,
+        "progress": true,
+        "zmp": true,
+        "joint_limits": true,
+        "no_clipping": true,
+        "qp_convergence": true,
+        "base_dynamics": true,
+        "contact_acceleration": true,
+        "contact_wrench": true,
+        "raw_torque": true,
+        "torque_buffer": true,
+        "no_unexpected_contact": true
+      },
+      "passed": true
+    }
+  ],
+  "controller_source_sha256": "c462f31a0a0d2ee095da8ecbfb6020dd1ca375e963af4f6fde0d8b8403fc1e4b"
+}

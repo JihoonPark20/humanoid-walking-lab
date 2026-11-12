@@ -1,5 +1,7 @@
 # A4: Inverse Kinematics
 
+[English](a4_inverse_kinematics.md) · [한국어](a4_inverse_kinematics.ko.md) · [简体中文](a4_inverse_kinematics.zh-CN.md)
+
 ## Goal
 
 Solve full 6-DOF IK (position + orientation) for the UR5e using numerical methods, validate solutions via FK roundtrip and MuJoCo cross-validation, and benchmark solver performance on random reachable targets.

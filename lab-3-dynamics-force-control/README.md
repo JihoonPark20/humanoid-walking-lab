@@ -6,9 +6,9 @@ Learn RNEA, CRBA, gravity compensation, impedance and contact force control.
 
 ![Demo](media/gallery/hero.gif)
 
-Closed gripper with a rigid probe: 5 N force control over a 50 mm trace on a flat plate (μ=0.05). Full run at 1×; raw-force in-band 93.0%.
+The closed gripper holds a rigid probe. Observe tangential motion along the plate while normal contact force tracks 5 N (1× playback).
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md)
 
 ## Run
 

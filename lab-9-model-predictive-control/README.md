@@ -6,9 +6,9 @@ Replan with full-NLP MPC or single-QP RTI; evaluate delay, model mismatch and no
 
 ![Demo](media/gallery/hero.gif)
 
-Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.
+Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Watch how the prediction changes around the red push arrow.
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 
 ## Run
 

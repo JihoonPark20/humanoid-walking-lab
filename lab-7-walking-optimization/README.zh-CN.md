@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-比较初始落脚点（灰色）、优化落脚点与 CoM（紫色）、实际 CoM（青色）。执行期间计划固定，完成 5/5 次摆动。
+比较初始落脚点（灰色）、优化落脚点与 CoM（紫色）、实际 CoM（青色）。执行期间计划保持不变。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 python lab-7-walking-optimization/src/offline_walk.py --compare

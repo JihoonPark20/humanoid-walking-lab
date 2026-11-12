@@ -1,5 +1,7 @@
 # Interview Cheatsheet
 
+[English](interview_cheatsheet.md) · [한국어](interview_cheatsheet.ko.md) · [简体中文](interview_cheatsheet.zh-CN.md)
+
 ## Explain FK vs IK
 
 Forward kinematics maps joint angles to end-effector pose. Inverse kinematics does the opposite and often has multiple valid joint solutions for the same pose.

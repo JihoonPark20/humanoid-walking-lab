@@ -1,10 +1,12 @@
-# W4: 측정 상태로 다시 계획하는 MPC
+# W4: MPC replanning from measured state
 
-## 지연·모델 오차 보완
+[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
 
-기존 `mass_ratio=1.05`, 마찰 0.4, 측정 1주기 지연, 외란 0.03 m/s를 그대로 유지합니다. Timestamp가 있는 과거 측정값과 이미 보낸 command 이력으로 현재 상태를 예측합니다. 아직 측정하지 못한 외란은 예측할 수 없으며 다음 측정에 반영됩니다. Controller에는 현재 plant 상태나 실제 질량을 전달하지 않습니다.
+## Delay and model errors
 
-질량 식별은 연속된 세 CoM 높이 측정과 두 interval의 수직 command만 사용합니다. 높이를 `z0,z1,z2`, interval 길이를 `h0,h1`, 두 발의 합력 command를 `F0,F1`이라 하면, constant-wrench Dynamics에서 다음 관계를 얻습니다.
+The combined case retains `mass_ratio=1.05`, friction 0.4, one-interval measurement delay and a 0.03 m/s disturbance. Timestamped past measurements and previously issued commands predict current state. An unobserved disturbance cannot be predicted; it enters through later measurements. The controller receives neither the current plant state nor its true mass.
+
+Mass identification uses three consecutive CoM height measurements and the vertical commands over two intervals:
 
 ```text
 v_bar0 = (z1-z0)/h0
@@ -13,17 +15,15 @@ m_candidate = (F0*h0 + F1*h1) / (2*(v_bar1-v_bar0) + g*(h0+h1))
 m_hat <- m_hat + 0.3*(m_candidate-m_hat)
 ```
 
-후보가 nominal 질량의 0.75–1.25배 범위 밖이면 거부합니다. 이 범위는 실제 질량을 읽어 선택하지 않으며 모든 프로파일에서 같습니다. 중복 timestamp는 재사용하고 순서가 역행하면 거부합니다. 측정이 누락되면 연속된 세 측정이 모일 때까지 새 추정을 보류합니다. 수직 외력이나 force command 오차는 질량과 구별되지 않으므로 이 방식의 적용 조건을 벗어납니다.
+Reject candidates outside 0.75–1.25 times nominal mass, with the same bounds in every profile. Reuse duplicate timestamps and reject reversed time. After a missing measurement, wait for three consecutive measurements before estimating again. Vertical external forces and command-force error are indistinguishable from mass error and violate these identification assumptions.
 
-`CentroidalMPC.update_mass()`는 solver graph의 mass parameter와 같은 nominal 속도에 해당하는 reference momentum·wrench를 갱신합니다. 이전 계획의 fallback도 새 모델에서 다시 rollout·검증합니다. RTI는 질량이 바뀌면 준비된 QP를 무효화하며, reduced 실험에서는 측정 → 추정 → preparation → feedback 순서로 한 번의 QP를 풉니다. 고정 질량인 G1 실험의 advance preparation 경로는 유지합니다.
+`CentroidalMPC.update_mass()` updates the solver mass parameter and reference momentum/wrench for the same nominal velocity. Revalidate fallback by rolling out under the updated model. A mass change invalidates an RTI preparation. The reduced loop runs measurement → estimation → preparation → feedback, solving one QP; fixed-mass G1 keeps advance preparation.
 
-`validate_mpc_scenarios.py`는 8가지 환경 × full NLP/RTI의 16개 프로파일을 검증합니다. 모든 interval 완료와 최종 CoM 오차 3 cm 미만, 실제 plant 상태·wrench의 독립 검증을 유지합니다. `command_wrench_violation`과 `saturation_intervals`는 plant가 명령을 얼마나 제한했는지도 보여줍니다.
+`validate_mpc_scenarios.py` tests eight environments × full NLP/RTI = 16 profiles. Require every interval to complete, final CoM error below 3 cm, and independent validation of actual plant state/wrench. `command_wrench_violation` and `saturation_intervals` expose plant command limiting.
 
-## RTI의 preparation과 feedback
+## RTI preparation and feedback
 
-`centroidal_rti.py`는 CasADi 미분 + OSQP 기반 single-SQP 경로입니다. `prepare(index)`는 이전 해를 shift하고 exact discrete Dynamics의 Jacobian, quadratic tracking cost, 선형 wrench/상태 제약을 구성합니다. `feedback(measured)`는 초기 상태 equality의 RHS만 갱신하고 **QP를 한 번** 풉니다. 비선형 입력 rollout을 별도로 검증하며, 유효하지 않으면 새 측정 상태에서 검증된 이전 입력만 fallback으로 허용합니다. Full NLP를 재호출하지 않습니다.
-
-결정변수 전체를 `z`, 이전 해를 `z_bar`, nonlinear constraint를 `g`라 하면 한 번의 SQP 문제는 다음과 같습니다.
+`centroidal_rti.py` uses CasADi derivatives and OSQP for a single SQP step. `prepare(index)` shifts the previous solution and constructs exact-discrete-dynamics Jacobians, quadratic tracking cost and linear wrench/state bounds. `feedback(measured)` changes only the initial-state equality RHS and solves **one QP**. An independent nonlinear rollout must pass; otherwise only previous inputs revalidated from the new measured state may be used as fallback. Full NLP is never called as RTI fallback.
 
 ```text
 min_delta  0.5 delta.T H delta + grad(f).T delta
@@ -31,39 +31,31 @@ subject to l <= g(z_bar) + J_g(z_bar) delta <= u
            delta_x0 = x_measured - x_bar0
 ```
 
-Tracking objective가 quadratic이므로 `H=Hessian(f)`는 Gauss–Newton Hessian과 같습니다. 비선형 제약의 Hessian은 사용하지 않습니다. 구현은 `z=z_bar+delta` 형태의 absolute QP와 단위 scaling을 사용합니다. Momentum은 질량, wrench는 무게로 정규화하고 제약 행도 scaling합니다. Wrench·상태 한계는 유지하며 nonlinear Dynamics만 선형화됩니다.
+The tracking objective is quadratic, so `H=Hessian(f)` equals its Gauss–Newton Hessian. Nonlinear constraint Hessians are omitted. Implementation uses the absolute QP `z=z_bar+delta`, scales momentum by mass and wrench by weight, and scales constraint rows. Wrench/state bounds remain; only nonlinear dynamics are linearized.
 
-QP를 푼 뒤에는 후보 wrench를 exact nonlinear rollout합니다. 이 상태로 독립 검증을 통과해야 입력을 사용합니다. `linearization_gap`은 linearized prediction과 exact rollout의 성분별 최대 차이이며 위치·운동량 단위가 섞여 있습니다. 단일 SQP가 항상 feasible하거나 수렴한다는 보장은 없습니다.
+After the QP, exact nonlinear rollout determines acceptance. `linearization_gap` is the maximum componentwise discrepancy between linear prediction and exact rollout, mixing position and momentum units. A single SQP step need not be feasible or converged.
 
-고정 모델의 G1 루프는 다음 주기 `prepare(k+1)`를 미리 호출합니다. 편의 API `solve(measured,index)`는 두 단계를 연속 실행하며 질량 추정을 사용하는 reduced 루프에서 사용합니다. 매 preparation에 sparse QP와 factorization을 새로 만들고 feedback에서 RHS만 갱신합니다. Horizon 간 factorization 재사용·condensing·코드 생성은 구현하지 않았습니다. 계측은 preparation/feedback/상태 추정 및 합계를 기록하며 초기 graph 생성은 제외합니다.
+The fixed-model G1 loop prepares `k+1` in advance. `solve(measured,index)` calls both stages sequentially for reduced experiments with mass estimation. Preparation rebuilds the sparse QP and factorization; feedback changes RHS only. There is no inter-horizon factorization reuse, condensing or code generation. Timing records preparation, feedback, estimation and total, excluding initial graph construction.
 
-[acados 공식 RTI 설명](https://docs.acados.org/features/)의 preparation/feedback 구분을 따르는 교육용 구현이며 acados backend를 사용하는 것은 아닙니다. 실시간 OS나 hard deadline 보장은 범위 밖입니다.
+This educational implementation follows the preparation/feedback split described in [acados documentation](https://docs.acados.org/features/), but uses no acados backend. It provides no hard real-time guarantee.
 
-## 구현 순서
+## Implementation and modules
 
-1. LIPM의 exact ZMP-input Dynamics와 유한 horizon QP를 구성합니다.
-2. 최종 양발 capture 영역에서 backward recursion으로 terminal DCM viability 영역을 구합니다.
-3. 같은 외란에서 offline feedback과 MPC를 비교하고 solver 시간·실패를 저장합니다.
-4. Lab 8의 centroidal NLP를 receding horizon으로 재사용합니다. Warm start를 shift하고 매번 초기 상태를 측정값으로 교체합니다.
-5. CoM·운동량 reference를 Lab 6 Whole-body QP에 연결해 MuJoCo 추종을 측정합니다.
+First build exact ZMP-input LIPM dynamics and horizon QP, then terminal DCM viability by backward recursion from final double support. Compare offline feedback and MPC under the same disturbance. Reuse Lab 8's centroidal NLP in a shifted receding horizon, then connect CoM/momentum references to Lab 6 Whole-body QP.
 
-## 모듈·데이터 흐름
+- `lipm_mpc.py`: `[c_x,v_x,c_y,v_y]`, ZMP input, OSQP horizon, terminal DCM region, braking fallback.
+- `centroidal_mpc.py`: Lab 8 solver, shifted primal warm start, delay/mass/friction experiments.
+- `centroidal_rti.py`: automatic derivatives, one-QP RTI, nonlinear checks, split timing.
+- `centroidal_estimation.py`: timestamp prediction and height/command mass identification.
+- `validate_mpc_scenarios.py`: 16 environment/algorithm profiles and acceptance matrix.
+- `mpc_experiment.py`: paired open-loop/offline feedback/MPC reduced rollouts; CSV/JSON/plots, timing median/p95/p99/deadline misses.
+- `g1_mpc.py`: measured Pinocchio state → MPC → Lab 6 CoM/angular-momentum tasks → Whole-body QP → MuJoCo.
 
-- `lipm_mpc.py`: 상태 `[c_x,v_x,c_y,v_y]`, ZMP 입력, OSQP horizon, terminal DCM viability 영역, braking fallback.
-- `centroidal_mpc.py`: Lab 8 모델/solver, shifted primal warm start, 상태 추정 지연·질량·마찰 오차 실험.
-- `centroidal_rti.py`: 같은 NLP graph의 자동 미분, one-QP RTI, nonlinear rollout 검사와 split timing.
-- `centroidal_estimation.py`: timestamp 기반 상태 예측과 CoM 높이·force command 기반 질량 추정.
-- `validate_mpc_scenarios.py`: 고정된 16개 환경·알고리즘 조합의 실행 및 판정표.
-- `mpc_experiment.py`: 동일 외란의 open-loop/offline feedback/MPC reduced-model rollout, CSV·JSON·plot와 solve-time median/p95/p99/deadline miss.
-- `g1_mpc.py`: Pinocchio 실측 상태 → centroidal MPC → Lab 6 CoM/angular-momentum task → Whole-body QP → MuJoCo.
+Never apply an infeasible solution. LIPM fallback brakes only when the capture point lies in the current conservative support region; otherwise stop. Centroidal fallback requires revalidating the previous plan from the new measured state, otherwise stop. Log failures and chosen paths. Compare full NLP and RTI with the same nominal plan, disturbance and horizon, including total computation time.
 
-실패 처리: infeasible 해를 적용하지 않습니다. LIPM은 capture point가 현재 보수적 지지 영역 안에 있을 때 검증된 정지 입력을 사용합니다. 그렇지 않으면 중단합니다. Centroidal MPC는 새 측정 상태에서 재검증한 이전 계획만 fallback으로 허용하고, 사용할 수 없으면 중단합니다. 실패 횟수와 사용한 경로를 숨기지 않습니다.
+## Terminal DCM region
 
-Centroidal MPC는 full NLP와 RTI를 모두 제공합니다. 같은 nominal·외란·horizon에서 오차와 전체 계산 시간을 비교합니다.
-
-## Terminal DCM 영역
-
-`omega=sqrt(g/h)`, `xi=c+v/omega`이면 constant ZMP `z`에 대해 `xi_next=exp(omega*dt)*xi+(1-exp(omega*dt))*z`입니다. 따라서 미래 capture 구간과 ZMP box에서 이전 구간을 다음과 같이 구합니다.
+With `omega=sqrt(g/h)`, `xi=c+v/omega`, constant ZMP gives `xi_next=exp(omega*dt)*xi+(1-exp(omega*dt))*z`. Backward recursion is:
 
 ```text
 alpha = exp(-omega * dt)
@@ -71,6 +63,4 @@ lower[k] = alpha * lower[k+1] + (1-alpha) * zmp_lower[k]
 upper[k] = alpha * upper[k+1] + (1-alpha) * zmp_upper[k]
 ```
 
-MPC horizon 끝의 DCM을 해당 시각의 구간 안에 둡니다. 이 계산은 고정 접촉 일정·분리된 수평축·constant-input LIPM에 대한 것입니다. 전체 G1의 관절·토크 feasibility를 뜻하지 않습니다.
-
-[실험 지표](../GALLERY.md)에서 reduced model과 G1의 결과를 구분해 읽으세요.
+Constrain horizon-end DCM to this time-indexed region. It assumes fixed contact timing, separate horizontal axes and constant-input LIPM, and does not establish G1 joint/torque feasibility. Distinguish reduced and G1 results in the [gallery](../GALLERY.md). See also [observation robustness](OBSERVATION_ROBUSTNESS.md).

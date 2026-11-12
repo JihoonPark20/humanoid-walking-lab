@@ -1,5 +1,7 @@
 # B1: Trajectory Generation
 
+[English](b1_trajectory_generation.md) · [한국어](b1_trajectory_generation.ko.md) · [简体中文](b1_trajectory_generation.zh-CN.md)
+
 ## Goal
 
 Generate smooth joint-space and Cartesian-space reference trajectories for the UR5e, with feasibility checking against velocity limits.

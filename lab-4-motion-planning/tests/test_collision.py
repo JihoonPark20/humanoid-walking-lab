@@ -6,7 +6,6 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import pinocchio as pin
 import pytest
 
 # Allow imports from src/
@@ -20,7 +19,6 @@ from lab4_common import (
     OBSTACLES,
     Q_HOME,
     TABLE_SPEC,
-    URDF_PATH,
     get_ee_pos,
     get_mj_ee_pos,
     load_mujoco_model,
@@ -145,16 +143,14 @@ class TestPathFree:
 
 
 class TestCrossValidation:
-    """Cross-validate Pinocchio collision against MuJoCo contacts."""
+    """Compare checker decisions with independently forwarded MuJoCo contacts."""
 
     def test_agreement_above_threshold(self, cc: CollisionChecker) -> None:
-        """At least 90% agreement on random configs (excluding floor contacts)."""
+        """Require agreement with independent MuJoCo contacts, including the ground."""
         import mujoco
 
         mj_model, mj_data = load_mujoco_model()
-        plane_ids = {
-            i for i in range(mj_model.ngeom) if mj_model.geom_type[i] == 0
-        }
+
 
         rng = np.random.default_rng(123)
         n_samples = 200
@@ -162,24 +158,18 @@ class TestCrossValidation:
 
         for _ in range(n_samples):
             q = rng.uniform(JOINT_LOWER, JOINT_UPPER)
-            pin_free = cc.is_collision_free(q)
+            checked_free = cc.is_collision_free(q)
 
             mj_data.qpos[:6] = q
             mj_data.qvel[:] = 0
             mujoco.mj_forward(mj_model, mj_data)
 
-            non_floor = sum(
-                1
-                for j in range(mj_data.ncon)
-                if mj_data.contact[j].geom1 not in plane_ids
-                and mj_data.contact[j].geom2 not in plane_ids
-            )
-            mj_free = non_floor == 0
-            if pin_free == mj_free:
+            mj_free = mj_data.ncon == 0
+            if checked_free == mj_free:
                 agree += 1
 
         pct = agree / n_samples
-        assert pct >= 0.90, f"Agreement {pct:.1%} below 90% threshold"
+        assert pct == 1.0, f"Collision decision disagrees with MuJoCo: {pct:.1%}"
 
     def test_ee_position_matches(self) -> None:
         """FK: Pinocchio EE position matches MuJoCo at Q_HOME."""
@@ -207,15 +197,20 @@ class TestModelLoading:
     """Test model loading utilities."""
 
     def test_pinocchio_model_dof(self) -> None:
-        model, data, ee_fid = load_pinocchio_model()
+        model, _data, _ee_fid = load_pinocchio_model()
         assert model.nq == NUM_JOINTS
 
     def test_mujoco_model_loads(self) -> None:
-        mj_model, mj_data = load_mujoco_model()
+        mj_model, _mj_data = load_mujoco_model()
         assert mj_model.nq >= NUM_JOINTS
         assert mj_model.nu > NUM_JOINTS
 
     def test_obstacle_specs_match_scene(self) -> None:
         """Obstacle specs in lab4_common match the canonical Lab 4 scene."""
-        assert len(OBSTACLES) == 4  # 4 box obstacles
+        assert "blocking_post" in {o.name for o in OBSTACLES}
+        model, _ = load_mujoco_model()
+        for obstacle in OBSTACLES:
+            geom = model.geom(f"{obstacle.name}_geom")
+            np.testing.assert_allclose(model.body(obstacle.name).pos, obstacle.position)
+            np.testing.assert_allclose(geom.size, obstacle.half_extents)
         assert TABLE_SPEC.name == "table"

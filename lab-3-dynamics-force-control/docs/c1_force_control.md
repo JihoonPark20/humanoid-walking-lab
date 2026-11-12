@@ -1,5 +1,7 @@
 # C1: Hybrid Position-Force Control
 
+[English](c1_force_control.md) · [한국어](c1_force_control.ko.md) · [简体中文](c1_force_control.zh-CN.md)
+
 ## Goal
 
 Implement hybrid control: position control in XY plane, PI force control in Z. Maintain constant contact force while controlling EE position on a table surface.

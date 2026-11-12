@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-3차원 큐브 전체 추종 3배속: RMS 오차 0.088 mm. 녹화한 실행의 측정값입니다.
+말단이 정육면체의 12개 모서리를 따라갈 때 관절 자세가 어떻게 달라지는지 보세요(3배속).
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
+[데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md)
 
 ## 실행
 
-[설치](../docs/SETUP.md)
+[설치](../docs/SETUP.ko.md)
 
 ```bash
 python lab-2-Ur5e-robotics-lab/src/c3_record_video.py

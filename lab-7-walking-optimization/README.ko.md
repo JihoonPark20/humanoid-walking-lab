@@ -6,13 +6,13 @@ Offline LIPM 궤적·발 디딤·시간 후보를 최적화하고 G1에서 추�
 
 ![Demo](media/gallery/hero.gif)
 
-초기 발 디딤(회색), 최적화된 발 디딤·CoM(보라), 실제 CoM(청록)을 비교하세요. 실행 중 계획은 고정되어 있으며 swing 5/5를 완료합니다.
+초기 발 디딤(회색), 최적화된 발 디딤·CoM(보라), 실제 CoM(청록)을 비교하세요. 실행 중 계획은 고정됩니다.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
+[데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 
 ## 실행
 
-[설치](../docs/SETUP.md)
+[설치](../docs/SETUP.ko.md)
 
 ```bash
 python lab-7-walking-optimization/src/offline_walk.py --compare

@@ -25,13 +25,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 import numpy as np
-
-from gait_planner import GaitReference, GaitSchedule, Phase
+from gait_planner import GaitReference, GaitSchedule
 from lab6_common import DT, foot_contact_state, robot_com
 from wb_id_qp import ContactSpec, WholeBodyIDQP
 from wb_tasks import CoMTask, FramePositionTask, TaskStack
 
-__all__ = ["SteppingController", "StepLog"]
+__all__ = ["StepLog", "SteppingController"]
 
 
 @dataclass
@@ -83,6 +82,8 @@ class SteppingController:
         swing_orientation_task=None,
         dcm_plan=None,
         vrp_shrink: float = 0.7,
+        contact_sync_before_tasks: bool = False,
+        contact_state_reader=foot_contact_state,
     ) -> None:
         self.mj_model = mj_model
         self.mj_data = mj_data
@@ -104,6 +105,8 @@ class SteppingController:
         # exactly leaves the solver no room to satisfy anything else.
         self.dcm_plan = dcm_plan
         self.vrp_shrink = float(vrp_shrink)
+        self.contact_sync_before_tasks = contact_sync_before_tasks
+        self.contact_state_reader = contact_state_reader
 
         # Optional: hold the swing foot level through the swing. A foot that
         # lands tilted touches down on one edge, which is both a poor contact
@@ -146,7 +149,7 @@ class SteppingController:
         schedule still decides *intent* — the swing foot is excluded while it
         is meant to be swinging — but reality has the last word on support.
         """
-        left_down, right_down = foot_contact_state(self.mj_model, self.mj_data)
+        left_down, right_down = self.contact_state_reader(self.mj_model, self.mj_data)
         measured = {
             self.schedule.left_frame: left_down,
             self.schedule.right_frame: right_down,
@@ -185,6 +188,10 @@ class SteppingController:
         """Apply the schedule's references to the task stack for time `t`."""
         self._t = t
         reference = self.schedule.reference(t)
+        # New contact-transition experiments synchronize support before enabling swing tasks.
+        early_sync = self.contact_sync_before_tasks
+        if early_sync:
+            self._sync_contacts(self._effective_stance(reference))
 
         if self.dcm_plan is None:
             self.com_task.set_target(reference.com_target)
@@ -230,7 +237,8 @@ class SteppingController:
                 self.swing_orientation_task.frame_name = reference.swing_foot
                 self.swing_orientation_task.weight = self.swing_orientation_weight
 
-        self._sync_contacts(self._effective_stance(reference))
+        if not early_sync:
+            self._sync_contacts(self._effective_stance(reference))
         if self.dcm_plan is not None:
             self._update_vrp_bounds()
         return reference

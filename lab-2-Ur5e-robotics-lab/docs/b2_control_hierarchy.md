@@ -1,5 +1,7 @@
 # B2: Control Hierarchy
 
+[English](b2_control_hierarchy.md) · [한국어](b2_control_hierarchy.ko.md) · [简体中文](b2_control_hierarchy.zh-CN.md)
+
 ## Goal
 
 Implement and compare four controller levels on the same UR5e trajectory in MuJoCo, progressing from simple PD to full operational-space control.

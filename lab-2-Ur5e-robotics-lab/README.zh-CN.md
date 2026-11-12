@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-完整三维立方体跟踪、3 倍速：RMS 误差 0.088 mm；指标来自录像对应的运行。
+观察末端沿立方体的 12 条棱运动时，关节姿态如何变化（3 倍速）。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 python lab-2-Ur5e-robotics-lab/src/c3_record_video.py

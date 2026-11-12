@@ -8,24 +8,29 @@ Implements sampling-based motion planning with:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import matplotlib
+
 matplotlib.use("Agg")           # must be set before pyplot is imported
 import matplotlib.pyplot as plt
 import numpy as np
 
 # 3-D projection — optional; broken when system mpl_toolkits conflicts with pip matplotlib
+if TYPE_CHECKING:
+    from mpl_toolkits.mplot3d import Axes3D
+
 _3D_AVAILABLE = False
 try:
     import mpl_toolkits.mplot3d  # noqa: F401 — registers '3d' projection
     _3D_AVAILABLE = True
 except Exception:
-    pass
+    _3D_AVAILABLE = False
 
 from collision_checker import CollisionChecker
-from lab4_common import JOINT_LOWER, JOINT_UPPER, MEDIA_DIR, ObstacleSpec
+from lab4_common import JOINT_LOWER, JOINT_UPPER
 
 
 @dataclass
@@ -54,6 +59,8 @@ class RRTStarPlanner:
         goal_bias: Probability of sampling the goal configuration.
         rewire_radius: Radius for RRT* rewiring neighborhood.
         goal_tolerance: L2 distance to goal for success.
+        local_bias: Optional Gaussian sampling probability near the endpoint segment.
+        local_std: Gaussian standard deviation; global sampling remains nonzero.
     """
 
     def __init__(
@@ -65,10 +72,21 @@ class RRTStarPlanner:
         goal_bias: float = 0.1,
         rewire_radius: float = 1.0,
         goal_tolerance: float = 0.15,
+        local_bias: float = 0.0,
+        local_std: float = 0.8,
     ) -> None:
         self.cc = collision_checker
-        self.lower = joint_limits_lower if joint_limits_lower is not None else JOINT_LOWER
-        self.upper = joint_limits_upper if joint_limits_upper is not None else JOINT_UPPER
+        self.lower = np.asarray(joint_limits_lower if joint_limits_lower is not None else JOINT_LOWER, dtype=float).copy()
+        self.upper = np.asarray(joint_limits_upper if joint_limits_upper is not None else JOINT_UPPER, dtype=float).copy()
+        if self.lower.ndim != 1 or self.upper.shape != self.lower.shape or not np.isfinite([self.lower, self.upper]).all() or np.any(self.lower >= self.upper):
+            raise ValueError("Finite, ordered joint limits with matching shapes are required")
+        if not np.isfinite([step_size, goal_bias, rewire_radius, goal_tolerance]).all() or min(step_size, rewire_radius, goal_tolerance) <= 0 or not 0 <= goal_bias <= 1:
+            raise ValueError("Invalid RRT step, radius, tolerance or goal bias")
+        if not np.isfinite([local_bias, local_std]).all() or local_bias < 0 or local_std <= 0:
+            raise ValueError("Invalid local sampling settings")
+        if local_bias + goal_bias >= 1 and local_bias > 0:
+            raise ValueError("Local bias must retain a positive global sampling probability")
+        self.local_bias, self.local_std = local_bias, local_std
         self.step_size = step_size
         self.goal_bias = goal_bias
         self.rewire_radius = rewire_radius
@@ -106,7 +124,18 @@ class RRTStarPlanner:
             self._rng = np.random.default_rng(seed)
 
         self.cost_history = []
+        self.iterations = 0
 
+        self._tree = []
+        q_start = np.asarray(q_start, dtype=float)
+        q_goal = np.asarray(q_goal, dtype=float)
+        if not isinstance(max_iter, (int, np.integer)) or max_iter <= 0:
+            raise ValueError("max_iter must be a positive integer")
+        for q in (q_start, q_goal):
+            if q.shape != self.lower.shape or not np.isfinite(q).all():
+                raise ValueError("Endpoint shape/values do not match the joint space")
+            if np.any(q < self.lower) or np.any(q > self.upper):
+                return None
         # Validate start and goal
         if not self.cc.is_collision_free(q_start):
             return None
@@ -115,9 +144,13 @@ class RRTStarPlanner:
 
         # Initialize tree with start node
         self._tree = [RRTNode(q=q_start.copy(), parent=None, cost=0.0)]
+        if np.array_equal(q_start, q_goal):
+            self.cost_history.append(0.0)
+            return [q_start.copy()]
         goal_node_idx: int | None = None
 
         for _iteration in range(max_iter):
+            self.iterations = _iteration + 1
             # Sample random configuration (with goal bias)
             q_rand = self._sample(q_goal)
 
@@ -162,7 +195,7 @@ class RRTStarPlanner:
                             goal_node_idx = len(self._tree) - 1
                         else:
                             self._tree[goal_node_idx].parent = new_idx
-                            self._tree[goal_node_idx].cost = cost_to_goal
+                            self._propagate_cost(goal_node_idx, cost_to_goal)
 
                     # For basic RRT, return immediately
                     if not rrt_star:
@@ -178,14 +211,19 @@ class RRTStarPlanner:
 
     def _sample(self, q_goal: np.ndarray) -> np.ndarray:
         """Sample a random configuration with goal bias."""
-        if self._rng.random() < self.goal_bias:
+        draw = self._rng.random()
+        if draw < self.goal_bias:
             return q_goal.copy()
+        if draw < self.goal_bias + self.local_bias:
+            alpha = self._rng.random()
+            center = (1 - alpha) * self._tree[0].q + alpha * q_goal
+            return np.clip(center + self._rng.normal(0, self.local_std, len(q_goal)), self.lower, self.upper)
         return self._rng.uniform(self.lower, self.upper)
 
     def _nearest(self, q: np.ndarray) -> int:
         """Find index of nearest node in tree to q."""
-        dists = [self._dist(node.q, q) for node in self._tree]
-        return int(np.argmin(dists))
+        delta = np.asarray([node.q for node in self._tree]) - q
+        return int(np.argmin(np.einsum("ij,ij->i", delta, delta)))
 
     def _steer(self, q_from: np.ndarray, q_to: np.ndarray) -> np.ndarray:
         """Steer from q_from toward q_to, limited by step_size."""
@@ -201,11 +239,9 @@ class RRTStarPlanner:
 
     def _near(self, q: np.ndarray) -> list[int]:
         """Find all nodes within rewire_radius of q."""
-        return [
-            i
-            for i, node in enumerate(self._tree)
-            if self._dist(node.q, q) <= self.rewire_radius
-        ]
+        delta = np.asarray([node.q for node in self._tree]) - q
+        squared = np.einsum("ij,ij->i", delta, delta)
+        return np.flatnonzero(squared <= self.rewire_radius**2).tolist()
 
     def _extend_rrt_star(self, q_new: np.ndarray, nearest_idx: int) -> int:
         """Add q_new to tree with RRT* best-parent selection and rewiring.
@@ -254,14 +290,13 @@ class RRTStarPlanner:
 
     def _propagate_cost(self, idx: int, new_cost: float) -> None:
         """Propagate updated cost to all descendants of node idx."""
-        self._tree[idx].cost = new_cost
-        # Find children and update recursively
-        for i, node in enumerate(self._tree):
-            if node.parent == idx:
-                child_cost = new_cost + self._dist(
-                    self._tree[idx].q, node.q
-                )
-                self._propagate_cost(i, child_cost)
+        pending = [(idx, new_cost)]
+        while pending:
+            parent, cost = pending.pop()
+            self._tree[parent].cost = cost
+            for i, node in enumerate(self._tree):
+                if node.parent == parent:
+                    pending.append((i, cost + self._dist(self._tree[parent].q, node.q)))
 
     def _extract_path(self, goal_idx: int) -> list[np.ndarray]:
         """Extract path from root to goal by backtracking through parents."""
@@ -303,7 +338,6 @@ def visualize_plan(
             "Skipping visualization."
         )
 
-    import pinocchio as pin
     from lab4_common import TABLE_SPEC, get_ee_pos
 
     model = planner.cc.model

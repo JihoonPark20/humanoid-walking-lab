@@ -6,9 +6,9 @@ Extend kinematics and trajectory tracking to a 6-DOF UR5e.
 
 ![Demo](media/gallery/hero.gif)
 
-Complete 3D cube tracking at 3×: RMS error 0.088 mm; measurements from the recorded run.
+Follow the end effector along all 12 cube edges and observe how joint configurations change (3× playback).
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md)
 
 ## Run
 

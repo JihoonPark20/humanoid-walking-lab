@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-정사각형 전체 추종: RMS 오차 0.008 mm. 녹화한 실행의 측정값입니다.
+관절 운동이 말단의 정사각형 경로를 만드는 과정을 관찰하세요. 특히 모서리에서의 움직임을 비교하세요.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
+[데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md)
 
 ## 실행
 
-[설치](../docs/SETUP.md)
+[설치](../docs/SETUP.ko.md)
 
 ```bash
 mjpython lab-1-2link-arm/src/c1_draw_square.py

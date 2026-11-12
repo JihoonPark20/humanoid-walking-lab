@@ -1,5 +1,7 @@
 # A2: Forward Kinematics — Study Notes
 
+[English](a2_forward_kinematics.md) · [한국어](a2_forward_kinematics.ko.md) · [简体中文](a2_forward_kinematics.zh-CN.md)
+
 ## What Is FK?
 
 The answer to: "Given joint angles, where is the end-effector?"

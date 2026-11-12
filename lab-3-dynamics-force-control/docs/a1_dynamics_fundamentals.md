@@ -1,5 +1,7 @@
 # A1: Dynamics Fundamentals
 
+[English](a1_dynamics_fundamentals.md) · [한국어](a1_dynamics_fundamentals.ko.md) · [简体中文](a1_dynamics_fundamentals.zh-CN.md)
+
 ## Goal
 
 Compute the rigid-body dynamics quantities M(q), C(q,q̇), g(q) using Pinocchio's analytical algorithms, and cross-validate against MuJoCo.

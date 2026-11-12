@@ -10,17 +10,18 @@ Usage:
 
 from __future__ import annotations
 
+import itertools
+import json
 import sys
 from collections.abc import Callable
-import time
 from pathlib import Path
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import numpy as np
 import mujoco
+import numpy as np
 
 _SRC = Path(__file__).resolve().parent
 if str(_SRC) not in sys.path:
@@ -37,19 +38,9 @@ from lab4_common import (
     ACC_SCALE,
     DT,
     IK_ERROR_TOL,
-    JOINT_LOWER,
-    JOINT_UPPER,
     MEDIA_DIR,
     MIN_CLEARANCE_M,
     OBSTACLES,
-    PLANNER_GOAL_BIAS,
-    PLANNER_GOAL_TOLERANCE,
-    PLANNER_MAX_ITER,
-    PLANNER_REWIRE_RADIUS,
-    PLANNER_SAMPLING_MARGIN,
-    PLANNER_SEED_BANK,
-    PLANNER_STEP_SIZE,
-    SHORTCUT_ITER,
     SLALOM_LABELS,
     SLALOM_WAYPOINTS,
     VEL_LIMITS,
@@ -59,10 +50,9 @@ from lab4_common import (
     get_ee_pos,
     load_pinocchio_model,
 )
-from rrt_planner import RRTStarPlanner
+from planning_validation import audit_direct_segments, audit_samples
 from trajectory_executor import execute_trajectory
-from trajectory_smoother import parameterize_topp_ra, shortcut_path
-
+from trajectory_smoother import parameterize_topp_ra
 
 # ---------------------------------------------------------------------------
 # Clearance-aware collision checking
@@ -75,7 +65,7 @@ class ClearanceAwareChecker:
     def __init__(
         self,
         base: CollisionChecker,
-        min_clearance: float = MIN_CLEARANCE_M,
+        min_clearance: float = MIN_CLEARANCE_M + 0.002,
     ) -> None:
         self.base = base
         self.min_clearance = min_clearance
@@ -165,65 +155,33 @@ def solve_waypoints(
 def plan_segments(
     checker: ClearanceAwareChecker,
     configs: list[np.ndarray],
-) -> tuple[list[np.ndarray], float, int]:
-    """Plan each segment with RRT* and concatenate into a full path.
+) -> tuple[list[np.ndarray], float, int, list[dict]]:
+    """Use the same full-range planner/configuration as the multi-scene benchmark."""
+    from motion_planning import plan_motion
 
-    Returns:
-        full_path: Concatenated collision-free waypoint list.
-        total_planning_time: Wall-clock seconds for all segments.
-        total_tree_nodes: Sum of RRT* tree sizes across segments.
-    """
-    full_path: list[np.ndarray] = []
-    total_time = 0.0
-    total_nodes = 0
-
-    for i in range(len(configs) - 1):
-        q_s, q_g = configs[i], configs[i + 1]
-        lower = np.maximum(
-            np.minimum(q_s, q_g) - PLANNER_SAMPLING_MARGIN, JOINT_LOWER,
+    full_path, stages = [], []
+    total_time, total_nodes = 0.0, 0
+    for i, (q_start, q_goal) in enumerate(itertools.pairwise(configs)):
+        # The task has explicit via poses; the planner receives no detour waypoints.
+        report, trajectory = plan_motion(
+            {"start": q_start.tolist(), "goal": q_goal.tolist()},
+            checker=checker.base, seed=42, rrt_star=True,
         )
-        upper = np.minimum(
-            np.maximum(q_s, q_g) + PLANNER_SAMPLING_MARGIN, JOINT_UPPER,
-        )
-
-        raw = None
-        t0 = time.perf_counter()
-        for seed in PLANNER_SEED_BANK:
-            planner = RRTStarPlanner(
-                checker,
-                joint_limits_lower=lower,
-                joint_limits_upper=upper,
-                step_size=PLANNER_STEP_SIZE,
-                goal_bias=PLANNER_GOAL_BIAS,
-                rewire_radius=PLANNER_REWIRE_RADIUS,
-                goal_tolerance=PLANNER_GOAL_TOLERANCE,
-            )
-            raw = planner.plan(
-                q_s, q_g, max_iter=PLANNER_MAX_ITER, rrt_star=True, seed=seed,
-            )
-            if raw is not None:
-                break
-        dt = time.perf_counter() - t0
-        total_time += dt
-
-        if raw is None:
-            raise RuntimeError(f"RRT* failed on segment {i + 1}")
-
-        short = shortcut_path(raw, checker, max_iter=SHORTCUT_ITER, seed=84 + i)
-        total_nodes += len(planner.tree)
-
-        if i == 0:
-            full_path.extend(short)
-        else:
-            full_path.extend(short[1:])
-
-        print(
-            f"    Seg {i + 1}/{len(configs) - 1}: "
-            f"{len(raw)} -> {len(short)} wps, "
-            f"tree={len(planner.tree)}, {dt:.2f}s"
-        )
-
-    return full_path, total_time, total_nodes
+        if trajectory is None:
+            raise RuntimeError(f"Segment {i} rejected: {report['status']}")
+        short = [np.asarray(q) for q in report["path"]]
+        stages.append({"segment": i, "seed": 42,
+                       "raw": report["audits"]["raw"],
+                       "shortcut": report["audits"]["shortcut"],
+                       "planner_config": report["config"],
+                       "sampling_lower": report["sampling_lower"],
+                       "sampling_upper": report["sampling_upper"]})
+        total_time += report["search_seconds"]
+        total_nodes += report["nodes"]
+        full_path.extend(short if i == 0 else short[1:])
+        print(f"    Seg {i + 1}/{len(configs)-1}: full joint limits, "
+              f"{len(short)} wps, {report['search_seconds']:.2f}s", flush=True)
+    return full_path, total_time, total_nodes, stages
 
 
 # ---------------------------------------------------------------------------
@@ -333,6 +291,9 @@ def run_capstone(
     # 1. IK waypoints
     print("\n[1/5] Solving IK for slalom waypoints...")
     configs, wp_clearances = solve_waypoints(cc)
+    direct_audit = audit_direct_segments(cc, configs)
+    if not direct_audit["passed"]:
+        raise RuntimeError("No obstacle-blocked direct segment: this is not an avoidance demo")
     for i, (cfg, clr, lbl) in enumerate(
         zip(configs, wp_clearances, SLALOM_LABELS)
     ):
@@ -344,7 +305,7 @@ def run_capstone(
 
     # 2. Per-segment RRT*
     print("\n[2/5] Planning per-segment RRT*...")
-    full_path, planning_time, tree_nodes = plan_segments(cc_clr, configs)
+    full_path, planning_time, tree_nodes, segment_audits = plan_segments(cc_clr, configs)
     print(
         f"  Total: {len(full_path)} waypoints, "
         f"{tree_nodes} tree nodes, {planning_time:.2f}s"
@@ -353,10 +314,22 @@ def run_capstone(
     # 3. Densify + TOPP-RA
     print("\n[3/5] Time-parameterizing...")
     dense = densify_path(full_path, max_step=0.02)
-    times, q_traj, qd_traj, _ = parameterize_topp_ra(
+    times, q_traj, qd_traj, qdd_traj = parameterize_topp_ra(
         dense, VEL_SCALE * VEL_LIMITS, ACC_SCALE * ACC_LIMITS, dt=DT,
     )
     print(f"  Duration: {times[-1]:.2f}s, samples: {len(times)}")
+
+    print("  Auditing every timed sample before execution...", flush=True)
+    timed_audit = audit_samples(cc, q_traj, MIN_CLEARANCE_M)
+    bounds_ok = bool(np.all(abs(qd_traj) <= VEL_SCALE * VEL_LIMITS + 1e-6) and np.all(abs(qdd_traj) <= ACC_SCALE * ACC_LIMITS + 1e-6))
+    audit = {"passed": timed_audit["passed"] and bounds_ok, "direct_control": direct_audit, "segments": segment_audits,
+             "timed_trajectory": timed_audit, "velocity_acceleration_limits": bounds_ok,
+             "configuration_endpoints": [q.tolist() for q in configs],
+             "obstacles": [{"name": o.name, "position": o.position, "half_extents": o.half_extents} for o in OBSTACLES]}
+    if not audit["passed"]:
+        raise RuntimeError(f"Refusing to execute unsafe time-parameterized trajectory: {audit}")
+    MEDIA_DIR.mkdir(parents=True, exist_ok=True)
+    (MEDIA_DIR / "planning_audit.json").write_text(json.dumps(audit, indent=2) + "\n")
 
     # 4. Execute
     print("\n[4/5] Executing trajectory...")
@@ -414,6 +387,7 @@ def run_capstone(
         "min_clearance": min_clr,
         "clr_profile": clr_profile,
         "sample_times": result["time"][sample_idx],
+        "planning_audit": audit,
     }
 
 

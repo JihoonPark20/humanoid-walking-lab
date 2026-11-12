@@ -117,8 +117,8 @@ class TestSwingReference:
         mid = schedule.reference(0.5 * (phase.t_start + phase.t_end)).swing_position
         assert mid[2] == pytest.approx(LEFT_HOME[2] + schedule.step_height, abs=1e-6)
 
-    def test_vertical_velocity_vanishes_at_both_ends(self, schedule):
-        """Zero touchdown velocity — otherwise the foot slams into the floor."""
+    def test_legacy_vertical_velocity_is_nonzero_at_both_ends(self, schedule):
+        """The legacy sine profile has nonzero endpoint velocity; Lab 11 uses C2."""
         phase = self._first_swing(schedule)
         assert schedule.reference(phase.t_start).swing_velocity[2] == pytest.approx(
             schedule.step_height * np.pi / phase.duration, rel=1e-6

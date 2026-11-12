@@ -6,9 +6,9 @@ Derive FK, Jacobians, Inverse Kinematics and PD control on a planar arm.
 
 ![Demo](media/gallery/hero.gif)
 
-Complete square tracking: RMS error 0.008 mm; measurements from the recorded run.
+Watch how joint motion produces a square end-effector path, especially at the corners.
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md)
 
 ## Run
 

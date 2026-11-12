@@ -1,5 +1,7 @@
 # A5: Dynamics
 
+[English](a5_dynamics.md) · [한국어](a5_dynamics.ko.md) · [简体中文](a5_dynamics.zh-CN.md)
+
 ## Goal
 
 Build the full rigid-body dynamics layer for the UR5e using Pinocchio's analytical algorithms and cross-validate against MuJoCo.

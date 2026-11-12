@@ -118,32 +118,52 @@ def build_lab(entry: dict, width: int, fps: int) -> dict:
         )
     else:
         target = source
-    text = [
-        f"# Lab {entry['number']}: {entry['title']['en']}",
-        "[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)",
-        f"![Demo]({target.relative_to(lab).as_posix()})",
-        entry["caption"]["en"],
-        f"[Source recording / image]({source.relative_to(lab).as_posix()})",
-    ]
-    if entry["results"]:
-        text.append("## Measurements")
-        for relative in entry["results"]:
-            path = ROOT / relative
+    write_gallery(entry, target)
+    return {"lab": entry["number"], "assets": assets}
+
+
+def write_gallery(entry: dict, target: Path) -> None:
+    """Keep language switches on the same gallery and share measured assets."""
+    lab = ROOT / entry["path"]
+    source = ROOT / entry["source"]
+    nav = (
+        "[English](GALLERY.md) · [한국어](GALLERY.ko.md) · [简体中文](GALLERY.zh-CN.md)"
+    )
+    for language, suffix, labels in (
+        ("en", "", ("Source recording / image", "Raw data (optional)", "Plots")),
+        ("ko", ".ko", ("원본 영상 / 이미지", "원시 데이터 (선택)", "그래프")),
+        ("zh", ".zh-CN", ("原始视频 / 图像", "原始数据（可选）", "图表")),
+    ):
+        text = [
+            f"# Lab {entry['number']}: {entry['title'][language]}",
+            nav,
+            f"![Demo]({target.relative_to(lab).as_posix()})",
+            entry["caption"][language],
+            f"[{labels[0]}]({source.relative_to(lab).as_posix()})",
+        ]
+        if entry["plots"]:
+            text.append(f"## {labels[2]}")
+        for relative in entry["plots"]:
+            path = (ROOT / relative).resolve()
             if not path.exists():
                 raise FileNotFoundError(path)
+            link = Path(os.path.relpath(path, lab)).as_posix()
             text.append(
-                f"- [{path.parent.name}/{path.name}]({path.relative_to(lab).as_posix()})"
+                f'<img src="{link}" width="640" alt="{html.escape(path.stem)}">'
             )
-    text.append("## Exercises")
-    for relative in entry["plots"]:
-        path = (ROOT / relative).resolve()
-        if not path.exists():
-            raise FileNotFoundError(path)
-        link = Path(os.path.relpath(path, lab)).as_posix()
-        text.append(f"### {path.stem.replace('_', ' ')}")
-        text.append(f'<img src="{link}" width="640" alt="{html.escape(path.stem)}">')
-    (lab / "GALLERY.md").write_text("\n\n".join(text) + "\n")
-    return {"lab": entry["number"], "assets": assets}
+        if entry["results"]:
+            text.append(f"<details>\n<summary>{labels[1]}</summary>")
+            links = []
+            for relative in entry["results"]:
+                path = ROOT / relative
+                if not path.exists():
+                    raise FileNotFoundError(path)
+                links.append(
+                    f"- [{path.parent.name}/{path.name}]({path.relative_to(lab).as_posix()})"
+                )
+            text.append("\n".join(links))
+            text.append("</details>")
+        (lab / f"GALLERY{suffix}.md").write_text("\n\n".join(text) + "\n")
 
 
 def main() -> None:
@@ -153,7 +173,23 @@ def main() -> None:
     parser.add_argument(
         "--lab", type=int, choices=[e["number"] for e in catalog["labs"]]
     )
+    parser.add_argument(
+        "--docs-only",
+        action="store_true",
+        help="Refresh all three gallery languages without rendering GIFs",
+    )
     args = parser.parse_args()
+    if args.docs_only:
+        for entry in catalog["labs"]:
+            if args.lab is None or entry["number"] == args.lab:
+                source = ROOT / entry["source"]
+                target = (
+                    ROOT / entry["path"] / "media/gallery/hero.gif"
+                    if source.suffix == ".mp4"
+                    else source
+                )
+                write_gallery(entry, target)
+        return
     manifest_path = ROOT / "docs" / "gallery_manifest.json"
     previous = (
         json.loads(manifest_path.read_text())

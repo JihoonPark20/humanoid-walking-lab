@@ -1,5 +1,7 @@
 # A2: Gravity Compensation
 
+[English](a2_gravity_compensation.md) · [한국어](a2_gravity_compensation.ko.md) · [简体中文](a2_gravity_compensation.zh-CN.md)
+
 ## Goal
 
 Implement the simplest dynamics-based controller: τ = g(q). The robot should hold any configuration against gravity with minimal drift.
@@ -28,7 +30,7 @@ When τ = g(q), the equations of motion reduce to:
 M(q)q̈ + C(q,q̇)q̇ = 0
 ```
 
-With joint damping (1.0 Nm·s/rad in our model), any velocity decays exponentially and the robot settles at its initial configuration.
+Joint damping dissipates motion after a perturbation, but gravity compensation has no position-restoring stiffness. It need not return to the initial configuration; that requires PD or impedance feedback. Configuration-dependent inertia also prevents a general single-exponential decay claim.
 
 ## Results
 

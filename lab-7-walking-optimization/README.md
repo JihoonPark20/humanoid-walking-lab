@@ -6,9 +6,9 @@ Optimize offline LIPM trajectories, footstep locations and timing candidates; tr
 
 ![Demo](media/gallery/hero.gif)
 
-Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution; 5/5 swings completed.
+Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution.
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 
 ## Run
 

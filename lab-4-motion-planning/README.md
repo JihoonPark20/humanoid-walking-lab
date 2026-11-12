@@ -6,15 +6,19 @@ Plan collision-free motion with RRT*, then parameterize and track the trajectory
 
 ![Demo](media/gallery/hero.gif)
 
-3D slalom at 2×: zero contacts, minimum obstacle clearance 30.35 mm. Collision shapes and visible meshes checked every 1 ms.
+RRT* finds a detour around a post blocking a required direct segment. Compare the planned path with the robot motion (2× playback).
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
+[Demo](GALLERY.md) · [Study notes](docs/README.md)
 
 ## Run
 
 [Setup](../docs/SETUP.md)
 
+[Multi-environment evaluation](docs/GENERALIZATION.md)
+
 ```bash
+python lab-4-motion-planning/src/motion_planning.py lab-4-motion-planning/scenarios/robot_101.json --seed 0 --execute
+python lab-4-motion-planning/src/benchmark_planning.py
 python lab-4-motion-planning/src/capstone_demo.py
 ```
 

@@ -6,13 +6,13 @@ Box-FDDP로 contact/impact Dynamics를 최적화하고 MuJoCo에서 추종합니
 
 ![Demo](media/gallery/hero.gif)
 
-반투명 로봇은 현재보다 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 두 걸음 FDDP feedback 추종: 최종 발 오차 4.29 mm, flight·clipping 0 tick.
+반투명 로봇은 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 오프라인 기준 자세와 FDDP feedback으로 움직이는 로봇을 비교하세요.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
+[데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 
 ## 실행
 
-[설치](../docs/SETUP.md)
+[설치](../docs/SETUP.ko.md)
 
 ```bash
 .venv-ocp/bin/python lab-10-whole-body-optimal-control/src/whole_body_demo.py --steps 2 --mujoco --video

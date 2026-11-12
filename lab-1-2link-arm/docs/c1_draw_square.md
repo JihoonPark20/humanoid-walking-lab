@@ -1,5 +1,7 @@
 # C1: Cartesian Square Drawing — Study Notes
 
+[English](c1_draw_square.md) · [한국어](c1_draw_square.ko.md) · [简体中文](c1_draw_square.zh-CN.md)
+
 ## Goal
 
 Integrate all previous modules (A2–B2) into a single executable script that makes

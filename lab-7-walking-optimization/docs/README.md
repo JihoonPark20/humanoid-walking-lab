@@ -1,63 +1,53 @@
-# Lab 7 학습 설계와 모듈 연결
+# Lab 7: Walking optimization and module connections
 
-이 실습은 W0 기준 보행, W1 오프라인 LIPM 최적화, W2 발 디딤 위치와 시간 후보 비교를 구현합니다. W3 Centroidal 최적화, W4 MPC, W5 Whole-body optimal control은 각각 Lab 8–10에 구현되어 있습니다.
+[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
 
-## 구현 순서와 검증
+This lab implements W0 baseline walking, W1 offline LIPM optimization, and W2 footstep/timing candidate comparison. W3 Centroidal optimization, W4 MPC and W5 Whole-body optimal control are Labs 8–10.
 
-1. **LIPM과 접촉 일정**: piecewise-constant jerk의 정확한 이산 Dynamics, 고정 yaw의 평지 발판, single/double support를 정의합니다. 적분식과 경계 연속성을 검증합니다.
-2. **오프라인 QP**: 시작 상태와 종료 정지 조건, 지지 영역 제약, ZMP 추종·jerk 비용을 구성합니다. Solver 종료 외에 Dynamics·제약 잔차와 구간 내부의 ZMP extrema를 검증합니다.
-3. **발 디딤 최적화**: 발 좌표를 QP 변수에 포함하고 전진 거리·발 사이 간격·착지 허용 영역을 제한합니다. 여러 접촉 시간 후보의 성공 여부와 비용을 모두 기록합니다.
-4. **실습 CLI**: 정해진 발걸음과 최적화된 발걸음의 NPZ·CSV·JSON·그림을 생성합니다. 결과 읽기와 재생 방법을 제공합니다.
-5. **G1 연동**: 기존 Lab 6의 torque 모델·Whole-body QP·접촉 처리를 재사용합니다. 계획된 궤적을 feedback으로 추종하고 기준 DCM 보행과 비교합니다. 계획 검증과 실제 보행 판정은 분리합니다.
+## Implementation and data flow
 
-## 모듈과 데이터 흐름
+1. Define exact piecewise-constant-jerk dynamics, flat fixed-yaw feet and single/double support; test integration and boundary continuity.
+2. Build a QP with initial/terminal rest conditions, support constraints and ZMP/jerk costs. Validate dynamics and within-interval ZMP extrema independently of solver status.
+3. Optimize foot positions with step length, width and landing bounds. Record feasibility and cost for every timing candidate.
+4. Export NPZ/CSV/JSON/plots through the CLI.
+5. Track the plan with Lab 6 torque dynamics, Whole-body QP and contact handling; compare with baseline DCM walking. Planning and physical execution have separate acceptance gates.
 
-| 모듈 | 역할 |
+| Module | Role |
 |---|---|
-| `walking_model.py` | 설정, phase별 접촉, footstep reference, exact jerk dynamics |
-| `lipm_optimizer.py` | 상태·jerk·footstep QP, infeasible 처리, 연속 구간 제약 검증 |
-| `walking_artifacts.py` | NPZ 저장·읽기, CSV·JSON·plot·animation |
-| `offline_walk.py` | W1 고정 발 디딤과 W2 위치·시간 최적화 CLI |
-| `g1_walk.py` | Lab 6 adapter, baseline/optimized G1 실행과 측정 |
+| `walking_model.py` | Settings, contacts, footsteps, exact jerk dynamics |
+| `lipm_optimizer.py` | State/jerk/footstep QP, infeasibility, continuous-interval checks |
+| `walking_artifacts.py` | NPZ I/O, CSV/JSON, plots and animation |
+| `offline_walk.py` | W1 fixed-foot and W2 position/timing CLI |
+| `g1_walk.py` | Lab 6 adapter, baseline/optimized G1 execution and measurements |
 
-```text
-초기 상태 + 발 위치 + 접촉 시간 + 목표 거리
-    → WalkingSchedule → sparse QP → WalkingPlan
-    → 독립 Dynamics/구간 내부 검증 → NPZ/CSV/plot
-    → G1 reference adapter → Lab 6 Whole-body QP → torque → MuJoCo
-```
+Initial state + feet + contact times + distance → `WalkingSchedule` → sparse QP → `WalkingPlan` → independent checks → G1 reference adapter → Whole-body QP → torque → MuJoCo.
 
-고정 접촉 순서를 사용합니다. Double support의 허용 영역은 두 발 중심의 주어진 비율로 이동하는 작은 rectangle로 정의합니다. 이는 실제 두 발 convex hull 안의 보수적인 부분집합입니다. 발 좌표와 영역 중심의 관계가 affine이므로 W2도 시간 후보 하나당 convex QP입니다. 접촉 시간은 연속 최적화하지 않고 후보를 전부 비교합니다.
+Contact order is fixed. During double support, a small rectangle follows a prescribed convex combination of the two foot centers. It lies conservatively inside their convex hull for equal-size, fixed-yaw feet. Its center depends affinely on foot coordinates, so each W2 timing candidate is still a convex QP. Timing is selected by enumerating candidates, not continuous optimization.
 
-## 주요 인터페이스
+## Interfaces
 
 - `build_schedule(config, initial_feet=None)` → `WalkingSchedule`
 - `solve_walk(schedule, initial_state=None, optimize_feet=False, landing_bounds=None)` → `WalkingPlan`
-- `WalkingPlan.sample(t)` → 위치·속도·가속도·ZMP·DCM reference
-- `validate_plan(plan)` → Dynamics 잔차, 연속 구간 support 위반, 발 디딤·경계조건 검증
+- `WalkingPlan.sample(t)` → position, velocity, acceleration, ZMP and DCM reference
+- `validate_plan(plan)` → dynamics residuals, continuous support violations, footsteps and boundaries
 
-코어 최적화에는 외부 로봇 모델이 필요 없습니다. G1 실행은 `third_party/mujoco_menagerie/unitree_g1/`의 MJCF와 Lab 5·6의 모델 로더를 사용합니다. Pinocchio가 G1의 FK·CoM·Jacobian·Dynamics를 계산하고, MuJoCo는 실제 운동과 접촉을 실행·측정합니다.
+The optimizer needs no external robot model. G1 execution uses the Menagerie MJCF and Lab 5/6 loaders. Pinocchio computes FK, CoM, Jacobians and dynamics; MuJoCo integrates physical motion and contact.
 
-## W1의 수식과 결정변수
+## W1 equations and variables
 
-각 수평 축에 대해 `x = [c, v, a]`로 두고 한 구간의 jerk `u`를 상수로 둡니다. 시간 간격 `h`에서 다음 적분식은 근사가 아니라 정확한 polynomial 적분입니다.
+For each horizontal axis, use `x=[c,v,a]`, constant jerk `u` over interval `h`. These are exact polynomial integrals:
 
 ```text
 c[k+1] = c[k] + h v[k] + h²/2 a[k] + h³/6 u[k]
 v[k+1] = v[k] + h a[k] + h²/2 u[k]
 a[k+1] = a[k] + h u[k]
-
 ω² = g / z_com
 ZMP = c − a / ω²
 DCM ξ = c + v / ω
 ξ_dot = v + a / ω = ω (ξ − ZMP)
 ```
 
-`walking_model.jerk_matrices()`와 `polynomial_state()`를 먼저 읽으세요. `WalkingPlan.sample()`은 이 식으로 제어 주기의 reference를 생성합니다. 상태를 단순 선형 보간하면 ZMP/DCM 관계를 깨뜨릴 수 있습니다.
-
-QP 변수는 모든 node의 `(c,v,a)` x/y 상태, interval의 x/y jerk, 모든 발목의 x/y 위치입니다. W1은 발 좌표를 equality constraint로 고정합니다. W2는 처음 두 발만 고정하고 이후 착지를 최적화합니다.
-
-목적함수는 다음 세 항입니다.
+Read `jerk_matrices()`, `polynomial_state()` and `WalkingPlan.sample()`. Linear interpolation of states can break the ZMP/DCM relationships. QP variables are all node x/y states, interval x/y jerks and foot x/y coordinates. W1 fixes feet by equality constraints; W2 fixes only the first two feet.
 
 ```text
 J = w_zmp ∫ ||ZMP(t) − support_center(t)||² dt
@@ -65,34 +55,30 @@ J = w_zmp ∫ ||ZMP(t) − support_center(t)||² dt
   + w_foot Σ ||foot_i − nominal_foot_i||²
 ```
 
-ZMP와 지지 중심의 차이는 구간별 cubic이므로 제곱은 6차입니다. 4점 Gauss quadrature로 그 적분을 정확히 계산합니다. QP 구성과 `plan_cost()`가 동일한 식을 사용하므로 fixed/optimized의 비용을 직접 비교할 수 있습니다. 다만 전체 점수는 가중치에 의존하며 전기 에너지나 기계적 일과는 다릅니다.
+The ZMP/support difference is cubic and its square degree six. Four-point Gauss quadrature integrates it exactly. QP construction and `plan_cost()` use the same formula. The score depends on weights; it is neither electrical energy nor mechanical work.
 
-경계조건은 초기 `(c,v,a)`, 마지막 `v=a=0`, 마지막 CoM이 최종 발 중심에 발바닥 offset을 더한 위치에 오는 것입니다. 발목 기준 x와 발바닥 중심 기준 x의 차이는 기본 0.035 m입니다. 이는 G1 모델의 발 형상을 참고한 값이며 모든 로봇에 공통인 상수가 아닙니다.
+Boundary conditions specify initial `(c,v,a)`, terminal `v=a=0` and final CoM over the final foot center plus sole offset. The default ankle-to-sole x offset is 0.035 m, specific to the G1 geometry.
 
-## 지지 영역과 연속시간 검증
+## Continuous support checks
 
-Single support에서는 지지발의 작은 직사각형 안에 ZMP를 둡니다. Double support에서는 두 발 중심의 convex combination을 시간에 따라 이동시킵니다. 고정 yaw·같은 크기의 두 발 직사각형에 대해 이 이동 영역은 두 발 convex hull 내부에 있습니다. 전체 convex hull을 사용하지 않으므로 어떤 실제 가능한 보행도 이 보수적 제한에서는 infeasible일 수 있습니다.
+Single support uses a small rectangle inside the stance sole. Double support uses the moving conservative rectangle described above. Conservative support can reject physically feasible walking; do not enlarge it beyond the actual contact footprint merely to obtain a solution.
 
-QP는 처음에 interval의 시작·중간·끝 ZMP 제약을 풉니다. `validate_plan()`은 추가로 `ZMP − moving_support_center`의 미분 실근을 찾아 구간 내부 extrema를 검사합니다. 속도의 extrema도 검사합니다. 허용 오차 `2e-5`보다 위반이 크면 해당 시각의 제약을 추가하고 최대 8회 재풀이합니다. 이 오차는 각 항의 SI 수치 기준이며, 위치에서는 20 μm입니다. Solver의 `solved` 상태만으로 성공을 판정하지 않습니다.
+The initial QP checks ZMP at interval start/middle/end. `validate_plan()` also finds real roots of the derivative of `ZMP − moving_support_center` and checks interior extrema, including velocity extrema. Violations above `2e-5` in SI numerical units trigger added constraints and up to eight solves. For positions this is 20 μm. A `solved` status alone is insufficient.
 
-초기 구현에서 발 반폭을 15 mm로 제한했을 때 기본 보행이 infeasible이었습니다. 20 mm로 두면 동일한 시간표에서 계획을 얻습니다. 이는 실제 발 폭을 늘리는 코드가 아니라 **계획이 사용할 수 있는 기존 발 내부 영역**을 바꾸는 것입니다. 모델의 실제 contact footprint보다 크게 설정해서 성공시키지 마세요.
+## W2 landing-box exercise
 
-## W2 착지 허용 영역 실습
-
-저장소 최상위에서 다음 Python 코드를 실행합니다. 첫 착지 x를 0.12–0.125 m로 제한합니다. 기본 고정 착지는 0.1 m이므로 고정 발걸음은 이 제약을 만족하지 못합니다.
+Run at the repository root. The first landing x is constrained to 0.12–0.125 m; the default fixed landing at 0.1 m cannot satisfy it.
 
 ```python
 import sys
 from pathlib import Path
 import numpy as np
-
 sys.path.insert(0, str(Path('lab-7-walking-optimization/src').resolve()))
 from walking_model import WalkConfig, build_schedule
 from lipm_optimizer import solve_walk, validate_plan
 from walking_artifacts import export_plan
-
 schedule = build_schedule(WalkConfig())
-# shape: (착지 수, x/y, lower/upper); 초기 두 발은 포함하지 않음
+# Shape: (landings excluding the initial two feet, x/y, lower/upper).
 bounds = np.tile([-np.inf, np.inf], (len(schedule.feet) - 2, 2, 1))
 bounds[0, 0] = [0.12, 0.125]
 plan = solve_walk(schedule, optimize_feet=True, landing_bounds=bounds)
@@ -100,16 +86,14 @@ print(plan.feet[2], validate_plan(plan))
 export_plan(plan, Path('/tmp/landing-box'))
 ```
 
-한 개의 convex box만 표현합니다. 구멍 있는 지형, 여러 개 중 하나를 고르는 발판, 장애물 회피의 비볼록 영역은 이 제약으로 표현되지 않습니다. W2의 보폭·폭 제한도 전신 IK 또는 self-collision을 대신하지 않습니다.
+A single convex box cannot represent holes, a choice among disconnected stepping stones or nonconvex obstacle avoidance. Step-length/width bounds do not replace whole-body IK or self-collision checks.
 
-## G1 연결을 읽는 순서
+## G1 adapter
 
-1. `g1_walk.run()`은 `m3_walking.build()`를 호출해 torque 모델과 controller를 안정화합니다.
-2. Pinocchio의 실측 초기 발·CoM·속도로 새 계획을 만듭니다. CoM 높이는 발목 frame이 아닌 MuJoCo 바닥 plane을 기준으로 계산합니다. 축소 모델의 가속도 초기값은 0으로 가정합니다.
-3. `OptimizedGait`는 Lab 6 `GaitSchedule`을 상속해 시간표와 발 목표만 바꿉니다. 내부 `_foot_state`, `_swing_of_phase` 형식에 의존하며 adapter 테스트로 착지/접촉 일치를 검사합니다.
-4. `OptimizedReference`는 plan의 `xi`, `xi_dot`, ZMP를 기존 `DCMReference`로 전달합니다.
-5. Lab 6이 Pinocchio Dynamics로 contact wrench와 joint torque를 풀고, MuJoCo가 step과 접촉을 수행합니다. 기록 시점은 step 이후이며 Pinocchio 상태를 같은 시점으로 갱신합니다.
+1. `g1_walk.run()` calls `m3_walking.build()` and settles the torque model/controller.
+2. Measured feet, CoM and velocity initialize a new plan. CoM height is relative to the MuJoCo ground plane, not the ankle frame. Initial reduced-model acceleration is assumed zero.
+3. `OptimizedGait` extends `GaitSchedule`, changing timing and foot targets. Adapter tests check the `_foot_state`/`_swing_of_phase` contact and landing conventions.
+4. `OptimizedReference` feeds plan `xi`, `xi_dot` and ZMP to the existing `DCMReference`.
+5. Lab 6 solves contact wrench and torque using Pinocchio dynamics; MuJoCo steps and measures contact. Telemetry and Pinocchio updates refer to the same post-step state.
 
-Swing의 수평 raised cosine와 수직 sine 궤적은 Lab 6 구현을 재사용합니다. 수직 sine의 양 끝점 속도는 0이 아닙니다. 따라서 이 실습을 착지 충격이 제거된 최적 swing으로 해석하면 안 됩니다. 향후 zero-endpoint-velocity swing과 orientation tracking을 비교할 수 있습니다.
-
-추종기의 ZMP clamp는 실제 발 위치에 따라 갱신되므로 계획의 ZMP와 같다고 가정하지 않습니다. 계획/실측 차이는 `telemetry.csv`와 contact 측정으로 확인합니다. Lab 9의 MPC는 고정 접촉 순서에서 상태와 wrench를 재계획합니다. 접촉 순서 자체를 자동으로 선택하는 기능은 포함하지 않습니다.
+The swing reuses Lab 6 horizontal raised-cosine and vertical sine trajectories. Vertical sine endpoint velocities are nonzero; this is not impact-free optimized swing. The controller clamps ZMP using actual feet, so commanded and planned ZMP can differ. Compare `telemetry.csv` and measured contacts. Lab 9 replans states/wrenches with fixed contact order; it does not choose a new contact sequence.

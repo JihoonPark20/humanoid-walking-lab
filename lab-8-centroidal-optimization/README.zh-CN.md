@@ -8,11 +8,11 @@
 
 观察接触力箭头、质心高度及角动量的变化。这是优化后的简化模型动画，不是机器人 rollout。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 python lab-8-centroidal-optimization/src/offline_centroidal.py

@@ -1,15 +1,16 @@
 # Lab 2: UR5e Kinematics
 
-[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
+[English](GALLERY.md) · [한국어](GALLERY.ko.md) · [简体中文](GALLERY.zh-CN.md)
 
 ![Demo](media/gallery/hero.gif)
 
-Complete 3D cube tracking at 3×: RMS error 0.088 mm; measurements from the recorded run.
+Follow the end effector along all 12 cube edges and observe how joint configurations change (3× playback).
 
 [Source recording / image](media/c3_draw_cube.mp4)
 
-## Measurements
+<details>
+<summary>Raw data (optional)</summary>
 
 - [media/c3_draw_cube.json](media/c3_draw_cube.json)
 
-## Exercises
+</details>

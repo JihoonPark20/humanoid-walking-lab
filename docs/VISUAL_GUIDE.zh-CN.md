@@ -2,7 +2,7 @@
 
 [English](VISUAL_GUIDE.md) · [한국어](VISUAL_GUIDE.ko.md) · [简体中文](VISUAL_GUIDE.zh-CN.md)
 
-Lab 5–10 直接在 MuJoCo 场景中显示标记，不添加文字或独立面板。地面圆环表示 CoM 的垂直投影，不是接触点。轨迹和支撑边界使用真实 world 坐标，摄像机跟随机器人移动。
+Lab 5–13 直接在 MuJoCo 场景中显示标记，不添加文字或独立面板。地面圆环表示 CoM 的垂直投影，不是接触点。轨迹和支撑边界使用真实 world 坐标，摄像机跟随机器人移动。
 
 | Lab | 观察重点 |
 |---|---|
@@ -12,6 +12,9 @@ Lab 5–10 直接在 MuJoCo 场景中显示标记，不添加文字或独立面�
 | 8 · Centroidal dynamics | 观察浮动质量、计划接触力、CoM 高度与角动量。这是简化模型动画，不是全身仿真。 |
 | 9 · MPC/RTI | 每次控制器更新后，紫色 CoM 预测随之刷新。在红色扰动前、中、后与灰色原始轨迹比较。半透明球体表示当前预测时域内的 CoM 采样点。 |
 | 10 · Whole-body OCP | 紫色 ghost 表示 +0.25/+0.50 s 的优化关节姿态，在 configuration manifold 上插值。实体机器人在 MuJoCo 中通过反馈跟踪；超出计划终点的 ghost 不再显示。 |
+| 11 · 接触感知行走 | 观察空中剩余 Swing reference、地面落脚点与实际支撑区域。 |
+| 12 · 物理行走鲁棒性 | 观察红色实际外力、测量 CoM/DCM 和接触 ZMP；比较外力作用前后的响应。 |
+| 13 · 在线落脚位置调整 | 对比灰色原始脚印与紫色修正落脚点；调整后剩余 Swing 轨迹也更新。 |
 
 **颜色：** 青色 = 实际 CoM（Lab 8 为计划质量位置）；白色 = 参考；紫色 = 计划/预测（Lab 6 为 DCM）；橙色 = 接触 ZMP；绿色 = 承重支撑区域或计划力；红色 = 外部扰动。
 
@@ -19,6 +22,6 @@ Lab 5–10 直接在 MuJoCo 场景中显示标记，不添加文字或独立面�
 
 Centroidal MPC 预测 CoM、动量与接触力，不预测关节姿态。因此 Lab 9 的半透明球体表示 CoM 预测；完整机器人 ghost 仅用于具有真实关节计划的 Lab 10。Lab 10 是离线 OCP 加反馈，不是全身 MPC。
 
-标记仅添加到渲染场景，ghost 使用独立的 simulator data，不改变被控机器人的状态。各 Lab 的练习与测量结果链接提供原始分辨率视频及同次运行的通过结果。运行 README 的录制命令后，使用 `python tools/build_gallery.py` 更新 GIF。
+各 Lab 的**演示**页面提供原始分辨率视频、比较图表和可选原始数据。使用 README 命令录制后，通过 `python tools/build_gallery.py` 更新 GIF。
 
 [← Curriculum](../README.zh-CN.md)

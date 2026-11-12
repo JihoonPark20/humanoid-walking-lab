@@ -2,7 +2,7 @@
 
 [English](VISUAL_GUIDE.md) · [한국어](VISUAL_GUIDE.ko.md) · [简体中文](VISUAL_GUIDE.zh-CN.md)
 
-Labs 5–10 render markers directly in MuJoCo, without text or inset panels. The ground ring is the vertical CoM projection, not a contact point. Paths and support boundaries use world coordinates; the camera follows the robot.
+Labs 5–13 render markers directly in MuJoCo, without text or inset panels. The ground ring is the vertical CoM projection, not a contact point. Paths and support boundaries use world coordinates; the camera follows the robot.
 
 | Lab | What to watch |
 |---|---|
@@ -12,6 +12,9 @@ Labs 5–10 render markers directly in MuJoCo, without text or inset panels. The
 | 8 · Centroidal dynamics | A floating mass, planned contact forces, CoM height and angular momentum. This is a reduced-model animation, not a whole-body simulation. |
 | 9 · MPC/RTI | The violet CoM prediction is refreshed after each controller update. Compare it with the gray nominal trajectory before, during and after the red push. Translucent spheres sample the current prediction horizon. |
 | 10 · Whole-body OCP | Violet ghosts show the offline optimized joint configurations at +0.25/+0.50 s, interpolated on the configuration manifold. The solid robot runs feedback in MuJoCo. Ghosts disappear beyond the plan's end. |
+| 11 · Contact-aware Walking | Remaining swing reference in the air, foot placements on the floor; compare smooth motion and measured support. |
+| 12 · Physical Walking Robustness | Red physical push, measured CoM/DCM and contact ZMP; compare the response before and after the push. |
+| 13 · Adaptive Foot Placement | Gray original footprints versus violet revised landings; the remaining swing path updates after adjustment. |
 
 **Colors:** cyan = measured CoM (planned mass in Lab 8); white = reference; violet = plan/prediction (DCM in Lab 6); amber = contact ZMP; green = loaded support or planned force; red = applied disturbance.
 
@@ -19,6 +22,6 @@ The green hull encloses force-bearing foot/ground contact points, so it may shri
 
 Centroidal MPC predicts CoM/momentum/contact forces, not joint configurations. Its translucent spheres therefore show predicted CoM; full robot ghosts are reserved for Lab 10's actual joint-space plan. Lab 10 is offline OCP with feedback, not whole-body MPC.
 
-Markers only decorate the rendering scene; ghost poses use separate simulator data. Recording does not replace the controlled robot's state. For full-resolution video and the matching passing measurements, open each lab's **Exercises and measurements** link. Regenerate previews with `python tools/build_gallery.py` after recording the demo command in its README.
+Each lab’s **Demo** page provides the full-resolution recording, comparison plots and optional raw data. After recording with its README command, regenerate previews with `python tools/build_gallery.py`.
 
 [← Curriculum](../README.md)

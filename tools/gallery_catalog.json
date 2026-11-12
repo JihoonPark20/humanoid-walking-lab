@@ -13,12 +13,12 @@
       },
       "source": "lab-1-2link-arm/media/c1_draw_square.mp4",
       "start_s": 0,
-      "duration_s": 7.87,
+      "duration_s": 7.866666666666666,
       "speed": 1,
       "caption": {
-        "en": "Complete square tracking: RMS error 0.008 mm; measurements from the recorded run.",
-        "ko": "정사각형 전체 추종: RMS 오차 0.008 mm. 녹화한 실행의 측정값입니다.",
-        "zh": "完整正方形跟踪：RMS 误差 0.008 mm；指标来自录像对应的运行。"
+        "en": "Watch how joint motion produces a square end-effector path, especially at the corners.",
+        "ko": "관절 운동이 말단의 정사각형 경로를 만드는 과정을 관찰하세요. 특히 모서리에서의 움직임을 비교하세요.",
+        "zh": "观察关节运动如何形成末端的正方形路径，尤其注意转角处的运动。"
       },
       "plots": [
         "lab-1-2link-arm/media/../docs/b1_trajectory_profiles.png"
@@ -38,12 +38,12 @@
       },
       "source": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.mp4",
       "start_s": 0,
-      "duration_s": 23.57,
+      "duration_s": 30.033333333333335,
       "speed": 3,
       "caption": {
-        "en": "Complete 3D cube tracking at 3×: RMS error 0.088 mm; measurements from the recorded run.",
-        "ko": "3차원 큐브 전체 추종 3배속: RMS 오차 0.088 mm. 녹화한 실행의 측정값입니다.",
-        "zh": "完整三维立方体跟踪、3 倍速：RMS 误差 0.088 mm；指标来自录像对应的运行。"
+        "en": "Follow the end effector along all 12 cube edges and observe how joint configurations change (3× playback).",
+        "ko": "말단이 정육면체의 12개 모서리를 따라갈 때 관절 자세가 어떻게 달라지는지 보세요(3배속).",
+        "zh": "观察末端沿立方体的 12 条棱运动时，关节姿态如何变化（3 倍速）。"
       },
       "plots": [],
       "results": [
@@ -64,9 +64,9 @@
       "duration_s": 11.133333333333333,
       "speed": 1,
       "caption": {
-        "en": "Closed gripper with a rigid probe: 5 N force control over a 50 mm trace on a flat plate (μ=0.05). Full run at 1×; raw-force in-band 93.0%.",
-        "ko": "닫힌 그리퍼와 강체 probe로 평판(μ=0.05)에서 5 N·50 mm를 추종합니다. 전체 실행 1배속, 원시 접촉력 허용 구간 93.0%.",
-        "zh": "闭合夹爪与刚性探针在平板（μ=0.05）上以 5 N 描绘 50 mm。完整过程、1 倍速；原始接触力合格率 93.0%。"
+        "en": "The closed gripper holds a rigid probe. Observe tangential motion along the plate while normal contact force tracks 5 N (1× playback).",
+        "ko": "닫힌 그리퍼의 강체 probe가 평판을 따라 이동하면서 수직 접촉력 5 N을 유지하는 모습을 보세요(1배속).",
+        "zh": "闭合夹爪装有刚性探针。观察沿平板的切向运动，以及法向接触力对 5 N 的跟踪（1 倍速）。"
       },
       "plots": [
         "lab-3-dynamics-force-control/media/capstone_line_trace.png"
@@ -90,12 +90,12 @@
       },
       "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
       "start_s": 0,
-      "duration_s": 67.86666666666666,
+      "duration_s": 75.66666666666667,
       "speed": 2,
       "caption": {
-        "en": "3D slalom at 2×: zero contacts, minimum obstacle clearance 30.35 mm. Collision shapes and visible meshes checked every 1 ms.",
-        "ko": "3차원 slalom 2배속: 접촉 0회, 최소 장애물 간격 30.35 mm. 매 1 ms마다 collision 형상과 화면 mesh를 함께 검사합니다.",
-        "zh": "三维绕障、2 倍速：零接触，最小障碍物间隙 30.35 mm。每 1 ms 检查碰撞形状与可见 mesh。"
+        "en": "RRT* finds a detour around a post blocking a required direct segment. Compare the planned path with the robot motion (2× playback).",
+        "ko": "필수 직선 구간을 막는 기둥을 RRT*로 우회합니다. 계획 경로와 실제 로봇 움직임을 비교하세요(2배속).",
+        "zh": "RRT* 绕过阻挡必经直线段的柱体。比较规划路径与机器人的实际运动（2 倍速）。"
       },
       "plots": [
         "lab-4-motion-planning/media/capstone_clearance.png",
@@ -103,7 +103,9 @@
       ],
       "results": [
         "lab-4-motion-planning/media/slalom_summary.json",
-        "lab-4-motion-planning/media/slalom.csv"
+        "lab-4-motion-planning/media/slalom.csv",
+        "lab-4-motion-planning/media/planning_audit.json",
+        "lab-4-motion-planning/media/planning_benchmark/matrix.json"
       ],
       "verification": "lab-4-motion-planning/media/slalom_summary.json",
       "width": 720,
@@ -124,9 +126,9 @@
       "duration_s": 3.5,
       "speed": 1,
       "caption": {
-        "en": "Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP. CoM shift 53.6 mm, foot drift ≤1.39 mm.",
-        "ko": "초록 지지 영역 안에서 청록 CoM 원이 흰 목표로 이동하는 모습을 보세요. 주황은 접촉 ZMP입니다. CoM 이동 53.6 mm, 발 위치 변화 ≤1.39 mm.",
-        "zh": "观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。CoM 转移 53.6 mm，足端漂移 ≤1.39 mm。"
+        "en": "Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP.",
+        "ko": "초록 지지 영역 안에서 청록 CoM 원이 흰 목표로 이동하는 모습을 보세요. 주황은 접촉 ZMP입니다.",
+        "zh": "观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。"
       },
       "plots": [
         "lab-5-locomotion/media/m1_pelvis_height.png",
@@ -154,9 +156,9 @@
       "duration_s": 13.8,
       "speed": 1,
       "caption": {
-        "en": "Watch the support hull switch between feet while DCM (violet) and contact ZMP (amber) evolve. 12 steps, 1.182 m; full run at 1×.",
-        "ko": "한발·양발 지지 영역이 바뀔 때 DCM(보라)과 접촉 ZMP(주황)의 움직임을 보세요. 12걸음·1.182 m, 전체 실행 1배속.",
-        "zh": "观察单脚与双脚支撑区域的切换，以及 DCM（紫色）和接触 ZMP（橙色）的变化。12 步、1.182 m，完整过程、1 倍速。"
+        "en": "Watch support switch between one and two feet while DCM (violet) and contact ZMP (amber) evolve (1× playback).",
+        "ko": "한발·양발 지지 영역이 바뀔 때 DCM(보라)과 접촉 ZMP(주황)의 움직임을 보세요(1배속).",
+        "zh": "观察单脚与双脚支撑区域的切换，以及 DCM（紫色）和接触 ZMP（橙色）的变化（1 倍速）。"
       },
       "plots": [
         "lab-6-whole-body-control/media/m0_standing_metrics.png",
@@ -186,9 +188,9 @@
       "duration_s": 8.533333333333333,
       "speed": 1,
       "caption": {
-        "en": "Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution; 5/5 swings completed.",
-        "ko": "초기 발 디딤(회색), 최적화된 발 디딤·CoM(보라), 실제 CoM(청록)을 비교하세요. 실행 중 계획은 고정되어 있으며 swing 5/5를 완료합니다.",
-        "zh": "比较初始落脚点（灰色）、优化落脚点与 CoM（紫色）、实际 CoM（青色）。执行期间计划固定，完成 5/5 次摆动。"
+        "en": "Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution.",
+        "ko": "초기 발 디딤(회색), 최적화된 발 디딤·CoM(보라), 실제 CoM(청록)을 비교하세요. 실행 중 계획은 고정됩니다.",
+        "zh": "比较初始落脚点（灰色）、优化落脚点与 CoM（紫色）、实际 CoM（青色）。执行期间计划保持不变。"
       },
       "plots": [
         "lab-7-walking-optimization/media/offline/fixed/trajectory.png",
@@ -246,9 +248,9 @@
       "duration_s": 6.733333333333333,
       "speed": 1,
       "caption": {
-        "en": "Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.",
-        "ko": "보라 구와 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 화살표는 5 N 외란입니다. 최종 CoM 오차 0.922 mm.",
-        "zh": "紫色球体与轨迹为当前 CoM 预测，灰色为原始计划，红色箭头为 5 N 扰动。最终 CoM 误差 0.922 mm。"
+        "en": "Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Watch how the prediction changes around the red push arrow.",
+        "ko": "보라 구와 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 외란 화살표 전후로 예측이 어떻게 달라지는지 보세요.",
+        "zh": "紫色球体与轨迹为当前 CoM 预测，灰色为原始计划。观察红色外力箭头出现前后预测如何变化。"
       },
       "plots": [
         "lab-9-model-predictive-control/media/g1/rti/tracking.png",
@@ -279,9 +281,9 @@
       "duration_s": 3.0,
       "speed": 1,
       "caption": {
-        "en": "Translucent robots show the optimized joint poses 0.25/0.50 s ahead of the tracked robot. Two-step FDDP feedback: final foot gap 4.29 mm, zero flight/clipping ticks.",
-        "ko": "반투명 로봇은 현재보다 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 두 걸음 FDDP feedback 추종: 최종 발 오차 4.29 mm, flight·clipping 0 tick.",
-        "zh": "半透明机器人显示提前 0.25/0.50 s 的优化关节姿态。两步 FDDP feedback 跟踪：最终足端误差 4.29 mm，无 flight/clipping tick。"
+        "en": "Translucent robots show optimized joint poses 0.25/0.50 s ahead. Compare the offline reference with the solid robot under FDDP feedback.",
+        "ko": "반투명 로봇은 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 오프라인 기준 자세와 FDDP feedback으로 움직이는 로봇을 비교하세요.",
+        "zh": "半透明机器人显示提前 0.25/0.50 s 的优化关节姿态。比较离线参考姿态与 FDDP feedback 下的实体机器人。"
       },
       "plots": [
         "lab-10-whole-body-optimal-control/media/one_step_validated/tracking.png",
@@ -294,6 +296,90 @@
       ],
       "verification": "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
       "width": 600,
+      "palette_colors": 256,
+      "palette_stats": "full"
+    },
+    {
+      "number": 11,
+      "path": "lab-11-contact-transitions",
+      "title": {
+        "en": "Contact-aware Walking",
+        "ko": "접촉을 고려한 보행",
+        "zh": "接触感知行走"
+      },
+      "source": "lab-11-contact-transitions/media/demo/walk.mp4",
+      "start_s": 0,
+      "duration_s": 7.833333333333333,
+      "speed": 1,
+      "caption": {
+        "en": "The violet arc shows the remaining C2 swing reference; amber marks measured ZMP. Observe foot lift, landing and support changes together.",
+        "ko": "보라 곡선은 남은 C2 Swing reference, 주황은 측정 ZMP입니다. 발 들기·착지와 지지 영역의 변화를 함께 보세요.",
+        "zh": "紫色曲线为剩余 C2 Swing reference，橙色为测量 ZMP。结合观察抬脚、落地与支撑区域的变化。"
+      },
+      "plots": [],
+      "results": [
+        "lab-11-contact-transitions/media/demo/summary.json",
+        "lab-11-contact-transitions/media/legacy/summary.json"
+      ],
+      "verification": "lab-11-contact-transitions/media/demo/summary.json",
+      "width": 600,
+      "fps": 12,
+      "palette_colors": 256,
+      "palette_stats": "full"
+    },
+    {
+      "number": 12,
+      "path": "lab-12-walking-robustness",
+      "title": {
+        "en": "Physical Walking Robustness",
+        "ko": "물리 보행 강건성 평가",
+        "zh": "物理行走鲁棒性"
+      },
+      "source": "lab-12-walking-robustness/media/demo/walk.mp4",
+      "start_s": 0,
+      "duration_s": 7.833333333333333,
+      "speed": 1,
+      "caption": {
+        "en": "The red arrow marks a +10 N lateral push lasting 0.15 s. Observe the CoM, DCM and support response before and after the push.",
+        "ko": "빨간 화살표는 0.15초 동안 가한 +10 N 횡방향 외란입니다. 외란 전후의 CoM·DCM과 지지 영역 변화를 관찰하세요.",
+        "zh": "红色箭头表示持续 0.15 s 的 +10 N 侧向外力。观察外力前后的 CoM、DCM 与支撑区域变化。"
+      },
+      "plots": [],
+      "results": [
+        "lab-12-walking-robustness/media/demo/summary.json",
+        "lab-12-walking-robustness/media/benchmark/matrix.json"
+      ],
+      "verification": "lab-12-walking-robustness/media/demo/summary.json",
+      "width": 600,
+      "fps": 12,
+      "palette_colors": 256,
+      "palette_stats": "full"
+    },
+    {
+      "number": 13,
+      "path": "lab-13-adaptive-footsteps",
+      "title": {
+        "en": "Adaptive Foot Placement",
+        "ko": "온라인 발 위치 조정",
+        "zh": "在线落脚位置调整"
+      },
+      "source": "lab-13-adaptive-footsteps/media/demo/walk.mp4",
+      "start_s": 0,
+      "duration_s": 7.833333333333333,
+      "speed": 1,
+      "caption": {
+        "en": "Gray footprints are the original plan; violet footprints show adjusted landings after the push. Watch the swing path update while contact timing stays fixed.",
+        "ko": "회색 발자국은 원래 계획, 보라는 외란 뒤 조정한 착지점입니다. 접촉 시간은 유지하면서 Swing 경로가 바뀌는 모습을 보세요.",
+        "zh": "灰色脚印为原计划，紫色为受扰动后调整的落脚点。观察接触时间不变时 Swing 路径如何更新。"
+      },
+      "plots": [],
+      "results": [
+        "lab-13-adaptive-footsteps/media/demo/summary.json",
+        "lab-13-adaptive-footsteps/media/benchmark/matrix.json"
+      ],
+      "verification": "lab-13-adaptive-footsteps/media/demo/summary.json",
+      "width": 600,
+      "fps": 12,
       "palette_colors": 256,
       "palette_stats": "full"
     }

@@ -1,62 +1,11 @@
-# Lab 4: Trajectory Execution
+# Trajectory execution
 
-## Final Execution Path
+[English](04_trajectory_execution.md) · [한국어](04_trajectory_execution.ko.md) · [简体中文](04_trajectory_execution.zh-CN.md)
 
-Trajectory execution on Lab 4 now matches the canonical stack used by Lab 3:
+`trajectory_executor.py` runs the torque-controlled UR5e with PD plus gravity compensation. It applies actuator limits, integrates MuJoCo and logs desired/actual joints, torque and end-effector position. Planning feasibility and tracking feasibility are separate.
 
-- MuJoCo executes Menagerie UR5e + mounted Robotiq 2F-85
-- Pinocchio provides `g(q)` for gravity compensation
-- desired arm torques are mapped through the Menagerie actuator model before
-  being applied
+`record_lab4_demo.py` records the complete native MuJoCo scene without text panels. It uses the same capstone run for video and measurements, writes `slalom_summary.json` and binds it to the video SHA-256. The summary also binds `planning_audit.json` by SHA-256. The gallery shows the full run at 2×; metrics are from the physical run, not GIF frames.
 
-## Control Law
+Acceptance requires RMS joint error <0.05 rad, final configuration error <0.05 rad, zero reported prohibited contacts and minimum collision/visible-mesh obstacle clearance ≥30 mm at every 1 ms tick. The independent planning audit must pass before execution. See the [recorded metrics](../media/slalom_summary.json), [planning checks](../media/planning_audit.json) and [gallery](../GALLERY.md).
 
-Execution uses joint-space PD plus gravity compensation:
-
-```text
-tau = Kp * (q_d - q) + Kd * (qd_d - qd) + g(q)
-```
-
-with default gains:
-
-- `Kp = 400`
-- `Kd = 40`
-
-## Important Change
-
-The old Lab 4 execution path assumed direct torque writes into
-`mj_data.ctrl[:6]`. On the canonical stack this is not correct. The final
-implementation uses the same actuator mapping approach as Lab 3 so that the
-executed commands respect the Menagerie actuator model.
-
-## Logged Outputs
-
-`execute_trajectory(...)` returns:
-
-- `time`
-- `q_actual`
-- `q_desired`
-- `tau`
-- `ee_pos`
-
-## Final Validation Metrics
-
-Slalom capstone (current, post-redesign sign-off of 2026-03-24 — see
-`README.md` → "Final Validation"):
-
-- trajectory duration: `15.22 s`
-- RMS tracking error: `0.0027 rad`
-- final position error: `0.0018 rad`
-- min waypoint obstacle clearance: `0.034 m`
-
-The slalom's lower RMS relative to the pre-redesign scene comes from its
-conservative timing scale factors (`VEL_SCALE = 0.18`, `ACC_SCALE = 0.14`),
-not from a change to the control law.
-
-Historical (pre-redesign, 2026-03-17) — kept for provenance:
-
-- standard capstone scene: RMS `0.0125 rad`, final error `0.0016 rad`
-- blocked-path validation scene: RMS `0.0124 rad`, final error `0.0041 rad`,
-  direct path free `False`
-
-All are within the Lab 4 success thresholds enforced by the test suite.
+Compare the desired trajectory, actual tracking, clearance curve and contact count. A visually plausible movie or small endpoint error does not establish collision avoidance. The guarantee is limited to the recorded scene, collision-pair policy and sampled resolution.

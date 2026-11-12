@@ -1,5 +1,7 @@
 # A1: Environment Setup
 
+[English](a1_environment_setup.md) · [한국어](a1_environment_setup.ko.md) · [简体中文](a1_environment_setup.zh-CN.md)
+
 ## Goal
 
 Confirm that the UR5e assets load correctly, that the analytical and simulation models agree on forward kinematics, and that the lab dependencies are ready before moving into FK, Jacobians, IK, and control.

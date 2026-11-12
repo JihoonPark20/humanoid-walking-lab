@@ -8,7 +8,7 @@
 
 ## 课程
 
-Pinocchio 计算运动学与动力学，MuJoCo 模拟接触与运动。按 Lab 1–10 的顺序学习。
+Pinocchio 计算运动学与动力学，MuJoCo 模拟接触与运动。按 Lab 1–13 的顺序学习。
 
 | Lab | 课程 |
 |---|---|
@@ -22,6 +22,9 @@ Pinocchio 计算运动学与动力学，MuJoCo 模拟接触与运动。按 Lab 1
 | 8 | [Centroidal 优化](lab-8-centroidal-optimization/README.zh-CN.md) |
 | 9 | [MPC、RTI 与观测鲁棒性](lab-9-model-predictive-control/README.zh-CN.md) |
 | 10 | [全身最优控制](lab-10-whole-body-optimal-control/README.zh-CN.md) |
+| 11 | [接触感知行走](lab-11-contact-transitions/README.zh-CN.md) |
+| 12 | [物理行走鲁棒性](lab-12-walking-robustness/README.zh-CN.md) |
+| 13 | [在线落脚位置调整](lab-13-adaptive-footsteps/README.zh-CN.md) |
 
 ## 快速开始
 
@@ -34,8 +37,6 @@ bash tools/setup_env.sh
 python lab-9-model-predictive-control/src/g1_mpc.py --mode rti --video
 ```
 
-已验证平地配置：**MPC/RTI 16 个 · 观测实验 24 个 · 全身跟踪 12 个**。
-
-[可视化指南](docs/VISUAL_GUIDE.zh-CN.md) · [安装](docs/SETUP.md) · [验证](docs/VALIDATION.md) · [通用概念](docs/CONCEPTS.md)
+[可视化指南](docs/VISUAL_GUIDE.zh-CN.md) · [安装](docs/SETUP.zh-CN.md) · [实验解读](docs/VALIDATION.zh-CN.md) · [通用概念](docs/CONCEPTS.zh-CN.md)
 
 基于 [M. Ozkan Ceylan 的 robotics labs](https://github.com/ozkannceylan/mujoco-robotics-lab)。 [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Model licenses](THIRD_PARTY_NOTICES.md)

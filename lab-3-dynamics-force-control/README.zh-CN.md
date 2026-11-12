@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-闭合夹爪与刚性探针在平板（μ=0.05）上以 5 N 描绘 50 mm。完整过程、1 倍速；原始接触力合格率 93.0%。
+闭合夹爪装有刚性探针。观察沿平板的切向运动，以及法向接触力对 5 N 的跟踪（1 倍速）。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 python lab-3-dynamics-force-control/src/record_lab3_demo.py

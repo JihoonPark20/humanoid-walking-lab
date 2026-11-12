@@ -1,5 +1,7 @@
 # A3: Jacobian and Manipulability
 
+[English](a3_jacobian.md) · [한국어](a3_jacobian.ko.md) · [简体中文](a3_jacobian.zh-CN.md)
+
 ## Goal
 
 Compute the 6x6 Jacobian three different ways, cross-validate them, and use the Jacobian to analyze manipulability and detect singularities across the UR5e workspace.

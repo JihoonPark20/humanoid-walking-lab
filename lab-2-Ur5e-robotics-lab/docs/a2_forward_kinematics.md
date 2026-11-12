@@ -1,5 +1,7 @@
 # A2: Forward Kinematics
 
+[English](a2_forward_kinematics.md) · [한국어](a2_forward_kinematics.ko.md) · [简体中文](a2_forward_kinematics.zh-CN.md)
+
 ## Goal
 
 The goal of this step is to clearly understand how we take the **6 joint angles of the UR5e robot** and convert them into the **3D end-effector pose**.

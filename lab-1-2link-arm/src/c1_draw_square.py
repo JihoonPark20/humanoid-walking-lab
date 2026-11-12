@@ -226,6 +226,12 @@ def _add_line(scn, a, b, width: float, rgba):
     """Draw a thin capsule line between two 3-D points."""
     if scn.ngeom >= scn.maxgeom:
         return
+    # A reused scene slot may contain mesh/material IDs; reset all fields first.
+    mujoco.mjv_initGeom(
+        scn.geoms[scn.ngeom], mujoco.mjtGeom.mjGEOM_CAPSULE,
+        np.zeros(3), np.zeros(3), np.eye(3).flatten(),
+        np.asarray(rgba, dtype=np.float32),
+    )
     mujoco.mjv_connector(
         scn.geoms[scn.ngeom],
         mujoco.mjtGeom.mjGEOM_CAPSULE,

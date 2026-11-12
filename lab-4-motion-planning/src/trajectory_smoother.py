@@ -8,7 +8,7 @@ import numpy as np
 
 try:
     import toppra as ta
-    import toppra.constraint as constraint
+    from toppra import constraint
 
     _TOPPRA_AVAILABLE = True
 except Exception:
@@ -47,6 +47,8 @@ def shortcut_path(
 def _filter_duplicate_waypoints(path: list[np.ndarray]) -> np.ndarray:
     """연속된 중복 waypoint를 제거하여 arc-length가 증가하도록 한다."""
     waypoints = np.array(path, dtype=float)
+    if waypoints.ndim != 2 or not len(waypoints) or not np.isfinite(waypoints).all():
+        raise ValueError("A nonempty finite waypoint matrix is required")
     filtered = [waypoints[0]]
     for i in range(1, len(waypoints)):
         # 중복점은 arc-length 증가를 멈춰 spline 구성을 깨뜨릴 수 있다.
@@ -63,6 +65,7 @@ def _parameterize_quintic(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """TOPP-RA가 없을 때 사용하는 보수적인 quintic 시간 매개화."""
     waypoints = _filter_duplicate_waypoints(path)
+    vel_limits, acc_limits = _validate_limits(waypoints, vel_limits, acc_limits, dt)
     dof = waypoints.shape[1]
     if len(waypoints) < 2:
         times = np.array([0.0])
@@ -115,6 +118,20 @@ def _parameterize_quintic(
     return times, positions, velocities, accelerations
 
 
+def _validate_limits(waypoints, vel_limits, acc_limits, dt):
+    """Require finite positive limits matching the waypoint dimension."""
+    vel_limits, acc_limits = np.asarray(vel_limits), np.asarray(acc_limits)
+    invalid = any(
+        a.shape != waypoints.shape[1:]
+        or not np.isfinite(a).all()
+        or np.any(a <= 0)
+        for a in (vel_limits, acc_limits)
+    )
+    if invalid or not np.isfinite(dt) or dt <= 0:
+        raise ValueError("Positive finite joint limits and sampling interval are required")
+    return vel_limits, acc_limits
+
+
 def parameterize_topp_ra(
     path: list[np.ndarray],
     vel_limits: np.ndarray,
@@ -123,6 +140,7 @@ def parameterize_topp_ra(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """TOPP-RA 또는 quintic 방식으로 시간을 부여하고 (times, q, qd, qdd)를 반환한다."""
     waypoints = _filter_duplicate_waypoints(path)
+    vel_limits, acc_limits = _validate_limits(waypoints, vel_limits, acc_limits, dt)
     if len(waypoints) < 2:
         times = np.array([0.0])
         zeros = np.zeros((1, waypoints.shape[1]))
@@ -132,7 +150,6 @@ def parameterize_topp_ra(
         return _parameterize_quintic(list(waypoints), vel_limits, acc_limits, dt)
 
     n_waypoints = len(waypoints)
-    dof = waypoints.shape[1]
     ss = np.zeros(n_waypoints)
     for i in range(1, n_waypoints):
         ss[i] = ss[i - 1] + np.linalg.norm(waypoints[i] - waypoints[i - 1])
@@ -149,8 +166,7 @@ def parameterize_topp_ra(
         return _parameterize_quintic(list(waypoints), vel_limits, acc_limits, dt)
 
     duration = traj.duration
-    times = np.arange(0.0, duration + dt / 2.0, dt)
-    times = np.minimum(times, duration)
+    times = np.r_[np.arange(0.0, duration, dt), duration]
     positions = np.array([traj(t) for t in times])
     velocities = np.array([traj(t, 1) for t in times])
     accelerations = np.array([traj(t, 2) for t in times])

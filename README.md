@@ -8,7 +8,7 @@ Robotics fundamentals, balance and model-based humanoid walking in MuJoCo.
 
 ## Curriculum
 
-Pinocchio computes kinematics and dynamics; MuJoCo simulates contacts and motion. Follow Labs 1–10 in order.
+Pinocchio computes kinematics and dynamics; MuJoCo simulates contacts and motion. Follow Labs 1–13 in order.
 
 | Lab | Curriculum |
 |---|---|
@@ -22,6 +22,9 @@ Pinocchio computes kinematics and dynamics; MuJoCo simulates contacts and motion
 | 8 | [Centroidal Optimization](lab-8-centroidal-optimization/README.md) |
 | 9 | [MPC, RTI & Observation Robustness](lab-9-model-predictive-control/README.md) |
 | 10 | [Whole-Body Optimal Control](lab-10-whole-body-optimal-control/README.md) |
+| 11 | [Contact-aware Walking](lab-11-contact-transitions/README.md) |
+| 12 | [Physical Walking Robustness](lab-12-walking-robustness/README.md) |
+| 13 | [Adaptive Foot Placement](lab-13-adaptive-footsteps/README.md) |
 
 ## Quick start
 
@@ -34,8 +37,6 @@ bash tools/setup_env.sh
 python lab-9-model-predictive-control/src/g1_mpc.py --mode rti --video
 ```
 
-Validated flat-ground profiles: **16 MPC/RTI · 24 observation · 12 whole-body tracking**.
-
-[Visual guide](docs/VISUAL_GUIDE.md) · [Setup](docs/SETUP.md) · [Validation](docs/VALIDATION.md) · [Study concepts](docs/CONCEPTS.md)
+[Visual guide](docs/VISUAL_GUIDE.md) · [Setup](docs/SETUP.md) · [Interpreting experiments](docs/VALIDATION.md) · [Study concepts](docs/CONCEPTS.md)
 
 Based on [M. Ozkan Ceylan’s robotics labs](https://github.com/ozkannceylan/mujoco-robotics-lab). [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Model licenses](THIRD_PARTY_NOTICES.md)

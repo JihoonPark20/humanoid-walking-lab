@@ -1,48 +1,39 @@
-# Lab 2: 한국어 학습 노트
+# Lab 2: Study notes
 
-[실행 명령과 코드 순서](../README.md) · [공통 용어](../../docs/CONCEPTS.md)
+[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
 
-## 2차원에서 3차원으로
+[Commands and code order](../README.md) · [Shared concepts](../../docs/CONCEPTS.md)
 
-UR5e의 끝점 pose는 위치 `p`와 회전 `R`로 이루어진 `SE(3)` 변환입니다. FK는 관절 변환을 곱해 pose를 구하고, 6차원 Jacobian은 관절 속도를 선속도·각속도로 변환합니다. 2-link arm과 달리 위치 오차만 줄여서는 끝점의 방향이 정해지지 않습니다.
+## From 2D to 3D
 
-`ur5e_common.py`에서 관절 이름과 모델 경로를 확인한 뒤 `a2_forward_kinematics.py`를 읽으세요. MuJoCo body와 Pinocchio frame의 번호가 같다고 가정하면 안 됩니다. 비교할 지점이 flange인지 tool 끝인지도 맞춰야 합니다.
+The UR5e endpoint pose is an `SE(3)` transform containing position `p` and rotation `R`. FK multiplies joint transforms; the 6D Jacobian maps joint rates to linear/angular velocity. Matching position alone does not determine tool orientation.
 
-## IK에서 확인할 네 가지
+Start with joint names and model paths in `ur5e_common.py`, then read `a2_forward_kinematics.py`. MuJoCo body IDs and Pinocchio frame IDs are not interchangeable. Match flange versus tool-tip locations.
 
-1. 목표 pose와 현재 pose가 같은 좌표계에 있는가?
-2. 오차 벡터와 Jacobian이 같은 frame convention을 사용하는가?
-3. 회전 오차를 단순 Euler angle 차이가 아니라 회전의 기하에 맞게 계산하는가?
-4. 수렴한 관절각이 joint limit과 충돌 조건을 만족하는가?
+## Four IK checks
 
-Pinocchio의 spatial vector는 이 코드에서 `[linear, angular]` 순서로 다룹니다. World 좌표로 작업할 때 사용하는 `LOCAL_WORLD_ALIGNED`와 body-local Jacobian을 섞지 마세요. FK 후 frame pose가 필요하면 frame placement도 갱신해야 합니다.
+1. Are target and current pose expressed in the same frame?
+2. Do the error and Jacobian use compatible frame conventions?
+3. Is rotation error computed geometrically instead of subtracting Euler angles?
+4. Does a converged solution respect joint limits and collision constraints?
 
-## Position servo의 의미
+This repository uses Pinocchio spatial vectors in `[linear, angular]` order. Do not mix `LOCAL_WORLD_ALIGNED` and body-local Jacobians. Update frame placements after FK.
 
-Menagerie의 servo는 내부적으로 다음 관계를 사용합니다. 실제 gain·bias·gear 설정은 모델에서 확인하세요.
+## Position-servo interpretation
+
+The Menagerie servo implements the following relationship; inspect actual gain, bias and gear settings:
 
 ```text
 τ = Kp(ctrl − q) − Kd qdot
 ctrl = q_des + τ_feedforward/Kp + Kd qd_des/Kp
 ```
 
-`ctrl = q_des`만 넣으면 중력을 버티는 데 필요한 오차와 속도 추종 지연이 생깁니다. `c3_draw_cube.py`에서 feedforward가 들어가는 위치를 찾아 보고 궤적 생성·servo·물리 step의 역할을 분리해 읽으세요.
+Using only `ctrl=q_des` requires error to support gravity and introduces velocity-tracking lag. Find the feedforward term in `c3_draw_cube.py`; separate trajectory generation, servo conversion and physics integration.
 
-## 직접 해볼 실험
+## Exercises
 
-같은 관절각으로 Pinocchio와 MuJoCo의 FK를 비교한 뒤, 한 관절만 작은 값만큼 바꾸어 Jacobian 예측과 비교하세요. DLS damping과 초기 자세를 바꿔 IK의 해가 달라지는지도 확인합니다. `c2_ros2_bridge.py`는 선택 실습이며 ROS 2 실행 환경이 별도로 필요합니다.
+Compare both engines' FK at the same configuration. Perturb one joint and compare the Jacobian prediction. Change DLS damping and initial configuration to explore different IK solutions.
 
-## 상세 참고 자료
+## References
 
-
-- [A1: Environment Setup](a1_environment_setup.md)
-- [A2: Forward Kinematics](a2_forward_kinematics.md)
-- [A3: Jacobian and Manipulability](a3_jacobian.md)
-- [A4: Inverse Kinematics](a4_inverse_kinematics.md)
-- [A5: Dynamics](a5_dynamics.md)
-- [B1: Trajectory Generation](b1_trajectory_generation.md)
-- [B2: Control Hierarchy](b2_control_hierarchy.md)
-- [B3: Joint Constraints and Safety](b3_constraints.md)
-- [C1: Integrated Pick-and-Place Pipeline](c1_full_pipeline.md)
-- [C3: Draw a 3D Cube — Full Pipeline Demo](c3_draw_cube.md)
-- [Interview Cheatsheet](interview_cheatsheet.md)
+[Environment](a1_environment_setup.md) · [FK](a2_forward_kinematics.md) · [Jacobian](a3_jacobian.md) · [IK](a4_inverse_kinematics.md) · [Dynamics](a5_dynamics.md) · [Trajectories](b1_trajectory_generation.md) · [Control hierarchy](b2_control_hierarchy.md) · [Constraints](b3_constraints.md) · [Pipeline](c1_full_pipeline.md) · [Cube](c3_draw_cube.md) · [Review questions](interview_cheatsheet.md)

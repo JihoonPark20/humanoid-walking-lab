@@ -1,5 +1,7 @@
 # B1: Trajectory Generation — Study Notes
 
+[English](b1_trajectory_generation.md) · [한국어](b1_trajectory_generation.ko.md) · [简体中文](b1_trajectory_generation.zh-CN.md)
+
 ## Two Fundamental Approaches
 
 1. Joint-space trajectory

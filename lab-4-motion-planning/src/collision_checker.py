@@ -1,4 +1,4 @@
-"""Pinocchio와 HPP-FCL로 자세·경로의 충돌과 장애물 거리를 검사한다."""
+"""MuJoCo의 실행 장면에서 자세·경로의 충돌과 장애물 거리를 검사한다."""
 
 from __future__ import annotations
 
@@ -6,8 +6,13 @@ from pathlib import Path
 
 import mujoco
 import numpy as np
-
-from lab4_common import OBSTACLES, URDF_PATH, ObstacleSpec, load_mujoco_model, load_pinocchio_model
+from lab4_common import (
+    OBSTACLES,
+    URDF_PATH,
+    ObstacleSpec,
+    load_mujoco_model,
+    load_pinocchio_model,
+)
 
 
 class CollisionChecker:
@@ -62,6 +67,7 @@ class CollisionChecker:
             for body_id, name in enumerate(self._body_names)
             if name in obstacle_body_names
         }
+        self._environment_body_ids.add(0)  # World-attached ground is an obstacle too.
         self._robot_body_ids = {
             body_id
             for body_id, name in enumerate(self._body_names)
@@ -86,7 +92,8 @@ class CollisionChecker:
             if self._body_names[self.mj_model.geom_bodyid[geom_id]] == "table"
         ]
         self._obstacle_geom_ids = [
-            geom_id for geom_id in self._environment_geom_ids if geom_id not in self._table_geom_ids
+            geom_id for geom_id in self._environment_geom_ids
+            if geom_id not in self._table_geom_ids and self.mj_model.geom_bodyid[geom_id] != 0
         ]
         self._n_robot_geoms = len(self._robot_geom_ids)
         self._obstacle_ids = list(self._environment_geom_ids)
@@ -95,6 +102,7 @@ class CollisionChecker:
         self._distance_pairs: list[tuple[int, int]] = []
         self._environment_pairs: list[tuple[int, int]] = []
         self._table_pairs: list[tuple[int, int]] = []
+        self._ground_pairs: list[tuple[int, int]] = []
         self._obstacle_pairs: list[tuple[int, int]] = []
         self._self_pairs: list[tuple[int, int]] = []
 
@@ -102,9 +110,11 @@ class CollisionChecker:
             for env_gid in self._environment_geom_ids:
                 pair = self._register_pair(robot_gid, env_gid)
                 self._environment_pairs.append(pair)
-                if env_gid in self._table_geom_ids:
+                if self.mj_model.geom_bodyid[env_gid] == 0:
+                    self._ground_pairs.append(pair)
+                elif env_gid in self._table_geom_ids:
                     self._table_pairs.append(pair)
-                else:
+                elif env_gid in self._obstacle_geom_ids:
                     self._obstacle_pairs.append(pair)
 
         if self_collision:
@@ -157,6 +167,9 @@ class CollisionChecker:
         return self._body_tree_distance(body1, body2) > self.adjacency_gap
 
     def _forward(self, q: np.ndarray) -> None:
+        q = np.asarray(q, dtype=float)
+        if q.shape != (6,) or not np.isfinite(q).all():
+            raise ValueError("Expected six finite arm joint angles")
         self.mj_data.qpos[: self.mj_model.nq] = 0.0
         self.mj_data.qvel[: self.mj_model.nv] = 0.0
         self.mj_data.qpos[: len(q)] = q
@@ -164,6 +177,13 @@ class CollisionChecker:
 
     def is_collision_free(self, q: np.ndarray) -> bool:
         """Check whether configuration q is collision-free."""
+        q = np.asarray(q, dtype=float)
+        if q.shape != (6,) or not np.isfinite(q).all():
+            return False
+        ranges = self.mj_model.jnt_range[:6]
+        limited = self.mj_model.jnt_limited[:6].astype(bool)
+        if np.any(limited & ((q < ranges[:, 0]) | (q > ranges[:, 1]))):
+            return False
         self._forward(q)
         for contact_id in range(self.mj_data.ncon):
             contact = self.mj_data.contact[contact_id]
@@ -179,6 +199,8 @@ class CollisionChecker:
         resolution: float = 0.05,
     ) -> bool:
         """Check whether the straight-line joint-space path is collision-free."""
+        if not np.isfinite(resolution) or resolution <= 0:
+            raise ValueError("Path resolution must be positive and finite")
         diff = q2 - q1
         dist = np.linalg.norm(diff)
         if dist < 1e-9:
@@ -219,9 +241,12 @@ class CollisionChecker:
         include_self: bool = True,
         include_table: bool = True,
         include_obstacles: bool = True,
+        include_ground: bool = True,
     ) -> float:
         """Compute the minimum signed distance over selected collision buckets."""
         pairs: list[tuple[int, int]] = []
+        if include_ground:
+            pairs.extend(self._ground_pairs)
         if include_obstacles:
             pairs.extend(self._obstacle_pairs)
         if include_table:
@@ -250,6 +275,7 @@ class CollisionChecker:
             include_self=False,
             include_table=False,
             include_obstacles=True,
+            include_ground=False,
         )
 
     @property

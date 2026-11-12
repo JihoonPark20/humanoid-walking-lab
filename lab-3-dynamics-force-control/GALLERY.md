@@ -1,21 +1,21 @@
 # Lab 3: Dynamics & Force Control
 
-[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
+[English](GALLERY.md) · [한국어](GALLERY.ko.md) · [简体中文](GALLERY.zh-CN.md)
 
 ![Demo](media/gallery/hero.gif)
 
-Closed gripper with a rigid probe: 5 N force control over a 50 mm trace on a flat plate (μ=0.05). Full run at 1×; raw-force in-band 93.0%.
+The closed gripper holds a rigid probe. Observe tangential motion along the plate while normal contact force tracks 5 N (1× playback).
 
 [Source recording / image](media/lab3_simulation.mp4)
 
-## Measurements
-
-- [media/line_trace_summary.json](media/line_trace_summary.json)
-
-- [media/line_trace.csv](media/line_trace.csv)
-
-## Exercises
-
-### capstone line trace
+## Plots
 
 <img src="media/capstone_line_trace.png" width="640" alt="capstone_line_trace">
+
+<details>
+<summary>Raw data (optional)</summary>
+
+- [media/line_trace_summary.json](media/line_trace_summary.json)
+- [media/line_trace.csv](media/line_trace.csv)
+
+</details>

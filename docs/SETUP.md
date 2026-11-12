@@ -1,6 +1,6 @@
 # Setup
 
-[English](../README.md) · [한국어](../README.ko.md) · [简体中文](../README.zh-CN.md)
+[English](SETUP.md) · [한국어](SETUP.ko.md) · [简体中文](SETUP.zh-CN.md)
 
 Run commands from the repository root. The main CPU environment supports the
 fundamentals and walking labs; macOS arm64 is tested. Use Python 3.11+ and Git.
@@ -21,6 +21,8 @@ bash tools/setup_env.sh --models-only
 
 `pin` is the package name; `pinocchio` is the Python import. Lab 4 can optionally
 use `toppra`; without it the trajectory code uses quintic parameterization.
+
+Labs 11–13 use ProxQP (`proxsuite==0.8.2`) in the main environment; macOS arm64 wheels were tested. Rerun `python -m pip install -r requirements.txt` when updating an existing checkout.
 
 ## Whole-body OCP
 

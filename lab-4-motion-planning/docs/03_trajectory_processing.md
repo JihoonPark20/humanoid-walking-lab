@@ -1,42 +1,11 @@
-# Lab 4: Trajectory Processing
+# Trajectory processing
 
-## Overview
+[English](03_trajectory_processing.md) · [한국어](03_trajectory_processing.ko.md) · [简体中文](03_trajectory_processing.zh-CN.md)
 
-Lab 4 trajectory processing still has the same two stages:
+`shortcut_path()` chooses nonadjacent waypoints and replaces their subpath only after checking the connecting edge with the same collision checker. It preserves endpoints and cannot assume that safe nodes imply a safe edge.
 
-1. shortcutting a raw planner path
-2. time-parameterizing the shortened path
+`parameterize_topp_ra(path,vel_limits,acc_limits,dt)` returns `(times,q,qd,qdd)`. Reject empty/nonfinite paths, nonpositive limits and invalid time steps. Remove consecutive duplicates before constructing arc length. If TOPP-RA is available, parameterize its interpolating spline; otherwise use conservative quintic segments. Always include the exact final time even when duration is not a multiple of `dt`.
 
-The public API remains:
+Quintic segments stay on the straight joint-space edge, with zero endpoint velocity/acceleration. Spline interpolation can change path geometry and cut a corner into an obstacle. Therefore the capstone rechecks every timed position, velocity and acceleration before execution and aborts on a violation. A successful geometric planner alone does not certify a spline.
 
-```python
-short = shortcut_path(path, cc, max_iter=200)
-times, pos, vel, acc = parameterize_topp_ra(short, VEL_LIMITS, ACC_LIMITS)
-```
-
-## Shortcutting
-
-Shortcutting randomly selects two non-adjacent waypoints and removes the
-intermediate segment when the straight-line joint-space edge is collision-free.
-
-This stage is unchanged conceptually; the important difference is that the
-collision queries now use the canonical executed MuJoCo geometry.
-
-## Time Parameterization
-
-`parameterize_topp_ra(...)` keeps the historical Lab 4 function name.
-
-- If TOPP-RA is available, the function uses it.
-- If TOPP-RA is not available in the current environment, the function falls
-  back to a conservative quintic time-parameterization that respects the same
-  velocity and acceleration limits under the tested Lab 4 scenarios.
-
-This preserves the rest of the pipeline and keeps execution deterministic in
-environments where TOPP-RA cannot be compiled.
-
-## Final Validation
-
-- path endpoints are preserved
-- shortened paths stay collision-free
-- velocity and acceleration limits are respected in the generated trajectory
-- the full `tests/test_trajectory.py` suite passes on the canonical stack
+Read `planning_audit.json`: raw, shortcut and timed checks are separate. Try a shortcut across the blocking post and confirm rejection. The optional TOPP-RA backend is not required for the published quintic demo; its real installed backend requires its own run, while regression tests also check final-time sampling with a controlled backend.

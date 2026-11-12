@@ -1,26 +1,26 @@
 {
   "schema_version": 1,
-  "catalog_sha256": "8462f83e2a2e634196992ded92e8746bd20d40b9a1cfbb01a65f3c012bd5ba8c",
+  "catalog_sha256": "6176bd2abe96d550ddf66ac15649ef32179c5c2afb6decf05e014837a93cad54",
   "labs": [
     {
       "lab": 1,
       "assets": [
         {
           "source": "lab-1-2link-arm/media/c1_draw_square.mp4",
-          "sha256": "5500123711a5c17ff7aa3baefcca4e302bd7d36f6e11abc09f357d5d4d777821",
+          "sha256": "b06be9f0de4c3757c8b1ec6a3f63416edce09486d24798eaaed6be0892be2062",
           "output": "lab-1-2link-arm/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 7.87,
+            "source_duration_s": 7.866666666666666,
             "speed": 1,
             "fps": 10,
             "frames": 79,
             "palette_colors": 96,
             "palette_stats": "diff",
-            "size_bytes": 341112
+            "size_bytes": 340942
           },
           "verification": "lab-1-2link-arm/media/c1_draw_square.json",
-          "verification_sha256": "b463e806970add7189f91e53b27871c51f90b0bda23a6f095f889e96007398d3"
+          "verification_sha256": "76d4be6dcfb003d6a81d4c8b9bcca24b2f1e072e608f22f8d5021f578adab7eb"
         }
       ]
     },
@@ -29,20 +29,20 @@
       "assets": [
         {
           "source": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.mp4",
-          "sha256": "fb27e2d27e1bc7f7882d3f940d474116b79033c1429588a53f725d70cc1aee3c",
+          "sha256": "bfea97f49640e33dc22aed1ba197f28cdcbf6d729779de2ccc1d8fceb19df134",
           "output": "lab-2-Ur5e-robotics-lab/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 23.57,
+            "source_duration_s": 30.03,
             "speed": 3,
             "fps": 10,
-            "frames": 79,
+            "frames": 100,
             "palette_colors": 96,
             "palette_stats": "diff",
-            "size_bytes": 442278
+            "size_bytes": 689232
           },
           "verification": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.json",
-          "verification_sha256": "0f4147e579957768ad782bb2c14461af1e2a996cd368e245fce68f6828c89fa9"
+          "verification_sha256": "6f688f25f5692eb9e21418686b141a24c6172c59387eedebf0207bdb0b89af81"
         }
       ]
     },
@@ -73,20 +73,20 @@
       "assets": [
         {
           "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
-          "sha256": "95d3ecfacdad6a03385a2383ff3b5f90c1423a5866dc3492a931b980b45e8768",
+          "sha256": "2b949c6a24f7c60fb8c66097518f9481c78c77430a2c0f2c2f4778c1ffe0a700",
           "output": "lab-4-motion-planning/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 67.86666666666666,
+            "source_duration_s": 75.66666666666667,
             "speed": 2,
             "fps": 15,
-            "frames": 509,
+            "frames": 568,
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 4503526
+            "size_bytes": 5004023
           },
           "verification": "lab-4-motion-planning/media/slalom_summary.json",
-          "verification_sha256": "a6b4d829a7e547a4e77edf0c7996ae98dfd7f66692e4f49df42e6b0fd4461064"
+          "verification_sha256": "77d624d6bf4d364cef1aa6a12609982bfda21da9f325bab1ed6d61f46ae7e2f2"
         }
       ]
     },
@@ -219,6 +219,72 @@
           },
           "verification": "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
           "verification_sha256": "01204a49373a2033727c3225342b5478ba012c8fa6ad4ba801ce9f6fc2db0055"
+        }
+      ]
+    },
+    {
+      "lab": 11,
+      "assets": [
+        {
+          "source": "lab-11-contact-transitions/media/demo/walk.mp4",
+          "sha256": "9575517c36d5d39bf3d6292b78f4f608a879e210cc20c8b21f9df7e154a741f8",
+          "output": "lab-11-contact-transitions/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 7.83,
+            "speed": 1,
+            "fps": 12,
+            "frames": 94,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 10177579
+          },
+          "verification": "lab-11-contact-transitions/media/demo/summary.json",
+          "verification_sha256": "80c04369071edb6bc83ef612ad8e851226e6670187764af6b0403e0ea36b3e54"
+        }
+      ]
+    },
+    {
+      "lab": 12,
+      "assets": [
+        {
+          "source": "lab-12-walking-robustness/media/demo/walk.mp4",
+          "sha256": "30325ea3fa58ebfc49dfca3c91814b4a87a780fab698d32585ce725a0e7167ca",
+          "output": "lab-12-walking-robustness/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 7.83,
+            "speed": 1,
+            "fps": 12,
+            "frames": 94,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 8873882
+          },
+          "verification": "lab-12-walking-robustness/media/demo/summary.json",
+          "verification_sha256": "f68984c807816c74dff8693a826f959dc4ae49f7ce13539ff4896ac63de293a8"
+        }
+      ]
+    },
+    {
+      "lab": 13,
+      "assets": [
+        {
+          "source": "lab-13-adaptive-footsteps/media/demo/walk.mp4",
+          "sha256": "d02f89e94afc561bca318604652190a6e7b7b74ad5de956a706a29660bdb3a9b",
+          "output": "lab-13-adaptive-footsteps/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 7.83,
+            "speed": 1,
+            "fps": 12,
+            "frames": 94,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 8916954
+          },
+          "verification": "lab-13-adaptive-footsteps/media/demo/summary.json",
+          "verification_sha256": "9314c1739c6aa1c622957fdf3bcf7568d14cd26f68b3a0dedf848c8f74b34f39"
         }
       ]
     }

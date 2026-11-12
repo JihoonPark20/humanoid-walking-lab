@@ -99,6 +99,7 @@ def main() -> None:
         "final_configuration": metrics["final_err"] < 0.05,
         "clearance": metrics["min_clearance"] >= MIN_CLEARANCE_M,
         "no_contacts": contacts == 0,
+        "rrt_avoidance_verified": metrics["planning_audit"]["passed"] and metrics["planning_audit"]["direct_control"]["passed"],
         "executed_mesh_clearance": float(result["obstacle_clearance"].min())
         >= MIN_CLEARANCE_M,
     }
@@ -114,6 +115,7 @@ def main() -> None:
         "geometry_clearance_samples": len(result["obstacle_clearance"]),
         "geometry_clearance_interval_s": 0.001,
         "duration_s": float(result["time"][-1]),
+        "planning_audit_sha256": hashlib.sha256((MEDIA_DIR / "planning_audit.json").read_bytes()).hexdigest(),
         "fps": 30,
         "frames": recorder.frames,
     }

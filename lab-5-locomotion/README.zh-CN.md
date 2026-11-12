@@ -6,13 +6,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。CoM 转移 53.6 mm，足端漂移 ≤1.39 mm。
+观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
+[演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 
 ## 运行
 
-[安装](../docs/SETUP.md)
+[安装](../docs/SETUP.zh-CN.md)
 
 ```bash
 python lab-5-locomotion/src/m3d_weight_shift.py

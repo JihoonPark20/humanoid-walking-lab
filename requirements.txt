@@ -4,3 +4,4 @@ mujoco==4.0.0
 pin==4.1.0
 imageio[ffmpeg]>=2.37
 Pillow>=10
+proxsuite==0.8.2
