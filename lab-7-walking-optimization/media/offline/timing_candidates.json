@@ -1,0 +1,26 @@
+{
+  "time_weight": 0.05,
+  "trials": [
+    {
+      "single_support_s": 0.55,
+      "feasible": true,
+      "objective": 0.32711403298448055,
+      "duration_s": 6.999999999999999,
+      "score": 0.6771140329844805
+    },
+    {
+      "single_support_s": 0.65,
+      "feasible": true,
+      "objective": 0.319837251024495,
+      "duration_s": 7.5,
+      "score": 0.694837251024495
+    },
+    {
+      "single_support_s": 0.75,
+      "feasible": true,
+      "objective": 0.3171044444563009,
+      "duration_s": 8.0,
+      "score": 0.717104444456301
+    }
+  ]
+}

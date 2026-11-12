@@ -1,0 +1,6 @@
+# Main CPU environment (Python 3.11+). Whole-body OCP uses its separate requirements.
+-r lab-9-model-predictive-control/requirements.txt
+mujoco==4.0.0
+pin==4.1.0
+imageio[ffmpeg]>=2.37
+Pillow>=10

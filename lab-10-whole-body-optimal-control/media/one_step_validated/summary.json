@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "config": {
+    "steps": 1,
+    "step_length": 0.06,
+    "step_height": 0.025,
+    "dt": 0.01,
+    "swing_knots": 60,
+    "support_knots": 60,
+    "max_iterations": 600,
+    "control_weight": 3.0
+  },
+  "report": {
+    "model_rollout_valid": true,
+    "rollout_gap": 0.0,
+    "torque_violation_nm": 0.0,
+    "joint_violation_rad": 0.0,
+    "wrench_violation": 0.006566049702522392,
+    "final_foot_error_m": 3.7409471203396784e-05,
+    "quaternion_norm_error": 1.1102230246251565e-16,
+    "joint_velocity_violation": 0.0,
+    "impulse_cone_violation": 0.0,
+    "impact_position_jump": 0.0,
+    "converged": true,
+    "iterations": 47,
+    "solve_seconds": 2.9026647498831153,
+    "objective": 1692.334485197014,
+    "duration_s": 1.8000000000000014,
+    "nodes": 181,
+    "stopping_criterion": 5.198169337393847e-05,
+    "mass_matrix_errors": {
+      "pinocchio": 7.105427357601002e-15,
+      "contact": 5.329070518200751e-15,
+      "impact": 5.329070518200751e-15
+    }
+  },
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+    "versions": {
+      "pin": "4.0.0",
+      "crocoddyl": "3.2.1",
+      "mujoco": "4.0.0",
+      "numpy": "2.5.4"
+    }
+  }
+}

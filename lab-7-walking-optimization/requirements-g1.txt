@@ -1,0 +1,5 @@
+-r requirements.txt
+# W0/G1: Pinocchio 설치 이름은 pin이다.
+mujoco>=3.3
+pin>=3.0
+imageio[ffmpeg]>=2.31

@@ -1,0 +1,49 @@
+{
+  "validation": {
+    "dynamics_residual": 4.441102475355452e-09,
+    "support_violation_m": 1.1500797364217413e-05,
+    "velocity_violation": 0.0,
+    "acceleration_violation": 0.0,
+    "jerk_violation": 0.0,
+    "boundary_residual": 5.251178508038472e-09,
+    "foot_violation_m": 1.368089669329109e-10,
+    "valid": true
+  },
+  "cost": {
+    "zmp_squared_integral": 0.0008322774512680794,
+    "jerk_squared_integral": 23.98786872989165,
+    "foot_squared_deviation": 0.000801520111751214,
+    "objective": 0.32711403298448055
+  },
+  "duration_s": 6.999999999999999,
+  "solve_seconds": 0.4082059171050787,
+  "iterations": 7425,
+  "refinement_rounds": 0,
+  "optimize_feet": true,
+  "config": {
+    "steps": 4,
+    "step_length": 0.1,
+    "step_width": 0.18,
+    "single_support": 0.55,
+    "double_support": 0.25,
+    "settle_time": 1.5,
+    "dt": 0.05,
+    "com_height": 0.66,
+    "gravity": 9.81,
+    "foot_offset_x": 0.035,
+    "half_length": 0.05,
+    "half_width": 0.02,
+    "step_height": 0.03,
+    "min_stride": 0.04,
+    "max_stride": 0.16,
+    "min_width": 0.16,
+    "max_width": 0.22,
+    "max_velocity": 0.8,
+    "max_acceleration": 3.0,
+    "max_jerk": 30.0,
+    "zmp_weight": 100.0,
+    "jerk_weight": 0.01,
+    "foot_weight": 5.0,
+    "first_swing": 0
+  }
+}

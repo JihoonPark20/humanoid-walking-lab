@@ -1,0 +1,4 @@
+# 별도 .venv-ocp 권장: 이 wheel 조합으로 contact Dynamics를 검증했다.
+-r ../lab-7-walking-optimization/requirements-g1.txt
+pin==4.0.0
+crocoddyl==3.2.1

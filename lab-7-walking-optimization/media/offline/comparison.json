@@ -1,0 +1,59 @@
+{
+  "fixed": {
+    "cost": {
+      "zmp_squared_integral": 0.0008696752968482105,
+      "jerk_squared_integral": 30.13001643088694,
+      "foot_squared_deviation": 1.3720382749861248e-24,
+      "objective": 0.38826769399369043
+    },
+    "duration_s": 7.5,
+    "validation": {
+      "dynamics_residual": 8.56383603180938e-09,
+      "support_violation_m": 1.0612297266721776e-05,
+      "velocity_violation": 0.0,
+      "acceleration_violation": 0.0,
+      "jerk_violation": 0.0,
+      "boundary_residual": 1.0004798700345311e-08,
+      "foot_violation_m": 2.376347452148764e-10,
+      "valid": true
+    }
+  },
+  "footsteps": {
+    "cost": {
+      "zmp_squared_integral": 0.0008500271434071094,
+      "jerk_squared_integral": 23.08344424795274,
+      "foot_squared_deviation": 0.0008000188408513241,
+      "objective": 0.319837251024495
+    },
+    "duration_s": 7.5,
+    "validation": {
+      "dynamics_residual": 7.246721189270444e-09,
+      "support_violation_m": 1.0212994751238741e-05,
+      "velocity_violation": 0.0,
+      "acceleration_violation": 0.0,
+      "jerk_violation": 0.0,
+      "boundary_residual": 8.335282306909938e-09,
+      "foot_violation_m": 3.120884384255618e-10,
+      "valid": true
+    }
+  },
+  "timing": {
+    "cost": {
+      "zmp_squared_integral": 0.0008322774512680794,
+      "jerk_squared_integral": 23.98786872989165,
+      "foot_squared_deviation": 0.000801520111751214,
+      "objective": 0.32711403298448055
+    },
+    "duration_s": 6.999999999999999,
+    "validation": {
+      "dynamics_residual": 4.441102475355452e-09,
+      "support_violation_m": 1.1500797364217413e-05,
+      "velocity_violation": 0.0,
+      "acceleration_violation": 0.0,
+      "jerk_violation": 0.0,
+      "boundary_residual": 5.251178508038472e-09,
+      "foot_violation_m": 1.368089669329109e-10,
+      "valid": true
+    }
+  }
+}

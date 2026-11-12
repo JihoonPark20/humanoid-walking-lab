@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "tracking": {
+    "mode": "fddp",
+    "joint_kp": 400.0,
+    "joint_kd": 20.0,
+    "feedback_blend": 0.1
+  },
+  "failure": null,
+  "completed": true,
+  "elapsed_s": 1.7999999999999126,
+  "duration_s": 1.8000000000000014,
+  "final_foot_gap_m": 0.0014761271363878628,
+  "final_state_gap": 0.05159475769521231,
+  "clipping_ticks": 0,
+  "flight_ticks": 0,
+  "impact_state_overwrites": 0,
+  "max_state_gap": 1.2728299177505937,
+  "max_tangent_q_gap": 0.05541727424127276,
+  "min_pelvis_height_m": 0.7906017288311953
+}

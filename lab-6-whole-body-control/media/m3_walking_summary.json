@@ -1,0 +1,26 @@
+{
+  "fell": false,
+  "fell_at": null,
+  "steps_completed": 12,
+  "steps_planned": 12,
+  "distance": 1.1821616815107834,
+  "planned_distance": 1.1500000029619828,
+  "zmp_inside": 0.9931828866948754,
+  "contact_switches": 74,
+  "flight_ticks": 0,
+  "vrp_saturated_ticks": 357,
+  "vrp_saturated_frac": 0.025869565217391303,
+  "swing_err_max_mm": 16.907331296547635,
+  "dcm_err_max_mm": 38.24759713978651,
+  "dcm_err_rms_mm": 6.241014946865554,
+  "tau_max": 56.04562700666795,
+  "duration": 13.800000000000002,
+  "omega": 3.859086223488401,
+  "passed": true,
+  "checks": {
+    "10 steps without falling": true,
+    "Travelled \u2265 1.0 m": true,
+    "ZMP inside support > 90 %": true,
+    "Torques within limits": true
+  }
+}

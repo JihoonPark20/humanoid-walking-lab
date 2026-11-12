@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "config": {
+    "mass": 33.34,
+    "gravity": 9.81,
+    "friction": 0.6,
+    "half_length": 0.05,
+    "half_width": 0.02,
+    "yaw_radius": 0.015,
+    "max_normal_force": 800.0,
+    "min_height": 0.5,
+    "max_height": 0.85,
+    "max_velocity": 1.0,
+    "max_angular_momentum": 6.0
+  },
+  "validation": {
+    "dynamics_residual": 2.2698509738461325e-13,
+    "wrench_violation": 1.0507372331436403e-08,
+    "height_violation": 0.0,
+    "velocity_violation": 0.0,
+    "angular_violation": 0.0,
+    "boundary_residual": 3.7583969496340264e-16,
+    "valid": true
+  },
+  "solve_seconds": 0.24717416684143245,
+  "iterations": 23,
+  "status": "Solve_Succeeded",
+  "objective": 0.0004265780106307667,
+  "terminal_stop": true,
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+    "versions": {
+      "numpy": "2.5.4",
+      "casadi": "3.8.2",
+      "osqp": "1.1.3"
+    }
+  }
+}

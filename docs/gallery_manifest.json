@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "catalog_sha256": "411930e104b6a127c600fcc7ec1e2453533cfb2bdbcc94f47e4b9d1b5ed7c0a7",
+  "labs": [
+    {
+      "lab": 1,
+      "assets": [
+        {
+          "source": "lab-1-2link-arm/media/c1_draw_square.mp4",
+          "sha256": "aa127e9c399ecda4518b6a64fb761d4587907486564e61b912ae6c74d356e695",
+          "output": "lab-1-2link-arm/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 7.87,
+            "speed": 1,
+            "fps": 10,
+            "frames": 79,
+            "size_bytes": 332144
+          }
+        }
+      ]
+    },
+    {
+      "lab": 2,
+      "assets": [
+        {
+          "source": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.mp4",
+          "sha256": "20188fa1bfc2a9105276e62806de2ef25ddffbd6d44162f0f9d4ae24ab217012",
+          "output": "lab-2-Ur5e-robotics-lab/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 23.57,
+            "speed": 3,
+            "fps": 10,
+            "frames": 79,
+            "size_bytes": 593225
+          }
+        }
+      ]
+    },
+    {
+      "lab": 3,
+      "assets": [
+        {
+          "source": "lab-3-dynamics-force-control/media/lab3_simulation.mp4",
+          "sha256": "ded869b95d8d256344ab52cba6bbf0b3504a81486a95f658ae3adaea6acdbd13",
+          "output": "lab-3-dynamics-force-control/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 5,
+            "source_duration_s": 12,
+            "speed": 1.5,
+            "fps": 10,
+            "frames": 80,
+            "size_bytes": 883160
+          }
+        }
+      ]
+    },
+    {
+      "lab": 4,
+      "assets": [
+        {
+          "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
+          "sha256": "fb45d98d93f7814b88d098c7caefa6be6067c69576ca568d952d5cec514d817f",
+          "output": "lab-4-motion-planning/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 9.13,
+            "speed": 1,
+            "fps": 10,
+            "frames": 91,
+            "size_bytes": 997573
+          }
+        }
+      ]
+    },
+    {
+      "lab": 5,
+      "assets": [
+        {
+          "source": "lab-5-locomotion/media/m3d_weight_shift.mp4",
+          "sha256": "0f9c76679a093a6a2aa0554a8bfd5de2b4af327df5708483eb0b458c84d8d5d9",
+          "output": "lab-5-locomotion/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 3.67,
+            "speed": 1,
+            "fps": 10,
+            "frames": 37,
+            "size_bytes": 168184
+          }
+        }
+      ]
+    },
+    {
+      "lab": 6,
+      "assets": [
+        {
+          "source": "lab-6-whole-body-control/media/m3_walking.mp4",
+          "sha256": "9eb9723b76c7105e4317fbd71d1a991133187f1f66280bef5b1f1f52546391d6",
+          "output": "lab-6-whole-body-control/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 13.53,
+            "speed": 1.5,
+            "fps": 10,
+            "frames": 90,
+            "size_bytes": 2204401
+          }
+        }
+      ]
+    },
+    {
+      "lab": 7,
+      "assets": [
+        {
+          "source": "lab-7-walking-optimization/media/g1/optimized_feet/walk.mp4",
+          "sha256": "ce956c9acd0508f655edb7b478e6b0a10dfd3b4ba54ec1a60da94e9a77daf54e",
+          "output": "lab-7-walking-optimization/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 8.6,
+            "speed": 1,
+            "fps": 10,
+            "frames": 86,
+            "size_bytes": 2800887
+          }
+        }
+      ]
+    },
+    {
+      "lab": 8,
+      "assets": []
+    },
+    {
+      "lab": 9,
+      "assets": [
+        {
+          "source": "lab-9-model-predictive-control/media/g1/rti/mpc.mp4",
+          "sha256": "aaba5f1a3acace85014238bf2e2df8fe81e9741208e49117b6850390f7afd559",
+          "output": "lab-9-model-predictive-control/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 6.8,
+            "speed": 1,
+            "fps": 10,
+            "frames": 68,
+            "size_bytes": 1984008
+          }
+        }
+      ]
+    },
+    {
+      "lab": 10,
+      "assets": [
+        {
+          "source": "lab-10-whole-body-optimal-control/media/two_steps_validated/rollout.mp4",
+          "sha256": "82a3f3a02a868fa6fbc8b49fb35e20f7e5d2f9f23704944aabcfce1ac6b69e7a",
+          "output": "lab-10-whole-body-optimal-control/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 3,
+            "speed": 1,
+            "fps": 10,
+            "frames": 30,
+            "size_bytes": 944180
+          }
+        }
+      ]
+    }
+  ]
+}

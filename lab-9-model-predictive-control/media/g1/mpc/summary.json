@@ -1,0 +1,31 @@
+{
+  "mode": "mpc",
+  "passed": true,
+  "failure": null,
+  "completed": true,
+  "no_flight": true,
+  "final_com_error_m": 0.0009600377227438809,
+  "elapsed_s": 6.7,
+  "duration_s": 6.7,
+  "push_force_n": 5.0,
+  "validated_fallbacks": 0,
+  "timing": {
+    "count": 70,
+    "median_ms": 24.663750547915697,
+    "p95_ms": 45.735359040554606,
+    "p99_ms": 51.648312034085414,
+    "deadline_misses": 0
+  },
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-15.2-arm64-arm-64bit-Mach-O",
+    "packages": {
+      "mujoco": "4.0.0",
+      "pin": "4.1.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "osqp": "1.1.3"
+    },
+    "menagerie_commit": "370c43965323c0944b433b202aac5058b5f907a9"
+  }
+}

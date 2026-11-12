@@ -1,0 +1,643 @@
+{
+  "all_passed": true,
+  "cases": 12,
+  "criteria": "converged, model feasible, complete, no fall/flight/clipping, final foot gap < 0.03 m",
+  "reports": {
+    "steps1_dt10_weight3/fddp": {
+      "config": {
+        "steps": 1,
+        "dt": 0.01,
+        "control_weight": 3.0,
+        "tracking": "fddp"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.006566049702522392,
+        "final_foot_error_m": 3.7409471203396784e-05,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 47,
+        "solve_seconds": 3.148437999887392,
+        "objective": 1692.334485197014,
+        "duration_s": 1.8000000000000014,
+        "nodes": 181,
+        "stopping_criterion": 5.198169337393847e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "fddp",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 1.7999999999999126,
+        "duration_s": 1.8000000000000014,
+        "final_foot_gap_m": 0.001476127136387836,
+        "final_state_gap": 0.05159475769521275,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.2728299177505924,
+        "max_tangent_q_gap": 0.055417274241272685,
+        "min_pelvis_height_m": 0.7906017288311953
+      }
+    },
+    "steps1_dt10_weight0.1/blended": {
+      "config": {
+        "steps": 1,
+        "dt": 0.01,
+        "control_weight": 0.1,
+        "tracking": "blended"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.008120233286693868,
+        "final_foot_error_m": 4.217379533024359e-05,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 162,
+        "solve_seconds": 10.239514667075127,
+        "objective": 701.2696932181681,
+        "duration_s": 1.8000000000000014,
+        "nodes": 181,
+        "stopping_criterion": 9.011019764146263e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "blended",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 1.7999999999999126,
+        "duration_s": 1.8000000000000014,
+        "final_foot_gap_m": 0.005032976535361437,
+        "final_state_gap": 0.027958365858168233,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.4794076700195267,
+        "max_tangent_q_gap": 0.03044194432667512,
+        "min_pelvis_height_m": 0.7904290803961336
+      }
+    },
+    "steps1_dt10_weight0.1/joint-pd": {
+      "config": {
+        "steps": 1,
+        "dt": 0.01,
+        "control_weight": 0.1,
+        "tracking": "joint-pd"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.008120233286693868,
+        "final_foot_error_m": 4.217379533024359e-05,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 162,
+        "solve_seconds": 10.239514667075127,
+        "objective": 701.2696932181681,
+        "duration_s": 1.8000000000000014,
+        "nodes": 181,
+        "stopping_criterion": 9.011019764146263e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "joint-pd",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 1.7999999999999126,
+        "duration_s": 1.8000000000000014,
+        "final_foot_gap_m": 0.005034674858989066,
+        "final_state_gap": 0.0823770783575558,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.5785929046024474,
+        "max_tangent_q_gap": 0.05106683754639378,
+        "min_pelvis_height_m": 0.7904551314904543
+      }
+    },
+    "steps1_dt20_weight3/fddp": {
+      "config": {
+        "steps": 1,
+        "dt": 0.02,
+        "control_weight": 3.0,
+        "tracking": "fddp"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.006642883494690999,
+        "final_foot_error_m": 9.26251582107311e-05,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 51,
+        "solve_seconds": 1.558360709110275,
+        "objective": 1701.734194368797,
+        "duration_s": 1.8000000000000012,
+        "nodes": 91,
+        "stopping_criterion": 6.101138619895873e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "fddp",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 1.7999999999999126,
+        "duration_s": 1.8000000000000012,
+        "final_foot_gap_m": 0.001985182725227599,
+        "final_state_gap": 0.056573052497733596,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 2.4988961692027205,
+        "max_tangent_q_gap": 0.07302025073981742,
+        "min_pelvis_height_m": 0.7905112503171966
+      }
+    },
+    "steps1_dt20_weight0.1/blended": {
+      "config": {
+        "steps": 1,
+        "dt": 0.02,
+        "control_weight": 0.1,
+        "tracking": "blended"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.008192316879170214,
+        "final_foot_error_m": 9.383933088476413e-05,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 190,
+        "solve_seconds": 5.976481874939054,
+        "objective": 708.5993945454858,
+        "duration_s": 1.8000000000000012,
+        "nodes": 91,
+        "stopping_criterion": 7.279913300301396e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "blended",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 1.7999999999999126,
+        "duration_s": 1.8000000000000012,
+        "final_foot_gap_m": 0.003567321028093285,
+        "final_state_gap": 0.026844297738395827,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.7094121874735524,
+        "max_tangent_q_gap": 0.036089431394026004,
+        "min_pelvis_height_m": 0.7902965954519576
+      }
+    },
+    "steps1_dt20_weight0.1/joint-pd": {
+      "config": {
+        "steps": 1,
+        "dt": 0.02,
+        "control_weight": 0.1,
+        "tracking": "joint-pd"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.008192316879170214,
+        "final_foot_error_m": 9.383933088476413e-05,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 190,
+        "solve_seconds": 5.976481874939054,
+        "objective": 708.5993945454858,
+        "duration_s": 1.8000000000000012,
+        "nodes": 91,
+        "stopping_criterion": 7.279913300301396e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "joint-pd",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 1.7999999999999126,
+        "duration_s": 1.8000000000000012,
+        "final_foot_gap_m": 0.005189700426970405,
+        "final_state_gap": 0.070344471843971,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.6168018772907706,
+        "max_tangent_q_gap": 0.04552256524607548,
+        "min_pelvis_height_m": 0.7903796971987778
+      }
+    },
+    "steps2_dt10_weight3/fddp": {
+      "config": {
+        "steps": 2,
+        "dt": 0.01,
+        "control_weight": 3.0,
+        "tracking": "fddp"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.006522524231227678,
+        "final_foot_error_m": 0.00013656832905401648,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 49,
+        "solve_seconds": 4.849550874903798,
+        "objective": 3418.9705062836433,
+        "duration_s": 2.99999999999998,
+        "nodes": 302,
+        "stopping_criterion": 7.621748170378528e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "fddp",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 2.9999999999997806,
+        "duration_s": 2.99999999999998,
+        "final_foot_gap_m": 0.004293435770499903,
+        "final_state_gap": 0.06309012371066648,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.618356910222964,
+        "max_tangent_q_gap": 0.06828076319487646,
+        "min_pelvis_height_m": 0.7906008002984241
+      }
+    },
+    "steps2_dt10_weight0.1/blended": {
+      "config": {
+        "steps": 2,
+        "dt": 0.01,
+        "control_weight": 0.1,
+        "tracking": "blended"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.00817235428819707,
+        "final_foot_error_m": 0.00021247692463410156,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 392,
+        "solve_seconds": 40.61811124999076,
+        "objective": 1405.0834903974817,
+        "duration_s": 2.99999999999998,
+        "nodes": 302,
+        "stopping_criterion": 9.309349293838314e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "blended",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 2.9999999999997806,
+        "duration_s": 2.99999999999998,
+        "final_foot_gap_m": 0.01017285175994342,
+        "final_state_gap": 0.04920704270044672,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.7256903731958273,
+        "max_tangent_q_gap": 0.06379971333636109,
+        "min_pelvis_height_m": 0.790250950990927
+      }
+    },
+    "steps2_dt10_weight0.1/joint-pd": {
+      "config": {
+        "steps": 2,
+        "dt": 0.01,
+        "control_weight": 0.1,
+        "tracking": "joint-pd"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.00817235428819707,
+        "final_foot_error_m": 0.00021247692463410156,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 392,
+        "solve_seconds": 40.61811124999076,
+        "objective": 1405.0834903974817,
+        "duration_s": 2.99999999999998,
+        "nodes": 302,
+        "stopping_criterion": 9.309349293838314e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "joint-pd",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 2.9999999999997806,
+        "duration_s": 2.99999999999998,
+        "final_foot_gap_m": 0.023942656644085236,
+        "final_state_gap": 0.08253988996020672,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.5943176089401416,
+        "max_tangent_q_gap": 0.06667075504021602,
+        "min_pelvis_height_m": 0.7903736533069541
+      }
+    },
+    "steps2_dt20_weight3/fddp": {
+      "config": {
+        "steps": 2,
+        "dt": 0.02,
+        "control_weight": 3.0,
+        "tracking": "fddp"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.006593009465165167,
+        "final_foot_error_m": 0.00020717012468546758,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 46,
+        "solve_seconds": 2.261019917204976,
+        "objective": 3439.144479217355,
+        "duration_s": 3.000000000000002,
+        "nodes": 152,
+        "stopping_criterion": 5.417271896606671e-05,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "fddp",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 2.9999999999997806,
+        "duration_s": 3.000000000000002,
+        "final_foot_gap_m": 0.004281100135437824,
+        "final_state_gap": 0.06599061165809976,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 2.779146801240494,
+        "max_tangent_q_gap": 0.08793006312551313,
+        "min_pelvis_height_m": 0.7904999614773871
+      }
+    },
+    "steps2_dt20_weight0.1/blended": {
+      "config": {
+        "steps": 2,
+        "dt": 0.02,
+        "control_weight": 0.1,
+        "tracking": "blended"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.008251615731582618,
+        "final_foot_error_m": 0.0004017793626583883,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 209,
+        "solve_seconds": 10.418834666954353,
+        "objective": 1420.2594932282932,
+        "duration_s": 3.000000000000002,
+        "nodes": 152,
+        "stopping_criterion": 9.753583189086327e-06,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "blended",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 2.9999999999997806,
+        "duration_s": 3.000000000000002,
+        "final_foot_gap_m": 0.014307275890217888,
+        "final_state_gap": 0.04362813773389579,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.7160160247606502,
+        "max_tangent_q_gap": 0.047638378857460875,
+        "min_pelvis_height_m": 0.7901911590336748
+      }
+    },
+    "steps2_dt20_weight0.1/joint-pd": {
+      "config": {
+        "steps": 2,
+        "dt": 0.02,
+        "control_weight": 0.1,
+        "tracking": "joint-pd"
+      },
+      "plan": {
+        "model_rollout_valid": true,
+        "rollout_gap": 0.0,
+        "torque_violation_nm": 0.0,
+        "joint_violation_rad": 0.0,
+        "wrench_violation": 0.008251615731582618,
+        "final_foot_error_m": 0.0004017793626583883,
+        "quaternion_norm_error": 1.1102230246251565e-16,
+        "joint_velocity_violation": 0.0,
+        "impulse_cone_violation": 0.0,
+        "impact_position_jump": 0.0,
+        "converged": true,
+        "iterations": 209,
+        "solve_seconds": 10.418834666954353,
+        "objective": 1420.2594932282932,
+        "duration_s": 3.000000000000002,
+        "nodes": 152,
+        "stopping_criterion": 9.753583189086327e-06,
+        "mass_matrix_errors": {
+          "pinocchio": 7.105427357601002e-15,
+          "contact": 5.329070518200751e-15,
+          "impact": 5.329070518200751e-15
+        }
+      },
+      "actual": {
+        "passed": true,
+        "tracking": {
+          "mode": "joint-pd",
+          "joint_kp": 400.0,
+          "joint_kd": 20.0,
+          "feedback_blend": 0.1
+        },
+        "failure": null,
+        "completed": true,
+        "elapsed_s": 2.9999999999997806,
+        "duration_s": 3.000000000000002,
+        "final_foot_gap_m": 0.01487966969758437,
+        "final_state_gap": 0.06039670148605481,
+        "clipping_ticks": 0,
+        "flight_ticks": 0,
+        "impact_state_overwrites": 0,
+        "max_state_gap": 1.6257298039301016,
+        "max_tangent_q_gap": 0.058920370772832006,
+        "min_pelvis_height_m": 0.7902755220551818
+      }
+    }
+  }
+}

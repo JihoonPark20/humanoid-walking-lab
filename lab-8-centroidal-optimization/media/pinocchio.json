@@ -1,0 +1,8 @@
+{
+  "samples": 5,
+  "mass_kg": 33.341142,
+  "map_error": 8.881784197001252e-16,
+  "link_sum_error": 8.881784197001252e-16,
+  "linear_momentum_error": 8.881784197001252e-16,
+  "passed": true
+}

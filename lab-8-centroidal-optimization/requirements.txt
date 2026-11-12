@@ -1,0 +1,2 @@
+-r ../lab-7-walking-optimization/requirements.txt
+casadi==3.8.2

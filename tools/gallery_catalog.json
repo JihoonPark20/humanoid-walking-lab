@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "width": 400,
+  "fps": 10,
+  "labs": [
+    {
+      "number": 1,
+      "path": "lab-1-2link-arm",
+      "title": {
+        "en": "2-Link Planar Arm",
+        "ko": "2-link 평면 로봇 팔",
+        "zh": "二连杆平面机械臂"
+      },
+      "source": "lab-1-2link-arm/media/c1_draw_square.mp4",
+      "start_s": 0,
+      "duration_s": 7.87,
+      "speed": 1,
+      "caption": {
+        "en": "Square trajectory tracking; original recorded demo.",
+        "ko": "정사각형 궤적 추종. 기존 실행 영상입니다.",
+        "zh": "正方形轨迹跟踪；原有实验录像。"
+      },
+      "plots": [
+        "lab-1-2link-arm/media/../docs/b1_trajectory_profiles.png"
+      ],
+      "results": []
+    },
+    {
+      "number": 2,
+      "path": "lab-2-Ur5e-robotics-lab",
+      "title": {
+        "en": "UR5e Kinematics",
+        "ko": "UR5e Kinematics",
+        "zh": "UR5e 运动学"
+      },
+      "source": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.mp4",
+      "start_s": 0,
+      "duration_s": 23.57,
+      "speed": 3,
+      "caption": {
+        "en": "3D cube tracking; 3× playback of the recorded demo.",
+        "ko": "3차원 큐브 추종. 기존 영상의 3배속 재생입니다.",
+        "zh": "三维立方体轨迹跟踪；原录像的 3 倍速播放。"
+      },
+      "plots": [],
+      "results": []
+    },
+    {
+      "number": 3,
+      "path": "lab-3-dynamics-force-control",
+      "title": {
+        "en": "Dynamics & Force Control",
+        "ko": "Dynamics와 힘 제어",
+        "zh": "动力学与力控制"
+      },
+      "source": "lab-3-dynamics-force-control/media/lab3_simulation.mp4",
+      "start_s": 5,
+      "duration_s": 12,
+      "speed": 1.5,
+      "caption": {
+        "en": "Contact line tracing; excerpt at 1.5×. Inspect force-error plots as well.",
+        "ko": "접촉면 선 추종. 1.5배속 발췌이며 힘 오차 그림도 함께 확인합니다.",
+        "zh": "接触面直线跟踪；1.5 倍速片段，请同时查看力误差图。"
+      },
+      "plots": [
+        "lab-3-dynamics-force-control/media/hybrid_force_control.png",
+        "lab-3-dynamics-force-control/media/impedance_6d_tracking.png"
+      ],
+      "results": []
+    },
+    {
+      "number": 4,
+      "path": "lab-4-motion-planning",
+      "title": {
+        "en": "Motion Planning",
+        "ko": "Motion Planning",
+        "zh": "运动规划"
+      },
+      "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
+      "start_s": 0,
+      "duration_s": 9.13,
+      "speed": 1,
+      "caption": {
+        "en": "Obstacle-avoiding arm motion; read clearance and tracking plots.",
+        "ko": "장애물 회피 동작. Clearance와 추종 오차를 함께 확인합니다.",
+        "zh": "机械臂避障运动；同时查看间隙与跟踪误差。"
+      },
+      "plots": [
+        "lab-4-motion-planning/media/capstone_clearance.png",
+        "lab-4-motion-planning/media/capstone_tracking.png"
+      ],
+      "results": []
+    },
+    {
+      "number": 5,
+      "path": "lab-5-locomotion",
+      "title": {
+        "en": "Balance & Weight Shifting",
+        "ko": "균형과 무게 이동",
+        "zh": "平衡与重心转移"
+      },
+      "source": "lab-5-locomotion/media/m3d_weight_shift.mp4",
+      "start_s": 0,
+      "duration_s": 3.67,
+      "speed": 1,
+      "caption": {
+        "en": "Quasi-static weight shifting with both feet in contact.",
+        "ko": "양발 접촉을 유지하는 준정적 무게 이동.",
+        "zh": "保持双脚接触的准静态重心转移。"
+      },
+      "plots": [
+        "lab-5-locomotion/media/m1_pelvis_height.png",
+        "lab-5-locomotion/media/m2_com_polygon.png",
+        "lab-5-locomotion/media/m3d_weight_shift_plot.png"
+      ],
+      "results": []
+    },
+    {
+      "number": 6,
+      "path": "lab-6-whole-body-control",
+      "title": {
+        "en": "Whole-Body Walking Control",
+        "ko": "Whole-body 보행 제어",
+        "zh": "全身行走控制"
+      },
+      "source": "lab-6-whole-body-control/media/m3_walking.mp4",
+      "start_s": 0,
+      "duration_s": 13.53,
+      "speed": 1.5,
+      "caption": {
+        "en": "DCM walking: 12 steps, 1.182 m; 1.5× playback.",
+        "ko": "DCM 보행: 12걸음, 1.182 m. 1.5배속 재생.",
+        "zh": "DCM 行走：12 步、1.182 m；1.5 倍速。"
+      },
+      "plots": [
+        "lab-6-whole-body-control/media/m0_standing_metrics.png",
+        "lab-6-whole-body-control/media/m1_reach_metrics.png",
+        "lab-6-whole-body-control/media/m2_stepping_metrics.png",
+        "lab-6-whole-body-control/media/m3_walking_metrics.png"
+      ],
+      "results": [
+        "lab-6-whole-body-control/media/m3_walking_summary.json"
+      ]
+    },
+    {
+      "number": 7,
+      "path": "lab-7-walking-optimization",
+      "title": {
+        "en": "Walking Trajectory Optimization",
+        "ko": "보행 궤적 최적화",
+        "zh": "行走轨迹优化"
+      },
+      "source": "lab-7-walking-optimization/media/g1/optimized_feet/walk.mp4",
+      "start_s": 0,
+      "duration_s": 8.6,
+      "speed": 1,
+      "caption": {
+        "en": "Optimized feet + CoM tracked in MuJoCo: 5/5 swings; final CoM error 15.15 mm.",
+        "ko": "발 위치·CoM 최적화의 MuJoCo 추종. Swing 5/5, 최종 CoM 오차 15.15 mm.",
+        "zh": "优化落脚点与 CoM 的 MuJoCo 跟踪：5/5 次摆动，最终 CoM 误差 15.15 mm。"
+      },
+      "plots": [
+        "lab-7-walking-optimization/media/offline/fixed/trajectory.png",
+        "lab-7-walking-optimization/media/offline/footsteps/trajectory.png",
+        "lab-7-walking-optimization/media/g1/optimized_feet/tracking.png"
+      ],
+      "results": [
+        "lab-7-walking-optimization/media/g1/optimized_feet/summary.json"
+      ]
+    },
+    {
+      "number": 8,
+      "path": "lab-8-centroidal-optimization",
+      "title": {
+        "en": "Centroidal Optimization",
+        "ko": "Centroidal 최적화",
+        "zh": "Centroidal 优化"
+      },
+      "source": "lab-8-centroidal-optimization/media/offline/centroidal.png",
+      "start_s": 0,
+      "duration_s": 0,
+      "speed": 1,
+      "caption": {
+        "en": "Reduced-model optimization: CoM height, momentum and contact forces. Not a robot rollout.",
+        "ko": "축소 모델의 CoM 높이·운동량·접촉력 최적화 결과입니다. 로봇 rollout은 아닙니다.",
+        "zh": "简化模型的 CoM 高度、动量及接触力优化；不是机器人 rollout。"
+      },
+      "plots": [
+        "lab-8-centroidal-optimization/media/offline/centroidal.png"
+      ],
+      "results": [
+        "lab-8-centroidal-optimization/media/offline/metrics.json",
+        "lab-8-centroidal-optimization/media/pinocchio.json"
+      ]
+    },
+    {
+      "number": 9,
+      "path": "lab-9-model-predictive-control",
+      "title": {
+        "en": "MPC, RTI & Observation Robustness",
+        "ko": "MPC·RTI·관측 강인성",
+        "zh": "MPC、RTI 与观测鲁棒性"
+      },
+      "source": "lab-9-model-predictive-control/media/g1/rti/mpc.mp4",
+      "start_s": 0,
+      "duration_s": 6.8,
+      "speed": 1,
+      "caption": {
+        "en": "G1 RTI with a 5 N lateral push: 6.7 s completed, final CoM error 0.922 mm.",
+        "ko": "5 N 측방 외란의 G1 RTI: 6.7초 완료, 최종 CoM 오차 0.922 mm.",
+        "zh": "G1 RTI 在 5 N 横向扰动下完成 6.7 s，最终 CoM 误差 0.922 mm。"
+      },
+      "plots": [
+        "lab-9-model-predictive-control/media/g1/rti/tracking.png",
+        "lab-9-model-predictive-control/media/observation_benchmark/noise_delay/seed_7/observations.png",
+        "lab-9-model-predictive-control/media/validated_scenarios/combined/comparison.png"
+      ],
+      "results": [
+        "lab-9-model-predictive-control/media/g1/rti/summary.json",
+        "lab-9-model-predictive-control/media/validated_scenarios/matrix.json",
+        "lab-9-model-predictive-control/media/observation_benchmark/matrix.json"
+      ]
+    },
+    {
+      "number": 10,
+      "path": "lab-10-whole-body-optimal-control",
+      "title": {
+        "en": "Whole-Body Optimal Control",
+        "ko": "Whole-body 최적제어",
+        "zh": "全身最优控制"
+      },
+      "source": "lab-10-whole-body-optimal-control/media/two_steps_validated/rollout.mp4",
+      "start_s": 0,
+      "duration_s": 3,
+      "speed": 1,
+      "caption": {
+        "en": "Two-step FDDP tracking: 3.0 s, final foot gap 4.29 mm, zero flight/clipping ticks.",
+        "ko": "두 걸음 FDDP 추종: 3.0초, 최종 발 오차 4.29 mm, flight·clipping 0 tick.",
+        "zh": "两步 FDDP 跟踪：3.0 s，最终足端误差 4.29 mm，无 flight/clipping tick。"
+      },
+      "plots": [
+        "lab-10-whole-body-optimal-control/media/one_step_validated/tracking.png",
+        "lab-10-whole-body-optimal-control/media/two_steps_validated/tracking.png"
+      ],
+      "results": [
+        "lab-10-whole-body-optimal-control/media/one_step_validated/mujoco_summary.json",
+        "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
+        "lab-10-whole-body-optimal-control/media/validated_scenarios/matrix.json"
+      ]
+    }
+  ]
+}
