@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP.
+Close view, 0.65×: the cyan CoM ring moves toward the white target while amber contact ZMP responds inside green support.
 
 [Source recording / image](media/m3d_weight_shift.mp4)
 

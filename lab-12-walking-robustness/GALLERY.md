@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-The red arrow marks a +10 N lateral push lasting 0.15 s. Observe the CoM, DCM and support response before and after the push.
+Left: no push. Right: +10 N lateral push for 0.15 s. Identical controller and synchronized 0.25× playback isolate the disturbance response; the red arrow marks when force is actually applied.
 
-[Source recording / image](media/demo/walk.mp4)
+[Right recording](media/demo/walk.mp4)
+
+[Left recording](../lab-11-contact-transitions/media/demo/walk.mp4)
 
 <details>
 <summary>Raw data (optional)</summary>

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "catalog_sha256": "6176bd2abe96d550ddf66ac15649ef32179c5c2afb6decf05e014837a93cad54",
+  "catalog_sha256": "4a6dbfa1bb21d74c538d8f21554d555d19d42324c1dc298fe72cbb1a83a014ce",
   "labs": [
     {
       "lab": 1,
@@ -9,12 +9,15 @@
           "source": "lab-1-2link-arm/media/c1_draw_square.mp4",
           "sha256": "b06be9f0de4c3757c8b1ec6a3f63416edce09486d24798eaaed6be0892be2062",
           "output": "lab-1-2link-arm/media/gallery/hero.gif",
+          "output_sha256": "055c4966e60ac2aed926726cdf28bc649d870eecf13f37e33605abbdf7c8f2fa",
           "clip": {
             "start_s": 0,
             "source_duration_s": 7.866666666666666,
             "speed": 1,
             "fps": 10,
             "frames": 79,
+            "crop": null,
+            "layout": "single",
             "palette_colors": 96,
             "palette_stats": "diff",
             "size_bytes": 340942
@@ -31,12 +34,15 @@
           "source": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.mp4",
           "sha256": "bfea97f49640e33dc22aed1ba197f28cdcbf6d729779de2ccc1d8fceb19df134",
           "output": "lab-2-Ur5e-robotics-lab/media/gallery/hero.gif",
+          "output_sha256": "ad38aad3b01661833368ad88d626799079e2cf8150b8f10945c5f206dd3ed3dd",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 30.03,
+            "source_duration_s": 30.033333333333335,
             "speed": 3,
             "fps": 10,
             "frames": 100,
+            "crop": null,
+            "layout": "single",
             "palette_colors": 96,
             "palette_stats": "diff",
             "size_bytes": 689232
@@ -53,12 +59,15 @@
           "source": "lab-3-dynamics-force-control/media/lab3_simulation.mp4",
           "sha256": "08ba288824912c8c1e154555d03c4689e8a3e9f55f6c979f1432a5da624e7cef",
           "output": "lab-3-dynamics-force-control/media/gallery/hero.gif",
+          "output_sha256": "bec55127aec21d9f4710d9eaab2b5e8e8c4a351d9f0a4bc1d0395ac0e2c5519a",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 11.13,
+            "source_duration_s": 11.133333333333333,
             "speed": 1,
             "fps": 10,
             "frames": 111,
+            "crop": null,
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
             "size_bytes": 2143319
@@ -75,12 +84,15 @@
           "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
           "sha256": "2b949c6a24f7c60fb8c66097518f9481c78c77430a2c0f2c2f4778c1ffe0a700",
           "output": "lab-4-motion-planning/media/gallery/hero.gif",
+          "output_sha256": "09f7b65ed8169338c142dfa8b0618f5a3251e306b1a92ca9b6741e6af5c2d262",
           "clip": {
             "start_s": 0,
             "source_duration_s": 75.66666666666667,
             "speed": 2,
             "fps": 15,
             "frames": 568,
+            "crop": null,
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
             "size_bytes": 5004023
@@ -97,15 +109,23 @@
           "source": "lab-5-locomotion/media/m3d_weight_shift.mp4",
           "sha256": "af0d50d2fd675cf7b73a926a22c168994ab56719bd22f3a7256922c90d978031",
           "output": "lab-5-locomotion/media/gallery/hero.gif",
+          "output_sha256": "02f765f8278c4638cec9316a6cf87c129a5c92b1566df1d65a5f2e8a2a128ced",
           "clip": {
             "start_s": 0,
             "source_duration_s": 3.5,
-            "speed": 1,
-            "fps": 10,
-            "frames": 35,
+            "speed": 0.65,
+            "fps": 15,
+            "frames": 81,
+            "crop": [
+              320,
+              180,
+              400,
+              400
+            ],
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 1404740
+            "size_bytes": 4154946
           },
           "verification": "lab-5-locomotion/media/m3d_weight_shift_summary.json",
           "verification_sha256": "9936ff9f6960a614590d36ba5522ec8af77fb9be64abe40d4ecf4ce4118337b1"
@@ -119,15 +139,23 @@
           "source": "lab-6-whole-body-control/media/m3_walking.mp4",
           "sha256": "0455be43efa918abc05e59c9e2220ba9ddddcfbb638500693929aa93e8bfbd43",
           "output": "lab-6-whole-body-control/media/gallery/hero.gif",
+          "output_sha256": "3c6d459336a75843719888e062b2627b34057c9d4f5e76113291cb8c1e81f038",
           "clip": {
-            "start_s": 0,
-            "source_duration_s": 13.8,
-            "speed": 1,
-            "fps": 8,
-            "frames": 110,
+            "start_s": 1.4,
+            "source_duration_s": 3.8,
+            "speed": 0.65,
+            "fps": 15,
+            "frames": 88,
+            "crop": [
+              340,
+              330,
+              320,
+              260
+            ],
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 10675612
+            "size_bytes": 7982848
           },
           "verification": "lab-6-whole-body-control/media/m3_walking_summary.json",
           "verification_sha256": "141df7d2d2aee161f706bc4ff289618bc553208b1a67bd78bef4d7dbac094ead"
@@ -141,15 +169,23 @@
           "source": "lab-7-walking-optimization/media/g1/optimized_feet/walk.mp4",
           "sha256": "a3eed897fc584ade331d2c599420bada42bfee6b0c35e87164360e38f8d35dbf",
           "output": "lab-7-walking-optimization/media/gallery/hero.gif",
+          "output_sha256": "531789783a42b05d9a1e0a5d11a5072e1810ba22b6fcf0c42d233c1332af740a",
           "clip": {
-            "start_s": 0,
-            "source_duration_s": 8.53,
-            "speed": 1,
-            "fps": 10,
-            "frames": 85,
+            "start_s": 1.0,
+            "source_duration_s": 4.8,
+            "speed": 0.7,
+            "fps": 15,
+            "frames": 103,
+            "crop": [
+              330,
+              240,
+              380,
+              360
+            ],
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 8314972
+            "size_bytes": 14039438
           },
           "verification": "lab-7-walking-optimization/media/g1/optimized_feet/summary.json",
           "verification_sha256": "d050d246d51f767c84069f781f6359ca5a56c5c96cf433a9e9b880eb3ec5e55f"
@@ -163,12 +199,15 @@
           "source": "lab-8-centroidal-optimization/media/offline/centroidal.mp4",
           "sha256": "5c9e550f37c2da136f98d57396f6b2d8c4c4426825ea409a6e04bcbf14134775",
           "output": "lab-8-centroidal-optimization/media/gallery/hero.gif",
+          "output_sha256": "a336965a9b1ef3988d608e33e673a3b674b1cdd9895819e0dbb8a6156fa39a7f",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 5.73,
+            "source_duration_s": 5.733333333333333,
             "speed": 1,
             "fps": 10,
             "frames": 57,
+            "crop": null,
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
             "size_bytes": 1082798
@@ -185,15 +224,23 @@
           "source": "lab-9-model-predictive-control/media/g1/rti/mpc.mp4",
           "sha256": "0bb828a89a6fa1bdbd99f87d7b7a72a433a95c962a89879600096b91f9fa44e9",
           "output": "lab-9-model-predictive-control/media/gallery/hero.gif",
+          "output_sha256": "0ccd4b9d5646b358c8a31c44e581fe0828305ab5ed3be41e5d51de37e8852035",
           "clip": {
-            "start_s": 0,
-            "source_duration_s": 6.73,
-            "speed": 1,
-            "fps": 12,
-            "frames": 81,
+            "start_s": 1.9,
+            "source_duration_s": 1.6,
+            "speed": 0.25,
+            "fps": 15,
+            "frames": 96,
+            "crop": [
+              320,
+              225,
+              400,
+              370
+            ],
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 6707981
+            "size_bytes": 5854239
           },
           "verification": "lab-9-model-predictive-control/media/g1/rti/summary.json",
           "verification_sha256": "d2020c87596a1f714e3bb8d23d339d3a66a0bb668caa7e286621b843d732f26d"
@@ -207,15 +254,23 @@
           "source": "lab-10-whole-body-optimal-control/media/two_steps_validated/rollout.mp4",
           "sha256": "f99654acb8f377c8b23a39d4d4d73c7cfd2e0d90e0498a9db5298e894518618f",
           "output": "lab-10-whole-body-optimal-control/media/gallery/hero.gif",
+          "output_sha256": "1a52f4355223e845fec8efb6eacacab661c10c1f33bcf4125afe7ac78e986c14",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 3.0,
-            "speed": 1,
-            "fps": 10,
-            "frames": 30,
+            "source_duration_s": 3,
+            "speed": 0.65,
+            "fps": 15,
+            "frames": 69,
+            "crop": [
+              300,
+              50,
+              440,
+              550
+            ],
+            "layout": "single",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 3023705
+            "size_bytes": 10143774
           },
           "verification": "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
           "verification_sha256": "01204a49373a2033727c3225342b5478ba012c8fa6ad4ba801ce9f6fc2db0055"
@@ -229,18 +284,51 @@
           "source": "lab-11-contact-transitions/media/demo/walk.mp4",
           "sha256": "9575517c36d5d39bf3d6292b78f4f608a879e210cc20c8b21f9df7e154a741f8",
           "output": "lab-11-contact-transitions/media/gallery/hero.gif",
+          "output_sha256": "96f7283ee8357a61fe621fccb720f320ab04ae9db81a0cc2d5e7dff9961b61d6",
           "clip": {
-            "start_s": 0,
-            "source_duration_s": 7.83,
-            "speed": 1,
-            "fps": 12,
-            "frames": 94,
+            "start_s": 1.3,
+            "source_duration_s": 1.3,
+            "speed": 0.25,
+            "fps": 15,
+            "frames": 78,
+            "crop": [
+              350,
+              340,
+              300,
+              240
+            ],
+            "layout": "comparison_left_primary_right",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 10177579
+            "size_bytes": 4935598
           },
           "verification": "lab-11-contact-transitions/media/demo/summary.json",
           "verification_sha256": "80c04369071edb6bc83ef612ad8e851226e6670187764af6b0403e0ea36b3e54"
+        },
+        {
+          "source": "lab-11-contact-transitions/media/legacy/walk.mp4",
+          "sha256": "c1ce879518bf30809924a940fa4848c843b458c21bb782a8f0d1a3747d8b4be5",
+          "output": "lab-11-contact-transitions/media/gallery/hero.gif",
+          "output_sha256": "96f7283ee8357a61fe621fccb720f320ab04ae9db81a0cc2d5e7dff9961b61d6",
+          "clip": {
+            "start_s": 1.3,
+            "source_duration_s": 1.3,
+            "speed": 0.25,
+            "fps": 15,
+            "frames": 78,
+            "crop": [
+              350,
+              340,
+              300,
+              240
+            ],
+            "layout": "comparison_left_primary_right",
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 4935598
+          },
+          "verification": "lab-11-contact-transitions/media/legacy/summary.json",
+          "verification_sha256": "061ae8ad4fa93515c14af084639fd6c059ccb4550897c023dd2eb2f85b311cde"
         }
       ]
     },
@@ -251,18 +339,51 @@
           "source": "lab-12-walking-robustness/media/demo/walk.mp4",
           "sha256": "30325ea3fa58ebfc49dfca3c91814b4a87a780fab698d32585ce725a0e7167ca",
           "output": "lab-12-walking-robustness/media/gallery/hero.gif",
+          "output_sha256": "b8e4c471754cbc6e97ca80a3fc547dde2fa2b88780a93dfd101ff9cf5164dd74",
           "clip": {
-            "start_s": 0,
-            "source_duration_s": 7.83,
-            "speed": 1,
-            "fps": 12,
-            "frames": 94,
+            "start_s": 1.3,
+            "source_duration_s": 1.5,
+            "speed": 0.25,
+            "fps": 15,
+            "frames": 90,
+            "crop": [
+              210,
+              230,
+              440,
+              350
+            ],
+            "layout": "comparison_left_primary_right",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 8873882
+            "size_bytes": 6121234
           },
           "verification": "lab-12-walking-robustness/media/demo/summary.json",
           "verification_sha256": "f68984c807816c74dff8693a826f959dc4ae49f7ce13539ff4896ac63de293a8"
+        },
+        {
+          "source": "lab-11-contact-transitions/media/demo/walk.mp4",
+          "sha256": "9575517c36d5d39bf3d6292b78f4f608a879e210cc20c8b21f9df7e154a741f8",
+          "output": "lab-12-walking-robustness/media/gallery/hero.gif",
+          "output_sha256": "b8e4c471754cbc6e97ca80a3fc547dde2fa2b88780a93dfd101ff9cf5164dd74",
+          "clip": {
+            "start_s": 1.3,
+            "source_duration_s": 1.5,
+            "speed": 0.25,
+            "fps": 15,
+            "frames": 90,
+            "crop": [
+              210,
+              230,
+              440,
+              350
+            ],
+            "layout": "comparison_left_primary_right",
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 6121234
+          },
+          "verification": "lab-11-contact-transitions/media/demo/summary.json",
+          "verification_sha256": "80c04369071edb6bc83ef612ad8e851226e6670187764af6b0403e0ea36b3e54"
         }
       ]
     },
@@ -273,18 +394,51 @@
           "source": "lab-13-adaptive-footsteps/media/demo/walk.mp4",
           "sha256": "d02f89e94afc561bca318604652190a6e7b7b74ad5de956a706a29660bdb3a9b",
           "output": "lab-13-adaptive-footsteps/media/gallery/hero.gif",
+          "output_sha256": "b6f30be22d0846ff6a17713c7cd78f12149cef9a019e2349d97da0524fe4d078",
           "clip": {
-            "start_s": 0,
-            "source_duration_s": 7.83,
-            "speed": 1,
-            "fps": 12,
-            "frames": 94,
+            "start_s": 1.5,
+            "source_duration_s": 2.2,
+            "speed": 0.3,
+            "fps": 15,
+            "frames": 110,
+            "crop": [
+              350,
+              340,
+              300,
+              240
+            ],
+            "layout": "comparison_left_primary_right",
             "palette_colors": 256,
             "palette_stats": "full",
-            "size_bytes": 8916954
+            "size_bytes": 8886633
           },
           "verification": "lab-13-adaptive-footsteps/media/demo/summary.json",
           "verification_sha256": "9314c1739c6aa1c622957fdf3bcf7568d14cd26f68b3a0dedf848c8f74b34f39"
+        },
+        {
+          "source": "lab-12-walking-robustness/media/demo/walk.mp4",
+          "sha256": "30325ea3fa58ebfc49dfca3c91814b4a87a780fab698d32585ce725a0e7167ca",
+          "output": "lab-13-adaptive-footsteps/media/gallery/hero.gif",
+          "output_sha256": "b6f30be22d0846ff6a17713c7cd78f12149cef9a019e2349d97da0524fe4d078",
+          "clip": {
+            "start_s": 1.5,
+            "source_duration_s": 2.2,
+            "speed": 0.3,
+            "fps": 15,
+            "frames": 110,
+            "crop": [
+              350,
+              340,
+              300,
+              240
+            ],
+            "layout": "comparison_left_primary_right",
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 8886633
+          },
+          "verification": "lab-12-walking-robustness/media/demo/summary.json",
+          "verification_sha256": "f68984c807816c74dff8693a826f959dc4ae49f7ce13539ff4896ac63de293a8"
         }
       ]
     }

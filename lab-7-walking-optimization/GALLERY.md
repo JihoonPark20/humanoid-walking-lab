@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution.
+Close view, 0.7×: compare gray seed footprints with violet optimized footsteps and CoM. Cyan is measured motion; the plan stays fixed during execution.
 
 [Source recording / image](media/g1/optimized_feet/walk.mp4)
 

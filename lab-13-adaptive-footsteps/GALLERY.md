@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Gray footprints are the original plan; violet footprints show adjusted landings after the push. Watch the swing path update while contact timing stays fixed.
+Left: fixed footsteps. Right: adaptive placement under the same push (0.3×). On the right, the violet landing shifts 4 cm laterally away from the gray original footprint and the swing path updates; timing stays fixed. This shows a changed response, not superiority on every metric.
 
-[Source recording / image](media/demo/walk.mp4)
+[Right recording](media/demo/walk.mp4)
+
+[Left recording](../lab-12-walking-robustness/media/demo/walk.mp4)
 
 <details>
 <summary>Raw data (optional)</summary>

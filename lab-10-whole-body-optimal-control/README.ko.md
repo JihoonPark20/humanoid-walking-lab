@@ -6,7 +6,7 @@ Box-FDDP로 contact/impact Dynamics를 최적화하고 MuJoCo에서 추종합니
 
 ![Demo](media/gallery/hero.gif)
 
-반투명 로봇은 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 오프라인 기준 자세와 FDDP feedback으로 움직이는 로봇을 비교하세요.
+확대·0.65배속: 반투명 로봇은 0.25/0.50초 뒤의 오프라인 관절 계획입니다. 실제 로봇이 FDDP feedback으로 추종하는 모습을 비교하세요.
 
 [데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 

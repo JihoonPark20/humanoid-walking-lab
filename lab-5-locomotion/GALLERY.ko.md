@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-초록 지지 영역 안에서 청록 CoM 원이 흰 목표로 이동하는 모습을 보세요. 주황은 접촉 ZMP입니다.
+확대·0.65배속: 청록 CoM 원이 흰 목표로 이동할 때 초록 지지 영역 안의 주황 접촉 ZMP가 어떻게 반응하는지 보세요.
 
 [원본 영상 / 이미지](media/m3d_weight_shift.mp4)
 

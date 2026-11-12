@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-学习根据测量 DCM 调整落脚位置，同时保持 Swing 连续性与固定接触时间。
+左：固定落脚点；右：相同外力下的自适应落脚（0.3 倍速）。右侧紫色落脚点相对灰色原始脚印横移 4 cm，Swing 路径随之更新，接触时间不变。此处展示响应变化，不代表每项指标都更优。
 
 [演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [环境设置](../docs/SETUP.zh-CN.md)
 

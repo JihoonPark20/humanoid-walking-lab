@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-빨간 화살표는 0.15초 동안 가한 +10 N 횡방향 외란입니다. 외란 전후의 CoM·DCM과 지지 영역 변화를 관찰하세요.
+왼쪽은 외란 없음, 오른쪽은 0.15초의 +10 N 횡방향 외란입니다. 동일 제어기를 같은 시점·0.25배속으로 비교하세요. 빨간 화살표가 표시되는 동안 실제 외력이 가해집니다.
 
-[원본 영상 / 이미지](media/demo/walk.mp4)
+[오른쪽 원본 영상](media/demo/walk.mp4)
+
+[왼쪽 원본 영상](../lab-11-contact-transitions/media/demo/walk.mp4)
 
 <details>
 <summary>원시 데이터 (선택)</summary>

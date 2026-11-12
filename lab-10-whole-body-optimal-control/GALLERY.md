@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Translucent robots show optimized joint poses 0.25/0.50 s ahead. Compare the offline reference with the solid robot under FDDP feedback.
+Close view, 0.65×: translucent robots show offline joint poses 0.25/0.50 s ahead. The solid robot tracks this plan with FDDP feedback.
 
 [Source recording / image](media/two_steps_validated/rollout.mp4)
 

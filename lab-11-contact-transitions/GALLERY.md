@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-The violet arc shows the remaining C2 swing reference; amber marks measured ZMP. Observe foot lift, landing and support changes together.
+Left: legacy sine swing. Right: C2 swing. The same first step at 0.25× shows how the foot and violet reference approach landing. C2 smooths reference endpoints; this comparison does not establish lower impact.
 
-[Source recording / image](media/demo/walk.mp4)
+[Right recording](media/demo/walk.mp4)
+
+[Left recording](media/legacy/walk.mp4)
 
 <details>
 <summary>Raw data (optional)</summary>

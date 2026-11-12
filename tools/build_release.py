@@ -13,6 +13,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from tools.build_gallery import check_comparison
 from tools.walking_evidence import verify_recording, verify_trial
 
 ROOT_FILES = {
@@ -453,20 +454,46 @@ def validate(files: list[Path]) -> None:
         source = ROOT / lab["source"]
         if source.suffix != ".mp4":
             continue
-        matching = [a for a in assets if a.get("source") == lab["source"]]
-        if not matching:
-            errors.append(f"Missing gallery evidence: {lab['path']}")
-            continue
-        asset = matching[0]
-        if (
-            asset.get("sha256") != hashlib.sha256(source.read_bytes()).hexdigest()
-            or asset.get("verification_sha256")
-            != hashlib.sha256((ROOT / lab["verification"]).read_bytes()).hexdigest()
-            or (ROOT / asset["output"]).resolve() not in included
-        ):
-            errors.append(
-                f"Gallery is not linked to the current passing recording: {lab['path']}"
-            )
+        recordings = [lab]
+        if "comparison" in lab:
+            recordings.append(lab["comparison"])
+            try:
+                check_comparison(lab)
+            except (ValueError, KeyError, FileNotFoundError) as exc:
+                errors.append(f"Invalid gallery comparison: {lab['path']}: {exc}")
+        for recording in recordings:
+            matching = [a for a in assets if a.get("source") == recording["source"]]
+            if not matching:
+                errors.append(f"Missing gallery evidence: {recording['source']}")
+                continue
+            asset = matching[0]
+            output = ROOT / asset["output"]
+            clip = asset.get("clip", {})
+            expected_clip = {
+                "start_s": lab["start_s"],
+                "source_duration_s": lab["duration_s"],
+                "speed": lab["speed"],
+                "crop": lab.get("crop"),
+                "layout": "comparison_left_primary_right"
+                if "comparison" in lab
+                else "single",
+            }
+            if (
+                asset.get("sha256")
+                != hashlib.sha256((ROOT / recording["source"]).read_bytes()).hexdigest()
+                or asset.get("verification_sha256")
+                != hashlib.sha256(
+                    (ROOT / recording["verification"]).read_bytes()
+                ).hexdigest()
+                or output.resolve() not in included
+                or not output.exists()
+                or asset.get("output_sha256")
+                != hashlib.sha256(output.read_bytes()).hexdigest()
+                or any(clip.get(key) != value for key, value in expected_clip.items())
+            ):
+                errors.append(
+                    f"Gallery does not match its recording or crop: {recording['source']}"
+                )
     if errors:
         raise ValueError("\n".join(errors))
 

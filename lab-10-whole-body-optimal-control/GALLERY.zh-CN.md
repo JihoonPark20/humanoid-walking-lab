@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-半透明机器人显示提前 0.25/0.50 s 的优化关节姿态。比较离线参考姿态与 FDDP feedback 下的实体机器人。
+放大、0.65 倍速：半透明机器人显示提前 0.25/0.50 s 的离线关节计划，实体机器人通过 FDDP feedback 跟踪。
 
 [原始视频 / 图像](media/two_steps_validated/rollout.mp4)
 

@@ -6,7 +6,7 @@ Control G1 walking with inverse-dynamics QP, contact wrenches and DCM tracking.
 
 ![Demo](media/gallery/hero.gif)
 
-Watch support switch between one and two feet while DCM (violet) and contact ZMP (amber) evolve (1× playback).
+Foot-level view, 0.65×: watch the loaded support hull change from two feet to one and back. Compare violet DCM with amber contact ZMP.
 
 [Demo](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 

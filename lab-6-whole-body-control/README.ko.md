@@ -6,7 +6,7 @@ Inverse-dynamics QP, contact wrench와 DCM 추종으로 G1 보행을 제어합�
 
 ![Demo](media/gallery/hero.gif)
 
-한발·양발 지지 영역이 바뀔 때 DCM(보라)과 접촉 ZMP(주황)의 움직임을 보세요(1배속).
+발 주변 확대·0.65배속: 양발→한발→양발로 실제 지지 영역이 바뀌는 모습을 보세요. 보라 DCM과 주황 접촉 ZMP를 비교하세요.
 
 [데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 

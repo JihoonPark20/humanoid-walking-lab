@@ -6,7 +6,7 @@ Offline LIPM 궤적·발 디딤·시간 후보를 최적화하고 G1에서 추�
 
 ![Demo](media/gallery/hero.gif)
 
-초기 발 디딤(회색), 최적화된 발 디딤·CoM(보라), 실제 CoM(청록)을 비교하세요. 실행 중 계획은 고정됩니다.
+확대·0.7배속: 회색 초기 발자국과 보라 최적화 발 디딤·CoM을 비교하세요. 청록은 실제 움직임이며 실행 중 계획은 고정됩니다.
 
 [데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 

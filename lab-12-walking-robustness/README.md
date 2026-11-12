@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Explore how pushes, friction and mass mismatch affect walking with the same controller.
+Left: no push. Right: +10 N lateral push for 0.15 s. Identical controller and synchronized 0.25× playback isolate the disturbance response; the red arrow marks when force is actually applied.
 
 [Demo](GALLERY.md) · [Study notes](docs/README.md) · [Setup](../docs/SETUP.md)
 

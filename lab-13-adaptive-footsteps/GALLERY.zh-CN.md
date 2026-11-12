@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-灰色脚印为原计划，紫色为受扰动后调整的落脚点。观察接触时间不变时 Swing 路径如何更新。
+左：固定落脚点；右：相同外力下的自适应落脚（0.3 倍速）。右侧紫色落脚点相对灰色原始脚印横移 4 cm，Swing 路径随之更新，接触时间不变。此处展示响应变化，不代表每项指标都更优。
 
-[原始视频 / 图像](media/demo/walk.mp4)
+[右侧原始视频](media/demo/walk.mp4)
+
+[左侧原始视频](../lab-12-walking-robustness/media/demo/walk.mp4)
 
 <details>
 <summary>原始数据（可选）</summary>

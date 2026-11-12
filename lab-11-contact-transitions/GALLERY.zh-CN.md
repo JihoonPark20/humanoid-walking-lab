@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-紫色曲线为剩余 C2 Swing reference，橙色为测量 ZMP。结合观察抬脚、落地与支撑区域的变化。
+左：原有 sine Swing；右：C2 Swing。同一首步以 0.25 倍速播放，比较足端与紫色参考轨迹接近落地的过程。C2 平滑参考端点，此对比不证明冲击更小。
 
-[原始视频 / 图像](media/demo/walk.mp4)
+[右侧原始视频](media/demo/walk.mp4)
+
+[左侧原始视频](media/legacy/walk.mp4)
 
 <details>
 <summary>原始数据（可选）</summary>

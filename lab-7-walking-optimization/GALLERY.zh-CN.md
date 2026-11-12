@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-比较初始落脚点（灰色）、优化落脚点与 CoM（紫色）、实际 CoM（青色）。执行期间计划保持不变。
+放大、0.7 倍速：比较灰色初始脚印与紫色优化落脚点及 CoM。青色为实际运动，执行期间计划保持不变。
 
 [原始视频 / 图像](media/g1/optimized_feet/walk.mp4)
 

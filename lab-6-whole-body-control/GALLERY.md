@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Watch support switch between one and two feet while DCM (violet) and contact ZMP (amber) evolve (1× playback).
+Foot-level view, 0.65×: watch the loaded support hull change from two feet to one and back. Compare violet DCM with amber contact ZMP.
 
 [Source recording / image](media/m3_walking.mp4)
 

@@ -33,20 +33,47 @@ def digest(path: Path) -> str:
     return checksum.hexdigest()
 
 
+def crop_filter(crop: list | None, size: tuple) -> str:
+    """Validate pixel coordinates before passing a crop to FFmpeg."""
+    if crop is None:
+        return ""
+    if len(crop) != 4 or any(type(value) is not int for value in crop):
+        raise ValueError("Crop must be four integer pixel coordinates")
+    x, y, width, height = crop
+    if min(x, y) < 0 or min(width, height) <= 0:
+        raise ValueError("Crop must have positive dimensions")
+    if x + width > size[0] or y + height > size[1]:
+        raise ValueError("Crop extends beyond the source recording")
+    return f"crop={width}:{height}:{x}:{y},"
+
+
 def make_gif(source: Path, target: Path, entry: dict, width: int, fps: int) -> dict:
-    """Apply a bounded clip and explicit playback speed using one shared palette."""
-    reader = imageio.get_reader(source)
-    metadata = reader.get_meta_data()
-    reader.close()
-    start = entry["start_s"]
-    duration = min(entry["duration_s"], metadata["duration"] - start)
-    if start < 0 or duration <= 0 or entry["speed"] <= 0:
+    """Crop recorded pixels and synchronize comparisons without changing motion."""
+    sources = [source]
+    if "comparison" in entry:
+        sources.append(ROOT / entry["comparison"]["source"])
+    inputs, branches = [], []
+    start, duration, speed = entry["start_s"], entry["duration_s"], entry["speed"]
+    if start < 0 or duration <= 0 or speed <= 0:
         raise ValueError(f"Invalid clip: {source}")
+    for index, path in enumerate(sources):
+        reader = imageio.get_reader(path)
+        metadata = reader.get_meta_data()
+        reader.close()
+        if start + duration > metadata["duration"] + 0.04:
+            raise ValueError(f"Requested interval exceeds recording: {path}")
+        crop = crop_filter(entry.get("crop"), metadata["size"])
+        inputs.extend(["-ss", str(start), "-t", str(duration), "-i", str(path)])
+        branches.append(
+            f"[{index}:v]{crop}setpts=(PTS-STARTPTS)/{speed},fps={fps},"
+            f"scale={width // len(sources)}:-1:flags=lanczos,setsar=1[v{index}];"
+        )
+    # Primary experiment is on the right, its controlled comparison on the left.
+    layout = "[v1][v0]hstack=inputs=2:shortest=1," if len(sources) == 2 else "[v0]"
     colors = entry.get("palette_colors", 96)
     palette_stats = entry.get("palette_stats", "diff")
     filters = (
-        f"setpts=(PTS-STARTPTS)/{entry['speed']},fps={fps},"
-        f"scale={width}:-1:flags=lanczos,split[a][b];"
+        "".join(branches) + layout + "split[a][b];"
         f"[a]palettegen=max_colors={colors}:stats_mode={palette_stats}:reserve_transparent=0[p];"
         "[b][p]paletteuse=dither=none"
     )
@@ -57,12 +84,7 @@ def make_gif(source: Path, target: Path, entry: dict, width: int, fps: int) -> d
             "-loglevel",
             "error",
             "-y",
-            "-ss",
-            str(start),
-            "-t",
-            str(duration),
-            "-i",
-            str(source),
+            *inputs,
             "-filter_complex",
             filters,
             "-loop",
@@ -78,13 +100,43 @@ def make_gif(source: Path, target: Path, entry: dict, width: int, fps: int) -> d
     return {
         "start_s": start,
         "source_duration_s": duration,
-        "speed": entry["speed"],
+        "speed": speed,
         "fps": fps,
         "frames": frames,
+        "crop": entry.get("crop"),
+        "layout": "comparison_left_primary_right" if len(sources) == 2 else "single",
         "palette_colors": colors,
         "palette_stats": palette_stats,
         "size_bytes": target.stat().st_size,
     }
+
+
+def recording_result(entry: dict) -> dict:
+    """Accept only a video linked to its own successful physical run."""
+    source, evidence = ROOT / entry["source"], ROOT / entry["verification"]
+    result = json.loads(evidence.read_text())
+    if result.get("passed") is not True or result.get("video_sha256") != digest(source):
+        raise ValueError(f"Video lacks a matching passing result: {source}")
+    return result
+
+
+def check_comparison(entry: dict) -> None:
+    """Require the same controller and case except the stated experimental factor."""
+    primary = recording_result(entry)
+    other = recording_result(entry["comparison"])
+    for key in (
+        "controller_settings",
+        "source_sha256",
+        "duration_s",
+        "sample_interval_s",
+    ):
+        if key not in primary or primary[key] != other.get(key):
+            raise ValueError(f"Comparison differs in {key}")
+    allowed = {"name", *entry["comparison"].get("changed_case_fields", [])}
+    left = {k: v for k, v in other["case"].items() if k not in allowed}
+    right = {k: v for k, v in primary["case"].items() if k not in allowed}
+    if left != right:
+        raise ValueError("Comparison changes an unrelated physical condition")
 
 
 def build_lab(entry: dict, width: int, fps: int) -> dict:
@@ -93,29 +145,30 @@ def build_lab(entry: dict, width: int, fps: int) -> dict:
     source = ROOT / entry["source"]
     assets = []
     if source.suffix == ".mp4":
-        evidence = ROOT / entry["verification"]
-        result = json.loads(evidence.read_text())
-        if result.get("passed") is not True or result.get("video_sha256") != digest(
-            source
-        ):
-            raise ValueError(
-                f"Video lacks a matching passing result; rerun its recorder: {source}"
-            )
+        recording_result(entry)
+        if "comparison" in entry:
+            check_comparison(entry)
         target = lab / "media" / "gallery" / "hero.gif"
         target.parent.mkdir(parents=True, exist_ok=True)
         clip = make_gif(
             source, target, entry, entry.get("width", width), entry.get("fps", fps)
         )
-        assets.append(
-            {
-                "source": entry["source"],
-                "sha256": digest(source),
-                "output": str(target.relative_to(ROOT)),
-                "clip": clip,
-                "verification": entry["verification"],
-                "verification_sha256": digest(evidence),
-            }
-        )
+        for recording in [
+            entry,
+            *([entry["comparison"]] if "comparison" in entry else []),
+        ]:
+            evidence = ROOT / recording["verification"]
+            assets.append(
+                {
+                    "source": recording["source"],
+                    "sha256": digest(ROOT / recording["source"]),
+                    "output": str(target.relative_to(ROOT)),
+                    "output_sha256": digest(target),
+                    "clip": clip,
+                    "verification": recording["verification"],
+                    "verification_sha256": digest(evidence),
+                }
+            )
     else:
         target = source
     write_gallery(entry, target)
@@ -141,6 +194,21 @@ def write_gallery(entry: dict, target: Path) -> None:
             entry["caption"][language],
             f"[{labels[0]}]({source.relative_to(lab).as_posix()})",
         ]
+        if "comparison" in entry:
+            right = {
+                "en": "Right recording",
+                "ko": "오른쪽 원본 영상",
+                "zh": "右侧原始视频",
+            }[language]
+            text[-1] = f"[{right}]({source.relative_to(lab).as_posix()})"
+            other = ROOT / entry["comparison"]["source"]
+            link = Path(os.path.relpath(other, lab)).as_posix()
+            name = {
+                "en": "Left recording",
+                "ko": "왼쪽 원본 영상",
+                "zh": "左侧原始视频",
+            }[language]
+            text.append(f"[{name}]({link})")
         if entry["plots"]:
             text.append(f"## {labels[2]}")
         for relative in entry["plots"]:

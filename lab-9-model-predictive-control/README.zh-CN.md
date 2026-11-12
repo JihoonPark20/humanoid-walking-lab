@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-紫色球体与轨迹为当前 CoM 预测，灰色为原始计划。观察红色外力箭头出现前后预测如何变化。
+外力响应特写、0.25 倍速：紫色 CoM 预测随红色外力变化，灰色仍为原计划。这里预测 CoM，而非未来关节姿态。
 
 [演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 

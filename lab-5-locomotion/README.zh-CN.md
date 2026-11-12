@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。
+放大、0.65 倍速：观察青色 CoM 圆环移向白色目标时，绿色支撑区内橙色接触 ZMP 的响应。
 
 [演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 

@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-반투명 로봇은 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 오프라인 기준 자세와 FDDP feedback으로 움직이는 로봇을 비교하세요.
+확대·0.65배속: 반투명 로봇은 0.25/0.50초 뒤의 오프라인 관절 계획입니다. 실제 로봇이 FDDP feedback으로 추종하는 모습을 비교하세요.
 
 [원본 영상 / 이미지](media/two_steps_validated/rollout.mp4)
 

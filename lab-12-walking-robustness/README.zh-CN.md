@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-使用同一控制器，比较外力、摩擦与质量误差对行走的影响。
+左：无外力；右：持续 0.15 s 的 +10 N 侧向外力。相同控制器、同步 0.25 倍速播放，便于比较扰动响应；红色箭头表示实际施力时段。
 
 [演示](GALLERY.zh-CN.md) · [学习笔记](docs/README.zh-CN.md) · [环境设置](../docs/SETUP.zh-CN.md)
 

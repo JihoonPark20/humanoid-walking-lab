@@ -6,7 +6,7 @@ Full-NLP MPC와 single-QP RTI로 재계획하고 지연·모델 오차·관측 �
 
 ![Demo](media/gallery/hero.gif)
 
-보라 구와 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 외란 화살표 전후로 예측이 어떻게 달라지는지 보세요.
+외란 전후 확대·0.25배속: 빨간 외란에 따라 보라 CoM 예측이 바뀌며 회색 원래 계획은 유지됩니다. 미래 관절 자세가 아닌 CoM 예측입니다.
 
 [데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 

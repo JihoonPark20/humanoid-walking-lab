@@ -6,7 +6,7 @@ Floating-base 상태, CoM, Whole-body IK와 양발 접촉 균형을 익힙니다
 
 ![Demo](media/gallery/hero.gif)
 
-초록 지지 영역 안에서 청록 CoM 원이 흰 목표로 이동하는 모습을 보세요. 주황은 접촉 ZMP입니다.
+확대·0.65배속: 청록 CoM 원이 흰 목표로 이동할 때 초록 지지 영역 안의 주황 접촉 ZMP가 어떻게 반응하는지 보세요.
 
 [데모](GALLERY.ko.md) · [학습 노트](docs/README.ko.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 

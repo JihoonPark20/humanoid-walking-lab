@@ -6,7 +6,7 @@ Learn floating-base states, CoM, Whole-body IK and balance with both feet in con
 
 ![Demo](media/gallery/hero.gif)
 
-Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP.
+Close view, 0.65×: the cyan CoM ring moves toward the white target while amber contact ZMP responds inside green support.
 
 [Demo](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 

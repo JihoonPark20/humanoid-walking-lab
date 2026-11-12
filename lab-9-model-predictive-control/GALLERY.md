@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Watch how the prediction changes around the red push arrow.
+Push-response close-up, 0.25×: violet CoM predictions change around the red push; gray remains the nominal plan. This predicts CoM, not future joint poses.
 
 [Source recording / image](media/g1/rti/mpc.mp4)
 

@@ -4,9 +4,11 @@
 
 ![Demo](media/gallery/hero.gif)
 
-보라 곡선은 남은 C2 Swing reference, 주황은 측정 ZMP입니다. 발 들기·착지와 지지 영역의 변화를 함께 보세요.
+왼쪽은 기존 sine Swing, 오른쪽은 C2 Swing입니다. 같은 첫 걸음을 0.25배속으로 보며 발과 보라 기준 궤적이 착지에 접근하는 모습을 비교하세요. C2는 기준 궤적 끝점을 매끄럽게 하며, 충격 감소를 뜻하지는 않습니다.
 
-[원본 영상 / 이미지](media/demo/walk.mp4)
+[오른쪽 원본 영상](media/demo/walk.mp4)
+
+[왼쪽 원본 영상](media/legacy/walk.mp4)
 
 <details>
 <summary>원시 데이터 (선택)</summary>
