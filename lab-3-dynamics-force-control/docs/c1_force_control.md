@@ -60,13 +60,16 @@ The recording callback observes the simulator; it does not implement another con
 
 A spherical probe (radius 10 mm, offset 60 mm beyond the pinch frame) slides on a flat
 plate with sliding friction **μ = 0.05**. Probe mass is neglected in this teaching model.
+The fingers start closed and are held by their actuator at command 230/255; the
+probe remains rigidly mounted to the tool body. Finger poses are not overwritten during simulation.
 This isolates hybrid control from articulated-finger contact and is not a gripper-polishing benchmark.
 Pinocchio and MuJoCo probe poses are cross-validated in `test_recorded_demo.py`.
 
 The release scenario traces 50 mm in 6 s at 5 N after a 10 mm/s approach and 1.5 s settling.
 Acceptance requires >90% of raw **and** filtered trace-force samples within 5 ± 1 N,
 peak force <15 N over the entire run, XY error <5 mm, orientation error <5°, completion,
-and zero non-probe tabletop contacts. Full approach/settle/trace/hold phases remain in the video.
+zero non-probe tabletop contacts, and both gripper driver angles >0.65 rad throughout.
+Full approach/settle/trace/hold phases remain in the video.
 
 ## Architecture
 

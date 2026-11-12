@@ -18,7 +18,7 @@ from centroidal_model import validate_centroidal
 
 from tools.walking_visuals import FPS, Overlay, WalkingVisualizer
 
-SCENE = """<mujoco><visual><global offwidth="640" offheight="560"/>
+SCENE = """<mujoco><visual><global offwidth="960" offheight="640"/>
 <headlight ambient="0.5 0.5 0.5" diffuse="0.7 0.7 0.7"/></visual>
 <worldbody><light pos="0 -1 3"/><geom name="floor" type="plane" size="3 3 .01" rgba=".13 .20 .28 1"/></worldbody></mujoco>"""
 
@@ -81,12 +81,6 @@ def main() -> None:
                         planned_support=np.asarray(patches),
                         forces=[
                             (feet[i], wrench[i, :3]) for i in range(2) if active[i]
-                        ],
-                        phase="Optimized reduced model / no robot",
-                        values=[
-                            f"Fz left / right: {wrench[0, 2]:.0f} / {wrench[1, 2]:.0f} N",
-                            f"Height change: {(state[2] - plan.states[0, 2]) * 1000:+.1f} mm",
-                            f"Angular momentum: {np.linalg.norm(state[6:]):.4f} kg m2/s",
                         ],
                     ),
                 )

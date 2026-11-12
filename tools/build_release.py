@@ -58,6 +58,8 @@ def release_files() -> list[Path]:
                 continue
             if not path.is_file() or not path.resolve().is_relative_to(ROOT):
                 continue
+            if path.name.endswith(".pending.mp4"):
+                continue
             if "third_party" in path.resolve().relative_to(ROOT).parts:
                 continue
             if path.suffix in SUFFIXES or path.name.startswith("LICENSE"):

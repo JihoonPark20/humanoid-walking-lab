@@ -4,15 +4,19 @@
     "tracking": true,
     "final_configuration": true,
     "clearance": true,
-    "no_contacts": true
+    "no_contacts": true,
+    "executed_mesh_clearance": true
   },
   "rms_error_rad": 0.0005820822760545899,
   "final_error_rad": 0.0001533567374485239,
   "min_sampled_clearance_m": 0.03045310367225975,
   "clearance_samples": 360,
   "max_contact_count": 0,
+  "min_executed_geometry_clearance_m": 0.030345221781801403,
+  "geometry_clearance_samples": 67850,
+  "geometry_clearance_interval_s": 0.001,
   "duration_s": 67.849,
   "fps": 30,
   "frames": 2036,
-  "video_sha256": "7aea371f7860f6e5a53639ecdce7d7da7ee0b477778b3db5e42d8f07fe6d7a65"
+  "video_sha256": "95d3ecfacdad6a03385a2383ff3b5f90c1423a5866dc3492a931b980b45e8768"
 }

@@ -205,9 +205,6 @@ def simulate_mujoco(
                             float(fraction),
                         )
                         ghosts.append((offset, pin_q_to_mj(nominal_q)))
-                    joint_gap = np.rad2deg(
-                        np.max(np.abs(q[7:] - next_nominal[7 : pm.nq]))
-                    )
                     writer.append_data(
                         renderer.render(
                             mj_data,
@@ -215,15 +212,6 @@ def simulate_mujoco(
                                 time=t,
                                 com=mj_data.subtree_com[0].copy(),
                                 ghosts=ghosts,
-                                values=[
-                                    f"Feedback: {tracking.mode}",
-                                    f"Joint error: {joint_gap:.2f} deg max",
-                                    "Ghosts: "
-                                    + " / ".join(f"+{dt:.2f} s" for dt, _ in ghosts)
-                                    if ghosts
-                                    else "Plan end: no future poses",
-                                    "Offline FDDP plan; live tracking",
-                                ],
                             ),
                         )
                     )

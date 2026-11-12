@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-紫色球体与带时间标记的轨迹为当前 CoM 预测，灰色为原始计划，红色箭头为 5 N 扰动。最终 CoM 误差 0.922 mm。
+紫色球体与轨迹为当前 CoM 预测，灰色为原始计划，红色箭头为 5 N 扰动。最终 CoM 误差 0.922 mm。
 
 [实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 

@@ -80,3 +80,10 @@ def test_wrist_contact_is_not_a_valid_trace(rollout: dict) -> None:
     bad = {key: value.copy() for key, value in rollout.items()}
     bad["unexpected_contacts"][-1] = 1
     assert not summarize(bad)["passed"]
+
+
+def test_open_gripper_is_not_a_valid_probe_demo(rollout: dict) -> None:
+    """열린 그리퍼를 숨긴 영상도 성공으로 분류하지 않는다."""
+    bad = {key: value.copy() for key, value in rollout.items()}
+    bad["gripper_angles"][0] = 0
+    assert not summarize(bad)["passed"]

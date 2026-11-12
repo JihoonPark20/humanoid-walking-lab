@@ -61,12 +61,12 @@
       },
       "source": "lab-3-dynamics-force-control/media/lab3_simulation.mp4",
       "start_s": 0,
-      "duration_s": 11.14,
+      "duration_s": 11.133333333333333,
       "speed": 1,
       "caption": {
-        "en": "50 mm trace at 5 N with a rigid probe on a flat plate (μ=0.05). Full run, 1×; raw-force in-band 93.1%, max XY error 0.335 mm.",
-        "ko": "강체 probe와 평판(μ=0.05)에서 5 N·50 mm 추종. 전체 실행 1배속, 원시 접촉력 허용 구간 93.1%, 최대 XY 오차 0.335 mm.",
-        "zh": "刚性探针在平板（μ=0.05）上以 5 N 描绘 50 mm。完整过程、1 倍速；原始接触力合格率 93.1%，最大 XY 误差 0.335 mm。"
+        "en": "Closed gripper with a rigid probe: 5 N force control over a 50 mm trace on a flat plate (μ=0.05). Full run at 1×; raw-force in-band 93.0%.",
+        "ko": "닫힌 그리퍼와 강체 probe로 평판(μ=0.05)에서 5 N·50 mm를 추종합니다. 전체 실행 1배속, 원시 접촉력 허용 구간 93.0%.",
+        "zh": "闭合夹爪与刚性探针在平板（μ=0.05）上以 5 N 描绘 50 mm。完整过程、1 倍速；原始接触力合格率 93.0%。"
       },
       "plots": [
         "lab-3-dynamics-force-control/media/capstone_line_trace.png"
@@ -76,7 +76,9 @@
         "lab-3-dynamics-force-control/media/line_trace.csv"
       ],
       "verification": "lab-3-dynamics-force-control/media/line_trace_summary.json",
-      "width": 640
+      "width": 720,
+      "palette_colors": 256,
+      "palette_stats": "full"
     },
     {
       "number": 4,
@@ -88,12 +90,12 @@
       },
       "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
       "start_s": 0,
-      "duration_s": 67.87,
-      "speed": 4,
+      "duration_s": 67.86666666666666,
+      "speed": 2,
       "caption": {
-        "en": "Complete slalom at 4×: no contacts, sampled obstacle clearance ≥30.5 mm; metrics from the filmed run.",
-        "ko": "전체 slalom 4배속: 접촉 0회, 표본 최소 장애물 간격 30.5 mm. 영상과 동일 실행의 측정값입니다.",
-        "zh": "完整绕障过程、4 倍速：零接触，采样最小间隙 30.5 mm；指标来自录像对应的同一次运行。"
+        "en": "3D slalom at 2×: zero contacts, minimum obstacle clearance 30.35 mm. Collision shapes and visible meshes checked every 1 ms.",
+        "ko": "3차원 slalom 2배속: 접촉 0회, 최소 장애물 간격 30.35 mm. 매 1 ms마다 collision 형상과 화면 mesh를 함께 검사합니다.",
+        "zh": "三维绕障、2 倍速：零接触，最小障碍物间隙 30.35 mm。每 1 ms 检查碰撞形状与可见 mesh。"
       },
       "plots": [
         "lab-4-motion-planning/media/capstone_clearance.png",
@@ -103,7 +105,11 @@
         "lab-4-motion-planning/media/slalom_summary.json",
         "lab-4-motion-planning/media/slalom.csv"
       ],
-      "verification": "lab-4-motion-planning/media/slalom_summary.json"
+      "verification": "lab-4-motion-planning/media/slalom_summary.json",
+      "width": 720,
+      "palette_colors": 256,
+      "palette_stats": "full",
+      "fps": 15
     },
     {
       "number": 5,
@@ -131,7 +137,7 @@
         "lab-5-locomotion/media/m3d_weight_shift_summary.json"
       ],
       "verification": "lab-5-locomotion/media/m3d_weight_shift_summary.json",
-      "width": 720,
+      "width": 600,
       "palette_colors": 256,
       "palette_stats": "full"
     },
@@ -162,9 +168,10 @@
         "lab-6-whole-body-control/media/m3_walking_summary.json"
       ],
       "verification": "lab-6-whole-body-control/media/m3_walking_summary.json",
-      "width": 720,
+      "width": 600,
       "palette_colors": 256,
-      "palette_stats": "full"
+      "palette_stats": "full",
+      "fps": 8
     },
     {
       "number": 7,
@@ -192,7 +199,7 @@
         "lab-7-walking-optimization/media/g1/optimized_feet/summary.json"
       ],
       "verification": "lab-7-walking-optimization/media/g1/optimized_feet/summary.json",
-      "width": 720,
+      "width": 600,
       "palette_colors": 256,
       "palette_stats": "full"
     },
@@ -221,7 +228,7 @@
         "lab-8-centroidal-optimization/media/pinocchio.json",
         "lab-8-centroidal-optimization/media/offline/animation_summary.json"
       ],
-      "width": 720,
+      "width": 600,
       "verification": "lab-8-centroidal-optimization/media/offline/animation_summary.json",
       "palette_colors": 256,
       "palette_stats": "full"
@@ -239,9 +246,9 @@
       "duration_s": 6.733333333333333,
       "speed": 1,
       "caption": {
-        "en": "Violet spheres and the timed path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.",
-        "ko": "보라 구와 시간 표시 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 화살표는 5 N 외란입니다. 최종 CoM 오차 0.922 mm.",
-        "zh": "紫色球体与带时间标记的轨迹为当前 CoM 预测，灰色为原始计划，红色箭头为 5 N 扰动。最终 CoM 误差 0.922 mm。"
+        "en": "Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.",
+        "ko": "보라 구와 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 화살표는 5 N 외란입니다. 최종 CoM 오차 0.922 mm.",
+        "zh": "紫色球体与轨迹为当前 CoM 预测，灰色为原始计划，红色箭头为 5 N 扰动。最终 CoM 误差 0.922 mm。"
       },
       "plots": [
         "lab-9-model-predictive-control/media/g1/rti/tracking.png",
@@ -254,8 +261,8 @@
         "lab-9-model-predictive-control/media/observation_benchmark/matrix.json"
       ],
       "verification": "lab-9-model-predictive-control/media/g1/rti/summary.json",
-      "width": 720,
-      "fps": 15,
+      "width": 600,
+      "fps": 12,
       "palette_colors": 256,
       "palette_stats": "full"
     },
@@ -286,7 +293,7 @@
         "lab-10-whole-body-optimal-control/media/validated_scenarios/matrix.json"
       ],
       "verification": "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
-      "width": 720,
+      "width": 600,
       "palette_colors": 256,
       "palette_stats": "full"
     }

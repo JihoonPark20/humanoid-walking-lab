@@ -22,7 +22,7 @@
     "boundary_residual": 5.329070718479921e-26,
     "valid": true
   },
-  "solve_seconds": 0.337930915877223,
+  "solve_seconds": 0.3621567499358207,
   "iterations": 43,
   "status": "Solve_Succeeded",
   "objective": 0.0005677599012753065,

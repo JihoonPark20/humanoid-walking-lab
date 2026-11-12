@@ -284,18 +284,7 @@ def run(
                 original = np.array(
                     [nominal.sample(time)[0][:3] for time in future_times]
                 )
-                deviation_mm = (
-                    np.max(np.linalg.norm(predicted[:, :2] - original[:, :2], axis=1))
-                    * 1000
-                )
                 push = np.array([0.0, push_force, 0.0]) if 2.3 <= t < 2.45 else None
-                status = (
-                    "PUSH ACTIVE"
-                    if push is not None
-                    else "After push: replanning"
-                    if t >= 2.45
-                    else "Before lateral push"
-                )
                 writer.append_data(
                     renderer.render(
                         d,
@@ -304,16 +293,8 @@ def run(
                             com=actual[:3],
                             target=goal[:3],
                             prediction=predicted,
-                            prediction_times=future_times - now,
                             nominal_path=original,
                             push=push,
-                            phase=status,
-                            values=[
-                                f"{mode.upper()} update #{index + 1} | {mpc.last_seconds * 1000:.1f} ms",
-                                f"Horizon left: {future_times[-1] - now:.2f} s",
-                                f"Replan vs nominal: {deviation_mm:.2f} mm",
-                                "CoM prediction; no joint prediction",
-                            ],
                         ),
                     )
                 )

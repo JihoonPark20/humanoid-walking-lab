@@ -42,6 +42,13 @@ executed stack.
 
 ## Final Validation
 
+The recorded run also measures obstacle clearance at every 1 ms physics tick,
+using the live finger configuration and both collision primitives and visible
+meshes (`scene_clearance.py`). Visual-only geometry is checked even when its
+contact mask is disabled. Mesh distances use MuJoCo's convex hulls, which are
+conservative for concave surfaces. Publication requires at least 30 mm clearance
+throughout and zero physical contacts; a sparse planned-path check alone is insufficient.
+
 - `tests/test_collision.py` passes on the canonical stack
 - free and colliding configurations are validated on the real scene
 - FK agreement between Pinocchio and MuJoCo is preserved for the canonical

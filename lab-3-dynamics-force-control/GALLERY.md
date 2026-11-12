@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-50 mm trace at 5 N with a rigid probe on a flat plate (μ=0.05). Full run, 1×; raw-force in-band 93.1%, max XY error 0.335 mm.
+Closed gripper with a rigid probe: 5 N force control over a 50 mm trace on a flat plate (μ=0.05). Full run at 1×; raw-force in-band 93.0%.
 
 [Source recording / image](media/lab3_simulation.mp4)
 

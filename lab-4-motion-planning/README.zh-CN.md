@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-完整绕障过程、4 倍速：零接触，采样最小间隙 30.5 mm；指标来自录像对应的同一次运行。
+三维绕障、2 倍速：零接触，最小障碍物间隙 30.35 mm。每 1 ms 检查碰撞形状与可见 mesh。
 
 [实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
 

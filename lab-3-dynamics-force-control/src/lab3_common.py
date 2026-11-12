@@ -78,6 +78,7 @@ ATTACHMENT_SITE_NAME = "attachment_site"
 EE_SITE_NAME = "2f85_pinch"
 GRIPPER_ACTUATOR_NAME = "2f85_fingers_actuator"
 GRIPPER_OPEN_CTRL = 0.0
+PROBE_GRIPPER_CTRL = 230.0
 
 TABLE_POS = np.array([0.45, 0.0, 0.30])
 TABLE_SIZE = np.array([0.30, 0.40, 0.015])
@@ -256,6 +257,15 @@ def load_mujoco_model(scene_path: Path | None = None):
     with_table = Path(scene_path) == SCENE_TABLE_PATH if scene_path is not None else False
     mj_model = _compile_scene_model(with_table)
     mj_data = mujoco.MjData(mj_model)
+    if with_table:
+        # 닫힌 four-bar 자세로 초기화하고 이후에는 actuator로 유지한다.
+        # 매 step qpos를 덮어쓰거나 손가락의 충돌을 끄지 않는다.
+        angle = 0.8 * PROBE_GRIPPER_CTRL / 255
+        for side in ("left", "right"):
+            for link, sign in (("driver", 1), ("spring_link", 1), ("coupler", -1), ("follower", -1)):
+                joint = mj_model.joint(f"2f85_{side}_{link}_joint")
+                mj_data.qpos[joint.qposadr[0]] = sign * angle
+        mj_data.ctrl[get_gripper_actuator_id(mj_model)] = PROBE_GRIPPER_CTRL
     return mj_model, mj_data
 
 
@@ -456,10 +466,12 @@ def apply_arm_torques(
     mj_model,
     mj_data,
     tau: np.ndarray,
-    gripper_ctrl: float = GRIPPER_OPEN_CTRL,
+    gripper_ctrl: float | None = None,
 ) -> None:
     """Menagerie position-servo를 통해 원하는 팔 torque를 적용한다."""
     ctrl = mj_data.ctrl.copy()
+    if gripper_ctrl is None:
+        gripper_ctrl = PROBE_GRIPPER_CTRL if get_mj_site_id(mj_model, "contact_probe_site") >= 0 else GRIPPER_OPEN_CTRL
     ctrl[:NUM_JOINTS] = arm_torques_to_ctrl(mj_model, mj_data, tau)
     if mj_model.nu > NUM_JOINTS:
         try:

@@ -297,10 +297,6 @@ def main() -> None:
                         time=t,
                         com=actual_com,
                         target=target_com,
-                        values=[
-                            f"Shift: {(actual_com[1] - com_init[1]) * 1000:.1f} / 50 mm",
-                            f"Foot drift: {max(lf_drift_log[-1], rf_drift_log[-1]) * 1000:.2f} mm",
-                        ],
                     ),
                 )
             )

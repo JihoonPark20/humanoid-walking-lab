@@ -151,6 +151,8 @@ def run_line_trace(
     raw_force_list = []
     orientation_list = []
     unexpected_contact_list = []
+    gripper_angles = []
+    drivers = [mj_model.joint(f"2f85_{side}_driver_joint").qposadr[0] for side in ("left", "right")]
 
     force_integral = 0.0
     fz_filtered = 0.0
@@ -275,6 +277,7 @@ def run_line_trace(
         raw_force_list.append(fz_raw)
         orientation_list.append(angle)
         unexpected_contact_list.append(unexpected)
+        gripper_angles.append(mj_data.qpos[drivers].copy())
         if frame_callback is not None:
             frame_callback(mj_model, mj_data, {
                 "time": t, "phase": phase, "force_z": fz, "force_raw_z": fz_raw,
@@ -304,6 +307,7 @@ def run_line_trace(
         "force_raw_z": np.array(raw_force_list),
         "orientation_error": np.array(orientation_list),
         "unexpected_contacts": np.array(unexpected_contact_list),
+        "gripper_angles": np.array(gripper_angles),
     }
 
 

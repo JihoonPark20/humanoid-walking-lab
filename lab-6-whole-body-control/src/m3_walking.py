@@ -308,12 +308,6 @@ def run(
                             com=mj_data.subtree_com[0].copy(),
                             target=visual_plan.xi,
                             dcm=controller.com_task.current_dcm(pin_data),
-                            values=[
-                                f"Phase: {reference.phase.value}",
-                                f"Step: {steps_completed} / {n_steps}",
-                                f"DCM error: {controller.log.dcm_err_mm[-1]:.1f} mm",
-                                f"ZMP margin: {controller.log.zmp_margin_mm[-1]:.1f} mm",
-                            ],
                         ),
                     )
                 )

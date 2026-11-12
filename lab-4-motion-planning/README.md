@@ -6,7 +6,7 @@ Plan collision-free motion with RRT*, then parameterize and track the trajectory
 
 ![Demo](media/gallery/hero.gif)
 
-Complete slalom at 4×: no contacts, sampled obstacle clearance ≥30.5 mm; metrics from the filmed run.
+3D slalom at 2×: zero contacts, minimum obstacle clearance 30.35 mm. Collision shapes and visible meshes checked every 1 ms.
 
 [Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
 

@@ -11,10 +11,8 @@ from dataclasses import asdict
 from pathlib import Path
 
 import imageio.v2 as imageio
-import matplotlib
 import mujoco
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from c1_force_control import HybridGains
@@ -74,6 +72,7 @@ def summarize(results: dict[str, np.ndarray]) -> dict:
         "xy_tracking": float(xy_error.max()) < 0.005,
         "orientation": angle < 5,
         "probe_only_contact": unexpected == 0,
+        "gripper_closed": bool(np.min(results["gripper_angles"]) > 0.65),
     }
     return {
         "passed": all(checks.values()),
@@ -86,6 +85,7 @@ def summarize(results: dict[str, np.ndarray]) -> dict:
         "max_xy_error_m": float(xy_error.max()),
         "max_orientation_error_deg": angle,
         "unexpected_contact_samples": unexpected,
+        "min_gripper_driver_angle_rad": float(results["gripper_angles"].min()),
         "duration_s": float(results["time"][-1]),
         "trace_start_s": float(results["time"][trace][0]),
         "trace_end_s": float(results["time"][trace][-1]),
@@ -100,27 +100,20 @@ class TraceRecorder:
         self.renderer = None
         self.writer = None
         self.frames = 0
-        self.times: list[float] = []
-        self.forces: list[float] = []
-        self.font = ImageFont.truetype(
-            str(Path(matplotlib.get_data_path()) / "fonts/ttf/DejaVuSans.ttf"), 17
-        )
         self.camera = mujoco.MjvCamera()
-        self.camera.lookat[:] = [0.38, 0.0, 0.43]
-        self.camera.distance = 1.15
-        self.camera.azimuth = 135
+        self.camera.lookat[:] = [0.40, 0.0, 0.46]
+        self.camera.distance = 0.85
+        self.camera.azimuth = 105
         self.camera.elevation = -25
 
     def __call__(
         self, model: mujoco.MjModel, data: mujoco.MjData, sample: dict
     ) -> None:
         """Render at exact simulation-time intervals, including approach and settling."""
-        self.times.append(sample["time"])
-        self.forces.append(sample["force_raw_z"])
         if sample["time"] + 1e-9 < self.frames / FPS:
             return
         if self.renderer is None:
-            self.renderer = mujoco.Renderer(model, height=480, width=640)
+            self.renderer = mujoco.Renderer(model, height=640, width=960)
             self.writer = imageio.get_writer(str(self.output), fps=FPS, codec="libx264")
         self.renderer.update_scene(data, camera=self.camera)
         scene = self.renderer.scene
@@ -134,46 +127,7 @@ class TraceRecorder:
                 np.array([0.1, 0.9, 0.3, 1], dtype=np.float32),
             )
             scene.ngeom += 1
-        frame = Image.new("RGB", (640, 640), (246, 248, 250))
-        frame.paste(Image.fromarray(self.renderer.render()), (0, 0))
-        draw = ImageDraw.Draw(frame)
-        phase = ("Approach", "Settle", "Trace 50 mm", "Hold")[sample["phase"]]
-        draw.rectangle((0, 0, 640, 58), fill=(24, 33, 45))
-        draw.text(
-            (14, 6),
-            f"Lab 3 | {phase} | t = {sample['time']:.2f} s | 1x",
-            font=self.font,
-            fill="white",
-        )
-        draw.text(
-            (14, 31),
-            f"Probe force: {sample['force_raw_z']:.2f} N  /  target: 5 N",
-            font=self.font,
-            fill="white",
-        )
-        draw.text(
-            (14, 485),
-            "Measured contact force (unfiltered) / green: 5 N",
-            font=self.font,
-            fill=(24, 33, 45),
-        )
-        x0, y0, x1, y1 = 50, 518, 620, 610
-        draw.line((x0, y0, x0, y1, x1, y1), fill="gray", width=1)
-
-        def project(t: float, f: float) -> tuple[float, float]:
-            """Map simulation time and force to the fixed plot axes."""
-            return x0 + (x1 - x0) * t / 12, y1 - (y1 - y0) * np.clip(f, 0, 20) / 20
-
-        draw.line((*project(0, 5), *project(12, 5)), fill=(30, 150, 70), width=2)
-        draw.text((4, 518), "20 N", font=self.font, fill="black")
-        draw.text((5, 590), "0 N", font=self.font, fill="black")
-        # Draw every force sample so the preview does not hide transient peaks.
-        points = [project(t, f) for t, f in zip(self.times, self.forces)]
-        if len(points) > 1:
-            draw.line(points, fill=(40, 95, 200), width=1)
-        draw.text((50, 615), "0 s", font=self.font, fill="black")
-        draw.text((570, 615), "12 s", font=self.font, fill="black")
-        self.writer.append_data(np.asarray(frame))
+        self.writer.append_data(self.renderer.render())
         self.frames += 1
 
     def close(self) -> None:

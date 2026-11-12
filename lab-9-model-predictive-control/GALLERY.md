@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Violet spheres and the timed path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.
+Violet spheres and the path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.
 
 [Source recording / image](media/g1/rti/mpc.mp4)
 

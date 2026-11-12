@@ -281,9 +281,6 @@ def run(
                 )
             )
             if writer is not None and elapsed + 1e-9 >= renderer.frames / VIS_FPS:
-                max_adjustment = (
-                    np.max(np.linalg.norm(optimized_feet - seed_feet, axis=1)) * 1000
-                )
                 writer.append_data(
                     renderer.render(
                         mj_data,
@@ -294,11 +291,6 @@ def run(
                             path=planned_path,
                             seed_feet=seed_feet,
                             planned_feet=optimized_feet,
-                            values=[
-                                "Plan fixed before simulation",
-                                f"Foot adjustment: {max_adjustment:.1f} mm max",
-                                f"CoM error: {np.linalg.norm(actual[:2] - desired.com) * 1000:.1f} mm",
-                            ],
                         ),
                     )
                 )

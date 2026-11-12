@@ -11,6 +11,7 @@ import pinocchio as pin
 from lab4_common import (
     DT,
     NUM_JOINTS,
+    OBSTACLES,
     ObstacleSpec,
     apply_arm_torques,
     clip_torques,
@@ -18,6 +19,7 @@ from lab4_common import (
     load_mujoco_model,
     load_pinocchio_model,
 )
+from scene_clearance import ObstacleClearance
 
 
 def execute_trajectory(
@@ -48,6 +50,11 @@ def execute_trajectory(
     log_tau = np.zeros((n_steps, NUM_JOINTS))
     log_ee_pos = np.zeros((n_steps, 3))
     contact_counts = np.zeros(n_steps, dtype=int)
+    specs = OBSTACLES if obstacle_specs is None else obstacle_specs
+    clearance = ObstacleClearance(
+        mj_model, [s.name for s in specs if s.name != "table"]
+    )
+    obstacle_clearance = np.zeros(n_steps)
 
     for step in range(n_steps):
         t = step * DT
@@ -80,6 +87,7 @@ def execute_trajectory(
 
         # The tabletop scene has no intended robot/environment contact.
         contact_counts[step] = mj_data.ncon
+        obstacle_clearance[step] = clearance.minimum(mj_data)
         if frame_callback is not None:
             frame_callback(
                 mj_model,
@@ -100,4 +108,5 @@ def execute_trajectory(
         "tau": log_tau,
         "ee_pos": log_ee_pos,
         "contact_counts": contact_counts,
+        "obstacle_clearance": obstacle_clearance,
     }

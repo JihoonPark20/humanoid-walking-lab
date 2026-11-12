@@ -25,7 +25,7 @@ h(q, qdot) = C(q, qdot) qdot + g(q)
 
 `c1_force_control.py`에서 force feedback의 부호와 기준 frame을 확인한 뒤 `c2_line_trace.py`로 넘어가세요. 접촉 직전·접촉 중·접촉 해제 구간을 나누어 그래프를 읽으면 힘의 overshoot 원인을 찾기 쉽습니다.
 
-대표 영상은 질량을 무시한 강체 probe와 마찰계수 μ=0.05인 평판에서 50 mm를 추종합니다. 관절이 있는 그리퍼 손가락의 접촉 제어를 검증한 영상은 아닙니다. 접근·안정화·추종·유지 전 구간을 포함하며, 같은 실행에서 원시 접촉력, 자세 오차와 probe 이외의 접촉 여부를 검사합니다. [설정과 판정 기준](c1_force_control.md), [측정값](../media/line_trace_summary.json)을 확인하세요.
+대표 영상은 닫힌 그리퍼와 질량을 무시한 강체 probe로 마찰계수 μ=0.05인 평판에서 50 mm를 추종합니다. 손가락은 actuator로 닫힘을 유지하고 probe는 tool body에 고정됩니다. 접근·안정화·추종·유지 전 구간을 포함하며, 같은 실행에서 원시 접촉력, 자세 오차, 그리퍼 닫힘과 probe 이외의 접촉 여부를 검사합니다. [설정과 판정 기준](c1_force_control.md), [측정값](../media/line_trace_summary.json)을 확인하세요.
 
 ## 직접 해볼 실험
 
