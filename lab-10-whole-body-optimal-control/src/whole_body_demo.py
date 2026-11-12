@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.metadata
 import json
 import platform
@@ -13,12 +14,17 @@ from pathlib import Path
 import crocoddyl as croc
 import mujoco
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import pinocchio as pin
+
+from tools.walking_visuals import FPS as VIS_FPS
+from tools.walking_visuals import Overlay, WalkingVisualizer
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "lab-6-whole-body-control" / "src"))
 
-from lab6_common import DT, foot_contact_state, mj_state_to_pin
+from lab6_common import DT, foot_contact_state, mj_state_to_pin, pin_q_to_mj
 from whole_body_ocp import G1GaitProblem, OCPConfig, solve_problem
 from whole_body_tracking import (
     TrackingConfig,
@@ -133,13 +139,10 @@ def simulate_mujoco(
         import imageio.v2 as imageio
 
         writer = imageio.get_writer(
-            str(output / "rollout.mp4"), fps=30, codec="libx264"
+            str(output / "rollout.mp4"), fps=VIS_FPS, codec="libx264"
         )
-        renderer = mujoco.Renderer(mj_model, height=480, width=640)
-        camera = mujoco.MjvCamera()
-        camera.distance = 2.5
-        camera.azimuth = 130
-        camera.elevation = -15
+        renderer = WalkingVisualizer(mj_model, 10)
+
     t = 0.0
     try:
         for k, (action, u) in enumerate(zip(solver.problem.runningModels, solver.us)):
@@ -183,10 +186,49 @@ def simulate_mujoco(
                     ]
                 )
                 if writer is not None and t >= frame_clock:
-                    camera.lookat[:] = [mj_data.qpos[0], mj_data.qpos[1], 0.75]
-                    renderer.update_scene(mj_data, camera=camera)
-                    writer.append_data(renderer.render())
-                    frame_clock += 1 / 30
+                    ghosts = []
+                    for offset in (0.25, 0.5):
+                        future = t + offset
+                        if future > times[-1]:
+                            continue
+                        j = min(
+                            int(np.searchsorted(times, future, side="right") - 1),
+                            len(times) - 2,
+                        )
+                        fraction = (future - times[j]) / max(
+                            times[j + 1] - times[j], 1e-9
+                        )
+                        nominal_q = pin.interpolate(
+                            pm,
+                            solver.xs[j][: pm.nq],
+                            solver.xs[j + 1][: pm.nq],
+                            float(fraction),
+                        )
+                        ghosts.append((offset, pin_q_to_mj(nominal_q)))
+                    joint_gap = np.rad2deg(
+                        np.max(np.abs(q[7:] - next_nominal[7 : pm.nq]))
+                    )
+                    writer.append_data(
+                        renderer.render(
+                            mj_data,
+                            Overlay(
+                                time=t,
+                                com=mj_data.subtree_com[0].copy(),
+                                ghosts=ghosts,
+                                values=[
+                                    f"Feedback: {tracking.mode}",
+                                    f"Joint error: {joint_gap:.2f} deg max",
+                                    "Ghosts: "
+                                    + " / ".join(f"+{dt:.2f} s" for dt, _ in ghosts)
+                                    if ghosts
+                                    else "Plan end: no future poses",
+                                    "Offline FDDP plan; live tracking",
+                                ],
+                            ),
+                        )
+                    )
+                    frame_clock += 1 / VIS_FPS
+
                 if mj_data.qpos[2] < 0.50 or not np.isfinite(actual).all():
                     failure = "fall/nonfinite"
                     break
@@ -240,6 +282,10 @@ def simulate_mujoco(
         "max_tangent_q_gap": float(rows[:, 2].max()) if len(rows) else None,
         "min_pelvis_height_m": float(rows[:, 3].min()) if len(rows) else None,
     }
+    if video:
+        report["video_sha256"] = hashlib.sha256(
+            (output / "rollout.mp4").read_bytes()
+        ).hexdigest()
     (output / "mujoco_summary.json").write_text(json.dumps(report, indent=2) + "\n")
     plot_tracking(rows, output / "tracking.png")
     return report

@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "checks": {
+    "completed": true,
+    "raw_force_in_band": true,
+    "filtered_force_in_band": true,
+    "peak_contact_force": true,
+    "xy_tracking": true,
+    "orientation": true,
+    "probe_only_contact": true
+  },
+  "force_target_n": 5,
+  "raw_force_in_band_fraction": 0.9305,
+  "filtered_force_in_band_fraction": 0.996,
+  "trace_mean_force_n": 4.999948447123518,
+  "peak_force_n": 12.352864637886565,
+  "max_xy_error_m": 0.00033501241954769377,
+  "max_orientation_error_deg": 0.16399564947621417,
+  "unexpected_contact_samples": 0,
+  "duration_s": 11.125,
+  "trace_start_s": 4.626,
+  "trace_end_s": 10.625,
+  "video_sha256": "328e35c2bed4c6dcf2c2d598b8730d56e63890976e48f2591a11ec7052f80d4e",
+  "gains": {
+    "K_p": 2000,
+    "K_d": 100,
+    "K_fp": 0.5,
+    "K_R": 60,
+    "K_w": 1,
+    "K_fi": 3,
+    "F_desired": 5.0
+  },
+  "approach_height_m": 0.355,
+  "fps": 30,
+  "frames": 334,
+  "descent_speed_m_s": 0.01,
+  "sliding_friction": 0.05,
+  "environment": "Rigid massless probe on a flat low-friction plate; no articulated-finger contact."
+}

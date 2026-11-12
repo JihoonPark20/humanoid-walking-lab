@@ -11,13 +11,15 @@ Usage:
 from __future__ import annotations
 
 import math
+import json
+import hashlib
 import sys
 from pathlib import Path
 
 _SRC_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(_SRC_DIR))
 
-import imageio.v3 as iio
+import imageio.v2 as iio
 import mujoco
 import numpy as np
 
@@ -86,7 +88,9 @@ def main() -> None:
 
     # ── Simulation + rendering loop ───────────────────────────────────────
     trail: list[np.ndarray] = []
-    frames: list[np.ndarray] = []
+    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    writer = iio.get_writer(str(OUT_PATH), fps=FPS, codec="libx264")
+    frame_count = 0
     cart_errors: list[float] = []
     max_torque = 0.0
     step = 0
@@ -138,11 +142,12 @@ def main() -> None:
             _add_sphere(renderer.scene, ee, 0.008, EE_MARKER_COLOR)
 
             frame = renderer.render()
-            frames.append(frame.copy())
+            writer.append_data(frame)
+            frame_count += 1
 
             # Progress
             pct = 100.0 * step / len(traj)
-            print(f"\r  {pct:5.1f}%  t={tp.t:.2f}s  frames={len(frames)}", end="", flush=True)
+            print(f"\r  {pct:5.1f}%  t={tp.t:.2f}s  frames={frame_count}", end="", flush=True)
 
         step += 1
 
@@ -150,13 +155,25 @@ def main() -> None:
 
     # ── Write video ───────────────────────────────────────────────────────
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    iio.imwrite(str(OUT_PATH), np.stack(frames), fps=FPS, codec="libx264")
+    writer.close()
 
     rms = math.sqrt(sum(e * e for e in cart_errors) / len(cart_errors))
-    print(f"\n\nVideo saved: {OUT_PATH}  ({len(frames)} frames)")
+    print(f"\n\nVideo saved: {OUT_PATH}  ({frame_count} frames)")
     print(f"  RMS error : {rms * 1000:.3f} mm")
     print(f"  Max error : {max(cart_errors) * 1000:.3f} mm")
     print(f"  Max torque: {max_torque:.3f} N·m")
+    checks = {"rms_below_1mm": rms < 0.001,
+              "peak_below_5mm": max(cart_errors) < 0.005,
+              "complete": len(cart_errors) == len(traj)}
+    summary = {"passed": all(checks.values()), "checks": checks,
+               "rms_error_m": rms, "max_error_m": max(cart_errors),
+               "max_torque_nm": max_torque, "simulation_duration_s": float(total_time),
+               "frames": frame_count, "fps": FPS,
+               "video_sha256": hashlib.sha256(OUT_PATH.read_bytes()).hexdigest()}
+    OUT_PATH.with_suffix(".json").write_text(json.dumps(summary, indent=2) + "\n")
+    if not summary["passed"]:
+        raise SystemExit("Recorded trajectory did not pass the tracking checks.")
+
 
 
 if __name__ == "__main__":

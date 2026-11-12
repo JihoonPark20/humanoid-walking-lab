@@ -2,17 +2,19 @@
 
 [English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
 
-![Demo](media/offline/centroidal.png)
+![Demo](media/gallery/hero.gif)
 
-Reduced-model optimization: CoM height, momentum and contact forces. Not a robot rollout.
+Contact-force arrows lift and redirect a floating mass; watch CoM height and angular momentum. Animation of the optimized reduced model, not a robot rollout.
 
-[Source recording / image](media/offline/centroidal.png)
+[Source recording / image](media/offline/centroidal.mp4)
 
 ## Measurements
 
 - [offline/metrics.json](media/offline/metrics.json)
 
 - [media/pinocchio.json](media/pinocchio.json)
+
+- [offline/animation_summary.json](media/offline/animation_summary.json)
 
 ## Exercises
 

@@ -4,13 +4,19 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import sys
 from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import pinocchio as pin
+
+from tools.walking_visuals import FPS as VIS_FPS
+from tools.walking_visuals import Overlay, WalkingVisualizer
 
 ROOT = Path(__file__).resolve().parents[2]
 for lab in (
@@ -175,12 +181,11 @@ def run(
     if video:
         import imageio.v2 as imageio
 
-        writer = imageio.get_writer(str(output / "mpc.mp4"), fps=30, codec="libx264")
-        renderer = mujoco.Renderer(m, height=480, width=640)
-        camera = mujoco.MjvCamera()
-        camera.distance = 2.6
-        camera.azimuth = 130
-        camera.elevation = -15
+        writer = imageio.get_writer(
+            str(output / "mpc.mp4"), fps=VIS_FPS, codec="libx264"
+        )
+        renderer = WalkingVisualizer(m, 9)
+
     try:
         for tick in range(round(contacts.times[-1] / DT)):
             t = tick * DT
@@ -268,10 +273,51 @@ def run(
                     "qp_residual": max(result.constraint_violations.values()),
                 }
             )
-            if writer is not None and tick % 33 == 0:
-                camera.lookat[:] = [actual[0], actual[1], 0.75]
-                renderer.update_scene(d, camera=camera)
-                writer.append_data(renderer.render())
+            if writer is not None and t + DT + 1e-9 >= renderer.frames / VIS_FPS:
+                now = t + DT
+                future_times = np.linspace(
+                    now, max(now, float(plan.contacts.times[-1])), 20
+                )
+                predicted = np.array(
+                    [plan.sample(time)[0][:3] for time in future_times]
+                )
+                original = np.array(
+                    [nominal.sample(time)[0][:3] for time in future_times]
+                )
+                deviation_mm = (
+                    np.max(np.linalg.norm(predicted[:, :2] - original[:, :2], axis=1))
+                    * 1000
+                )
+                push = np.array([0.0, push_force, 0.0]) if 2.3 <= t < 2.45 else None
+                status = (
+                    "PUSH ACTIVE"
+                    if push is not None
+                    else "After push: replanning"
+                    if t >= 2.45
+                    else "Before lateral push"
+                )
+                writer.append_data(
+                    renderer.render(
+                        d,
+                        Overlay(
+                            time=now,
+                            com=actual[:3],
+                            target=goal[:3],
+                            prediction=predicted,
+                            prediction_times=future_times - now,
+                            nominal_path=original,
+                            push=push,
+                            phase=status,
+                            values=[
+                                f"{mode.upper()} update #{index + 1} | {mpc.last_seconds * 1000:.1f} ms",
+                                f"Horizon left: {future_times[-1] - now:.2f} s",
+                                f"Replan vs nominal: {deviation_mm:.2f} mm",
+                                "CoM prediction; no joint prediction",
+                            ],
+                        ),
+                    )
+                )
+
             if d.qpos[2] < 0.50 or not np.isfinite(actual).all():
                 failure = "fall/nonfinite"
                 break
@@ -283,7 +329,9 @@ def run(
             renderer.close()
     if rows:
         with (output / "telemetry.csv").open("w", newline="") as file:
-            csv_writer = csv.DictWriter(file, fieldnames=list(rows[0]))
+            csv_writer = csv.DictWriter(
+                file, fieldnames=list(rows[0]), lineterminator="\n"
+            )
             csv_writer.writeheader()
             csv_writer.writerows(rows)
     final_error = rows[-1]["com_error_m"] if rows else None
@@ -315,6 +363,10 @@ def run(
             "feedback": timing_summary([r["feedback_s"] for r in rti_rows], periods),
             "updates": rti_rows,
         }
+    if video:
+        report["video_sha256"] = hashlib.sha256(
+            (output / "mpc.mp4").read_bytes()
+        ).hexdigest()
     (output / "summary.json").write_text(
         json.dumps(report, indent=2, ensure_ascii=False) + "\n"
     )

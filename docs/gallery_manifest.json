@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "catalog_sha256": "411930e104b6a127c600fcc7ec1e2453533cfb2bdbcc94f47e4b9d1b5ed7c0a7",
+  "catalog_sha256": "8d8e777e19090e839a0c1d938aac179bb7dc7e31e8ab58714aded465bdb30262",
   "labs": [
     {
       "lab": 1,
       "assets": [
         {
           "source": "lab-1-2link-arm/media/c1_draw_square.mp4",
-          "sha256": "aa127e9c399ecda4518b6a64fb761d4587907486564e61b912ae6c74d356e695",
+          "sha256": "5500123711a5c17ff7aa3baefcca4e302bd7d36f6e11abc09f357d5d4d777821",
           "output": "lab-1-2link-arm/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
@@ -15,8 +15,12 @@
             "speed": 1,
             "fps": 10,
             "frames": 79,
-            "size_bytes": 332144
-          }
+            "palette_colors": 96,
+            "palette_stats": "diff",
+            "size_bytes": 341112
+          },
+          "verification": "lab-1-2link-arm/media/c1_draw_square.json",
+          "verification_sha256": "b463e806970add7189f91e53b27871c51f90b0bda23a6f095f889e96007398d3"
         }
       ]
     },
@@ -25,7 +29,7 @@
       "assets": [
         {
           "source": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.mp4",
-          "sha256": "20188fa1bfc2a9105276e62806de2ef25ddffbd6d44162f0f9d4ae24ab217012",
+          "sha256": "fb27e2d27e1bc7f7882d3f940d474116b79033c1429588a53f725d70cc1aee3c",
           "output": "lab-2-Ur5e-robotics-lab/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
@@ -33,8 +37,12 @@
             "speed": 3,
             "fps": 10,
             "frames": 79,
-            "size_bytes": 593225
-          }
+            "palette_colors": 96,
+            "palette_stats": "diff",
+            "size_bytes": 442278
+          },
+          "verification": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.json",
+          "verification_sha256": "0f4147e579957768ad782bb2c14461af1e2a996cd368e245fce68f6828c89fa9"
         }
       ]
     },
@@ -43,16 +51,20 @@
       "assets": [
         {
           "source": "lab-3-dynamics-force-control/media/lab3_simulation.mp4",
-          "sha256": "ded869b95d8d256344ab52cba6bbf0b3504a81486a95f658ae3adaea6acdbd13",
+          "sha256": "328e35c2bed4c6dcf2c2d598b8730d56e63890976e48f2591a11ec7052f80d4e",
           "output": "lab-3-dynamics-force-control/media/gallery/hero.gif",
           "clip": {
-            "start_s": 5,
-            "source_duration_s": 12,
-            "speed": 1.5,
+            "start_s": 0,
+            "source_duration_s": 11.13,
+            "speed": 1,
             "fps": 10,
-            "frames": 80,
-            "size_bytes": 883160
-          }
+            "frames": 111,
+            "palette_colors": 96,
+            "palette_stats": "diff",
+            "size_bytes": 950774
+          },
+          "verification": "lab-3-dynamics-force-control/media/line_trace_summary.json",
+          "verification_sha256": "61e715f8a3268817aceeeca77e99fd936746a6eb397b777f6c7aa575e9a3d4a0"
         }
       ]
     },
@@ -61,16 +73,20 @@
       "assets": [
         {
           "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
-          "sha256": "fb45d98d93f7814b88d098c7caefa6be6067c69576ca568d952d5cec514d817f",
+          "sha256": "7aea371f7860f6e5a53639ecdce7d7da7ee0b477778b3db5e42d8f07fe6d7a65",
           "output": "lab-4-motion-planning/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 9.13,
-            "speed": 1,
+            "source_duration_s": 67.87,
+            "speed": 4,
             "fps": 10,
-            "frames": 91,
-            "size_bytes": 997573
-          }
+            "frames": 170,
+            "palette_colors": 96,
+            "palette_stats": "diff",
+            "size_bytes": 1208530
+          },
+          "verification": "lab-4-motion-planning/media/slalom_summary.json",
+          "verification_sha256": "7d18e3c76474cedaba1b15764cf6e046747ad876106192066f73a4f264cd07ab"
         }
       ]
     },
@@ -79,16 +95,20 @@
       "assets": [
         {
           "source": "lab-5-locomotion/media/m3d_weight_shift.mp4",
-          "sha256": "0f9c76679a093a6a2aa0554a8bfd5de2b4af327df5708483eb0b458c84d8d5d9",
+          "sha256": "d61d2914b51bc10e50d4d23dbb1b86c8c9d6e0e4f88e279b090f56f82b0988b8",
           "output": "lab-5-locomotion/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 3.67,
+            "source_duration_s": 3.5,
             "speed": 1,
             "fps": 10,
-            "frames": 37,
-            "size_bytes": 168184
-          }
+            "frames": 35,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 1183836
+          },
+          "verification": "lab-5-locomotion/media/m3d_weight_shift_summary.json",
+          "verification_sha256": "dcd0101ac01ca7766b436851760978353d698bc08f8e4f1b92a251442f2f6fc3"
         }
       ]
     },
@@ -97,16 +117,20 @@
       "assets": [
         {
           "source": "lab-6-whole-body-control/media/m3_walking.mp4",
-          "sha256": "9eb9723b76c7105e4317fbd71d1a991133187f1f66280bef5b1f1f52546391d6",
+          "sha256": "a9acc76e65c6fd683225ee966c3e93db3978bdc3c1bc656486eea0f0c4417656",
           "output": "lab-6-whole-body-control/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 13.53,
-            "speed": 1.5,
+            "source_duration_s": 13.8,
+            "speed": 1,
             "fps": 10,
-            "frames": 90,
-            "size_bytes": 2204401
-          }
+            "frames": 138,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 8695644
+          },
+          "verification": "lab-6-whole-body-control/media/m3_walking_summary.json",
+          "verification_sha256": "7f55fc5d68d2f358ee65b0ea56f8b57626af0812fbbba0a137a3ce3a67cf5b25"
         }
       ]
     },
@@ -115,38 +139,64 @@
       "assets": [
         {
           "source": "lab-7-walking-optimization/media/g1/optimized_feet/walk.mp4",
-          "sha256": "ce956c9acd0508f655edb7b478e6b0a10dfd3b4ba54ec1a60da94e9a77daf54e",
+          "sha256": "c512d04473c6903591d10efec4e6c373d35171ce22485387f45f739fda210852",
           "output": "lab-7-walking-optimization/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 8.6,
+            "source_duration_s": 8.53,
             "speed": 1,
             "fps": 10,
-            "frames": 86,
-            "size_bytes": 2800887
-          }
+            "frames": 85,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 8456263
+          },
+          "verification": "lab-7-walking-optimization/media/g1/optimized_feet/summary.json",
+          "verification_sha256": "017de27f6ba97ba277da412a68f75f2ae9b7e995fa06091fb2dcb4bd27d008ed"
         }
       ]
     },
     {
       "lab": 8,
-      "assets": []
+      "assets": [
+        {
+          "source": "lab-8-centroidal-optimization/media/offline/centroidal.mp4",
+          "sha256": "8642b7e2c0a04ac452bab82e11fd65173ee169c98106df3a318944efc1385c37",
+          "output": "lab-8-centroidal-optimization/media/gallery/hero.gif",
+          "clip": {
+            "start_s": 0,
+            "source_duration_s": 5.73,
+            "speed": 1,
+            "fps": 10,
+            "frames": 57,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 3193384
+          },
+          "verification": "lab-8-centroidal-optimization/media/offline/animation_summary.json",
+          "verification_sha256": "b39154f104a0b7d42174c249bdecac9329ae6302d789c5d23bd2deec4415a235"
+        }
+      ]
     },
     {
       "lab": 9,
       "assets": [
         {
           "source": "lab-9-model-predictive-control/media/g1/rti/mpc.mp4",
-          "sha256": "aaba5f1a3acace85014238bf2e2df8fe81e9741208e49117b6850390f7afd559",
+          "sha256": "5a4e523a5ed71eb762d1884f18e8cca39678bc7ad3b95c0d548977a9333f1715",
           "output": "lab-9-model-predictive-control/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 6.8,
+            "source_duration_s": 6.73,
             "speed": 1,
-            "fps": 10,
-            "frames": 68,
-            "size_bytes": 1984008
-          }
+            "fps": 15,
+            "frames": 101,
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 5532876
+          },
+          "verification": "lab-9-model-predictive-control/media/g1/rti/summary.json",
+          "verification_sha256": "1cc02ca6444cc622c33a392a9a1fa6ebfe33ba9502a157dd4f7af14bff961e26"
         }
       ]
     },
@@ -155,16 +205,20 @@
       "assets": [
         {
           "source": "lab-10-whole-body-optimal-control/media/two_steps_validated/rollout.mp4",
-          "sha256": "82a3f3a02a868fa6fbc8b49fb35e20f7e5d2f9f23704944aabcfce1ac6b69e7a",
+          "sha256": "fd9274a2013f763aa1d6a150bbc4df439f5dcc9436a1e0b820c05cfc5477c22b",
           "output": "lab-10-whole-body-optimal-control/media/gallery/hero.gif",
           "clip": {
             "start_s": 0,
-            "source_duration_s": 3,
+            "source_duration_s": 3.0,
             "speed": 1,
             "fps": 10,
             "frames": 30,
-            "size_bytes": 944180
-          }
+            "palette_colors": 256,
+            "palette_stats": "full",
+            "size_bytes": 1963736
+          },
+          "verification": "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
+          "verification_sha256": "b8d50b768f923b4f42bda93493ad2f61525909438bd2d3a41b9265e86c3a2cb1"
         }
       ]
     }

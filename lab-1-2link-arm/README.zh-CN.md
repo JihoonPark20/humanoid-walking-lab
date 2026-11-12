@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-正方形轨迹跟踪；原有实验录像。
+完整正方形跟踪：RMS 误差 0.008 mm；指标来自录像对应的运行。
 
 [实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
 

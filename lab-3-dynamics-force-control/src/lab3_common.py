@@ -84,6 +84,9 @@ TABLE_SIZE = np.array([0.30, 0.40, 0.015])
 TABLE_SURFACE_Z = float(TABLE_POS[2] + TABLE_SIZE[2])
 
 GRIPPER_TIP_OFFSET = 0.1558
+PROBE_OFFSET = np.array([0.0, 0.0, 0.06])
+PROBE_RADIUS = 0.01
+PROBE_FRICTION = 0.05
 
 
 # ---------------------------------------------------------------------------
@@ -188,7 +191,7 @@ def _add_table(spec) -> None:
         leg.rgba = [0.35, 0.35, 0.35, 1.0]
 
 
-def build_mujoco_scene_spec(with_table: bool = False):
+def build_mujoco_scene_spec(with_table: bool = False, with_probe: bool = False):
     """Build a UR5e + Robotiq scene using the MuJoCo Menagerie assets."""
     import mujoco
 
@@ -197,6 +200,39 @@ def build_mujoco_scene_spec(with_table: bool = False):
 
     attach_site = next(site for site in robot.sites if site.name == ATTACHMENT_SITE_NAME)
     robot.attach(gripper, prefix="2f85_", site=attach_site)
+
+    if with_probe:
+        # A rigid, massless teaching stylus keeps articulated fingers clear of the
+        # plate. Its contact center is also represented by a Pinocchio frame.
+        pinch = next(site for site in robot.sites if site.name == "2f85_pinch")
+        center = np.asarray(pinch.pos) + PROBE_OFFSET
+        tip = pinch.parent.add_geom()
+        tip.name = "contact_probe"
+        tip.type = mujoco.mjtGeom.mjGEOM_SPHERE
+        tip.pos = center
+        tip.size = [PROBE_RADIUS, 0, 0]
+        tip.mass = 0
+        tip.rgba = [0.95, 0.55, 0.1, 1]
+        stem = pinch.parent.add_geom()
+        stem.name = "probe_stem"
+        stem.type = mujoco.mjtGeom.mjGEOM_CAPSULE
+        stem.fromto = [*pinch.pos, *center]
+        stem.size = [0.004, 0, 0]
+        stem.mass = 0
+        stem.contype = stem.conaffinity = 0
+        stem.rgba = [0.95, 0.55, 0.1, 1]
+        site = pinch.parent.add_site()
+        site.name = "contact_probe_site"
+        # URDF pinch_link uses a +90 degree local-Z rotation relative to the
+        # Menagerie gripper body. Match the analytical contact-frame axes.
+        site.quat = [np.sqrt(0.5), 0, 0, np.sqrt(0.5)]
+        site.pos = center
+        site.size = [0.002, 0, 0]
+        pair = robot.add_pair()
+        pair.name = "probe_plate"
+        pair.geomname1 = "contact_probe"
+        pair.geomname2 = "table_top"
+        pair.friction = [PROBE_FRICTION, PROBE_FRICTION, 0.001, 0.0001, 0.0001]
 
     _configure_scene_visuals(robot)
     _add_floor(robot)
@@ -209,7 +245,7 @@ def build_mujoco_scene_spec(with_table: bool = False):
 @lru_cache(maxsize=2)
 def _compile_scene_model(with_table: bool):
     """Compile and cache the generated MuJoCo scene."""
-    spec = build_mujoco_scene_spec(with_table=with_table)
+    spec = build_mujoco_scene_spec(with_table=with_table, with_probe=with_table)
     return spec.compile()
 
 
@@ -227,7 +263,7 @@ def load_mujoco_model(scene_path: Path | None = None):
 # Pinocchio model loading
 # ---------------------------------------------------------------------------
 
-def load_pinocchio_model(urdf_path: Path | None = None):
+def load_pinocchio_model(urdf_path: Path | None = None, contact_probe: bool = False):
     """Load the real-stack UR5e + fixed Robotiq payload Pinocchio model."""
     import pinocchio as pin
 
@@ -242,6 +278,13 @@ def load_pinocchio_model(urdf_path: Path | None = None):
     except Exception:
         ee_frame_name = "ee_link"
     ee_frame_id = model.getFrameId(ee_frame_name)
+    if contact_probe:
+        parent = model.frames[ee_frame_id]
+        placement = parent.placement * pin.SE3(np.eye(3), PROBE_OFFSET)
+        ee_frame_id = model.addFrame(pin.Frame(
+            "contact_probe", parent.parentJoint, ee_frame_id, placement, pin.FrameType.OP_FRAME
+        ))
+        data = model.createData()
     return model, data, ee_frame_id
 
 
@@ -269,7 +312,8 @@ def get_mj_site_id(mj_model, name: str) -> int:
 
 def get_mj_ee_site_id(mj_model) -> int:
     """Get the MuJoCo site ID for the Robotiq pinch site."""
-    return get_mj_site_id(mj_model, EE_SITE_NAME)
+    probe_id = get_mj_site_id(mj_model, "contact_probe_site")
+    return probe_id if probe_id >= 0 else get_mj_site_id(mj_model, EE_SITE_NAME)
 
 
 def get_mj_attachment_site_id(mj_model) -> int:

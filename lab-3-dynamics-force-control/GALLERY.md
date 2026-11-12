@@ -4,16 +4,18 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Contact line tracing; excerpt at 1.5×. Inspect force-error plots as well.
+50 mm trace at 5 N with a rigid probe on a flat plate (μ=0.05). Full run, 1×; raw-force in-band 93.1%, max XY error 0.335 mm.
 
 [Source recording / image](media/lab3_simulation.mp4)
 
+## Measurements
+
+- [media/line_trace_summary.json](media/line_trace_summary.json)
+
+- [media/line_trace.csv](media/line_trace.csv)
+
 ## Exercises
 
-### hybrid force control
+### capstone line trace
 
-<img src="media/hybrid_force_control.png" width="640" alt="hybrid_force_control">
-
-### impedance 6d tracking
-
-<img src="media/impedance_6d_tracking.png" width="640" alt="impedance_6d_tracking">
+<img src="media/capstone_line_trace.png" width="640" alt="capstone_line_trace">

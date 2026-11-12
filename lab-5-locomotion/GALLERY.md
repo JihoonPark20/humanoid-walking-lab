@@ -4,9 +4,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Quasi-static weight shifting with both feet in contact.
+Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP. CoM shift 53.6 mm, foot drift ≤1.39 mm.
 
 [Source recording / image](media/m3d_weight_shift.mp4)
+
+## Measurements
+
+- [media/m3d_weight_shift_summary.json](media/m3d_weight_shift_summary.json)
 
 ## Exercises
 

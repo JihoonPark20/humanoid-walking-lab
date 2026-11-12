@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-정사각형 궤적 추종. 기존 실행 영상입니다.
+정사각형 전체 추종: RMS 오차 0.008 mm. 녹화한 실행의 측정값입니다.
 
 [실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
 

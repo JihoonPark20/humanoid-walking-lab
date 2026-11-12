@@ -6,9 +6,9 @@ Learn floating-base states, CoM, Whole-body IK and balance with both feet in con
 
 ![Demo](media/gallery/hero.gif)
 
-Quasi-static weight shifting with both feet in contact.
+Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP. CoM shift 53.6 mm, foot drift ≤1.39 mm.
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
+[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 
 ## Run
 

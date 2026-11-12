@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-机械臂避障运动；同时查看间隙与跟踪误差。
+完整绕障过程、4 倍速：零接触，采样最小间隙 30.5 mm；指标来自录像对应的同一次运行。
 
 [实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
 

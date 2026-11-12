@@ -16,14 +16,17 @@
       "duration_s": 7.87,
       "speed": 1,
       "caption": {
-        "en": "Square trajectory tracking; original recorded demo.",
-        "ko": "정사각형 궤적 추종. 기존 실행 영상입니다.",
-        "zh": "正方形轨迹跟踪；原有实验录像。"
+        "en": "Complete square tracking: RMS error 0.008 mm; measurements from the recorded run.",
+        "ko": "정사각형 전체 추종: RMS 오차 0.008 mm. 녹화한 실행의 측정값입니다.",
+        "zh": "完整正方形跟踪：RMS 误差 0.008 mm；指标来自录像对应的运行。"
       },
       "plots": [
         "lab-1-2link-arm/media/../docs/b1_trajectory_profiles.png"
       ],
-      "results": []
+      "results": [
+        "lab-1-2link-arm/media/c1_draw_square.json"
+      ],
+      "verification": "lab-1-2link-arm/media/c1_draw_square.json"
     },
     {
       "number": 2,
@@ -38,12 +41,15 @@
       "duration_s": 23.57,
       "speed": 3,
       "caption": {
-        "en": "3D cube tracking; 3× playback of the recorded demo.",
-        "ko": "3차원 큐브 추종. 기존 영상의 3배속 재생입니다.",
-        "zh": "三维立方体轨迹跟踪；原录像的 3 倍速播放。"
+        "en": "Complete 3D cube tracking at 3×: RMS error 0.088 mm; measurements from the recorded run.",
+        "ko": "3차원 큐브 전체 추종 3배속: RMS 오차 0.088 mm. 녹화한 실행의 측정값입니다.",
+        "zh": "完整三维立方体跟踪、3 倍速：RMS 误差 0.088 mm；指标来自录像对应的运行。"
       },
       "plots": [],
-      "results": []
+      "results": [
+        "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.json"
+      ],
+      "verification": "lab-2-Ur5e-robotics-lab/media/c3_draw_cube.json"
     },
     {
       "number": 3,
@@ -54,19 +60,23 @@
         "zh": "动力学与力控制"
       },
       "source": "lab-3-dynamics-force-control/media/lab3_simulation.mp4",
-      "start_s": 5,
-      "duration_s": 12,
-      "speed": 1.5,
+      "start_s": 0,
+      "duration_s": 11.14,
+      "speed": 1,
       "caption": {
-        "en": "Contact line tracing; excerpt at 1.5×. Inspect force-error plots as well.",
-        "ko": "접촉면 선 추종. 1.5배속 발췌이며 힘 오차 그림도 함께 확인합니다.",
-        "zh": "接触面直线跟踪；1.5 倍速片段，请同时查看力误差图。"
+        "en": "50 mm trace at 5 N with a rigid probe on a flat plate (μ=0.05). Full run, 1×; raw-force in-band 93.1%, max XY error 0.335 mm.",
+        "ko": "강체 probe와 평판(μ=0.05)에서 5 N·50 mm 추종. 전체 실행 1배속, 원시 접촉력 허용 구간 93.1%, 최대 XY 오차 0.335 mm.",
+        "zh": "刚性探针在平板（μ=0.05）上以 5 N 描绘 50 mm。完整过程、1 倍速；原始接触力合格率 93.1%，最大 XY 误差 0.335 mm。"
       },
       "plots": [
-        "lab-3-dynamics-force-control/media/hybrid_force_control.png",
-        "lab-3-dynamics-force-control/media/impedance_6d_tracking.png"
+        "lab-3-dynamics-force-control/media/capstone_line_trace.png"
       ],
-      "results": []
+      "results": [
+        "lab-3-dynamics-force-control/media/line_trace_summary.json",
+        "lab-3-dynamics-force-control/media/line_trace.csv"
+      ],
+      "verification": "lab-3-dynamics-force-control/media/line_trace_summary.json",
+      "width": 640
     },
     {
       "number": 4,
@@ -78,18 +88,22 @@
       },
       "source": "lab-4-motion-planning/media/lab4_simulation.mp4",
       "start_s": 0,
-      "duration_s": 9.13,
-      "speed": 1,
+      "duration_s": 67.87,
+      "speed": 4,
       "caption": {
-        "en": "Obstacle-avoiding arm motion; read clearance and tracking plots.",
-        "ko": "장애물 회피 동작. Clearance와 추종 오차를 함께 확인합니다.",
-        "zh": "机械臂避障运动；同时查看间隙与跟踪误差。"
+        "en": "Complete slalom at 4×: no contacts, sampled obstacle clearance ≥30.5 mm; metrics from the filmed run.",
+        "ko": "전체 slalom 4배속: 접촉 0회, 표본 최소 장애물 간격 30.5 mm. 영상과 동일 실행의 측정값입니다.",
+        "zh": "完整绕障过程、4 倍速：零接触，采样最小间隙 30.5 mm；指标来自录像对应的同一次运行。"
       },
       "plots": [
         "lab-4-motion-planning/media/capstone_clearance.png",
         "lab-4-motion-planning/media/capstone_tracking.png"
       ],
-      "results": []
+      "results": [
+        "lab-4-motion-planning/media/slalom_summary.json",
+        "lab-4-motion-planning/media/slalom.csv"
+      ],
+      "verification": "lab-4-motion-planning/media/slalom_summary.json"
     },
     {
       "number": 5,
@@ -101,19 +115,25 @@
       },
       "source": "lab-5-locomotion/media/m3d_weight_shift.mp4",
       "start_s": 0,
-      "duration_s": 3.67,
+      "duration_s": 3.5,
       "speed": 1,
       "caption": {
-        "en": "Quasi-static weight shifting with both feet in contact.",
-        "ko": "양발 접촉을 유지하는 준정적 무게 이동.",
-        "zh": "保持双脚接触的准静态重心转移。"
+        "en": "Watch the cyan CoM ring move toward the white target inside green support; amber marks contact ZMP. CoM shift 53.6 mm, foot drift ≤1.39 mm.",
+        "ko": "초록 지지 영역 안에서 청록 CoM 원이 흰 목표로 이동하는 모습을 보세요. 주황은 접촉 ZMP입니다. CoM 이동 53.6 mm, 발 위치 변화 ≤1.39 mm.",
+        "zh": "观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。CoM 转移 53.6 mm，足端漂移 ≤1.39 mm。"
       },
       "plots": [
         "lab-5-locomotion/media/m1_pelvis_height.png",
         "lab-5-locomotion/media/m2_com_polygon.png",
         "lab-5-locomotion/media/m3d_weight_shift_plot.png"
       ],
-      "results": []
+      "results": [
+        "lab-5-locomotion/media/m3d_weight_shift_summary.json"
+      ],
+      "verification": "lab-5-locomotion/media/m3d_weight_shift_summary.json",
+      "width": 720,
+      "palette_colors": 256,
+      "palette_stats": "full"
     },
     {
       "number": 6,
@@ -125,12 +145,12 @@
       },
       "source": "lab-6-whole-body-control/media/m3_walking.mp4",
       "start_s": 0,
-      "duration_s": 13.53,
-      "speed": 1.5,
+      "duration_s": 13.8,
+      "speed": 1,
       "caption": {
-        "en": "DCM walking: 12 steps, 1.182 m; 1.5× playback.",
-        "ko": "DCM 보행: 12걸음, 1.182 m. 1.5배속 재생.",
-        "zh": "DCM 行走：12 步、1.182 m；1.5 倍速。"
+        "en": "Watch the support hull switch between feet while DCM (violet) and contact ZMP (amber) evolve. 12 steps, 1.182 m; full run at 1×.",
+        "ko": "한발·양발 지지 영역이 바뀔 때 DCM(보라)과 접촉 ZMP(주황)의 움직임을 보세요. 12걸음·1.182 m, 전체 실행 1배속.",
+        "zh": "观察单脚与双脚支撑区域的切换，以及 DCM（紫色）和接触 ZMP（橙色）的变化。12 步、1.182 m，完整过程、1 倍速。"
       },
       "plots": [
         "lab-6-whole-body-control/media/m0_standing_metrics.png",
@@ -140,7 +160,11 @@
       ],
       "results": [
         "lab-6-whole-body-control/media/m3_walking_summary.json"
-      ]
+      ],
+      "verification": "lab-6-whole-body-control/media/m3_walking_summary.json",
+      "width": 720,
+      "palette_colors": 256,
+      "palette_stats": "full"
     },
     {
       "number": 7,
@@ -152,12 +176,12 @@
       },
       "source": "lab-7-walking-optimization/media/g1/optimized_feet/walk.mp4",
       "start_s": 0,
-      "duration_s": 8.6,
+      "duration_s": 8.533333333333333,
       "speed": 1,
       "caption": {
-        "en": "Optimized feet + CoM tracked in MuJoCo: 5/5 swings; final CoM error 15.15 mm.",
-        "ko": "발 위치·CoM 최적화의 MuJoCo 추종. Swing 5/5, 최종 CoM 오차 15.15 mm.",
-        "zh": "优化落脚点与 CoM 的 MuJoCo 跟踪：5/5 次摆动，最终 CoM 误差 15.15 mm。"
+        "en": "Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution; 5/5 swings completed.",
+        "ko": "초기 발 디딤(회색), 최적화된 발 디딤·CoM(보라), 실제 CoM(청록)을 비교하세요. 실행 중 계획은 고정되어 있으며 swing 5/5를 완료합니다.",
+        "zh": "比较初始落脚点（灰色）、优化落脚点与 CoM（紫色）、实际 CoM（青色）。执行期间计划固定，完成 5/5 次摆动。"
       },
       "plots": [
         "lab-7-walking-optimization/media/offline/fixed/trajectory.png",
@@ -166,7 +190,11 @@
       ],
       "results": [
         "lab-7-walking-optimization/media/g1/optimized_feet/summary.json"
-      ]
+      ],
+      "verification": "lab-7-walking-optimization/media/g1/optimized_feet/summary.json",
+      "width": 720,
+      "palette_colors": 256,
+      "palette_stats": "full"
     },
     {
       "number": 8,
@@ -176,22 +204,27 @@
         "ko": "Centroidal 최적화",
         "zh": "Centroidal 优化"
       },
-      "source": "lab-8-centroidal-optimization/media/offline/centroidal.png",
+      "source": "lab-8-centroidal-optimization/media/offline/centroidal.mp4",
       "start_s": 0,
-      "duration_s": 0,
+      "duration_s": 5.733333333333333,
       "speed": 1,
       "caption": {
-        "en": "Reduced-model optimization: CoM height, momentum and contact forces. Not a robot rollout.",
-        "ko": "축소 모델의 CoM 높이·운동량·접촉력 최적화 결과입니다. 로봇 rollout은 아닙니다.",
-        "zh": "简化模型的 CoM 高度、动量及接触力优化；不是机器人 rollout。"
+        "en": "Contact-force arrows lift and redirect a floating mass; watch CoM height and angular momentum. Animation of the optimized reduced model, not a robot rollout.",
+        "ko": "접촉력 화살표와 질량 중심의 높이·각운동량 변화를 보세요. 최적화된 축소 모델의 애니메이션이며 로봇 rollout은 아닙니다.",
+        "zh": "观察接触力箭头、质心高度及角动量的变化。这是优化后的简化模型动画，不是机器人 rollout。"
       },
       "plots": [
         "lab-8-centroidal-optimization/media/offline/centroidal.png"
       ],
       "results": [
         "lab-8-centroidal-optimization/media/offline/metrics.json",
-        "lab-8-centroidal-optimization/media/pinocchio.json"
-      ]
+        "lab-8-centroidal-optimization/media/pinocchio.json",
+        "lab-8-centroidal-optimization/media/offline/animation_summary.json"
+      ],
+      "width": 720,
+      "verification": "lab-8-centroidal-optimization/media/offline/animation_summary.json",
+      "palette_colors": 256,
+      "palette_stats": "full"
     },
     {
       "number": 9,
@@ -203,12 +236,12 @@
       },
       "source": "lab-9-model-predictive-control/media/g1/rti/mpc.mp4",
       "start_s": 0,
-      "duration_s": 6.8,
+      "duration_s": 6.733333333333333,
       "speed": 1,
       "caption": {
-        "en": "G1 RTI with a 5 N lateral push: 6.7 s completed, final CoM error 0.922 mm.",
-        "ko": "5 N 측방 외란의 G1 RTI: 6.7초 완료, 최종 CoM 오차 0.922 mm.",
-        "zh": "G1 RTI 在 5 N 横向扰动下完成 6.7 s，最终 CoM 误差 0.922 mm。"
+        "en": "Violet spheres and the timed path show the current CoM prediction; gray is the nominal plan. Red marks the 5 N push. Final CoM error 0.922 mm.",
+        "ko": "보라 구와 시간 표시 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 화살표는 5 N 외란입니다. 최종 CoM 오차 0.922 mm.",
+        "zh": "紫色球体与带时间标记的轨迹为当前 CoM 预测，灰色为原始计划，红色箭头为 5 N 扰动。最终 CoM 误差 0.922 mm。"
       },
       "plots": [
         "lab-9-model-predictive-control/media/g1/rti/tracking.png",
@@ -219,7 +252,12 @@
         "lab-9-model-predictive-control/media/g1/rti/summary.json",
         "lab-9-model-predictive-control/media/validated_scenarios/matrix.json",
         "lab-9-model-predictive-control/media/observation_benchmark/matrix.json"
-      ]
+      ],
+      "verification": "lab-9-model-predictive-control/media/g1/rti/summary.json",
+      "width": 720,
+      "fps": 15,
+      "palette_colors": 256,
+      "palette_stats": "full"
     },
     {
       "number": 10,
@@ -231,12 +269,12 @@
       },
       "source": "lab-10-whole-body-optimal-control/media/two_steps_validated/rollout.mp4",
       "start_s": 0,
-      "duration_s": 3,
+      "duration_s": 3.0,
       "speed": 1,
       "caption": {
-        "en": "Two-step FDDP tracking: 3.0 s, final foot gap 4.29 mm, zero flight/clipping ticks.",
-        "ko": "두 걸음 FDDP 추종: 3.0초, 최종 발 오차 4.29 mm, flight·clipping 0 tick.",
-        "zh": "两步 FDDP 跟踪：3.0 s，最终足端误差 4.29 mm，无 flight/clipping tick。"
+        "en": "Translucent robots show the optimized joint poses 0.25/0.50 s ahead of the tracked robot. Two-step FDDP feedback: final foot gap 4.29 mm, zero flight/clipping ticks.",
+        "ko": "반투명 로봇은 현재보다 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 두 걸음 FDDP feedback 추종: 최종 발 오차 4.29 mm, flight·clipping 0 tick.",
+        "zh": "半透明机器人显示提前 0.25/0.50 s 的优化关节姿态。两步 FDDP feedback 跟踪：最终足端误差 4.29 mm，无 flight/clipping tick。"
       },
       "plots": [
         "lab-10-whole-body-optimal-control/media/one_step_validated/tracking.png",
@@ -246,7 +284,11 @@
         "lab-10-whole-body-optimal-control/media/one_step_validated/mujoco_summary.json",
         "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
         "lab-10-whole-body-optimal-control/media/validated_scenarios/matrix.json"
-      ]
+      ],
+      "verification": "lab-10-whole-body-optimal-control/media/two_steps_validated/mujoco_summary.json",
+      "width": 720,
+      "palette_colors": 256,
+      "palette_stats": "full"
     }
   ]
 }

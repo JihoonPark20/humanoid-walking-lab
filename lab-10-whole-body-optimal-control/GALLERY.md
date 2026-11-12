@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Two-step FDDP tracking: 3.0 s, final foot gap 4.29 mm, zero flight/clipping ticks.
+Translucent robots show the optimized joint poses 0.25/0.50 s ahead of the tracked robot. Two-step FDDP feedback: final foot gap 4.29 mm, zero flight/clipping ticks.
 
 [Source recording / image](media/two_steps_validated/rollout.mp4)
 

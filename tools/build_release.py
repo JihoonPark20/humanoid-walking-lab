@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -75,6 +76,16 @@ def validate(files: list[Path]) -> None:
     for lab in labs:
         if not lab["path"].startswith(f"lab-{lab['number']}-"):
             errors.append(f"Curriculum number does not match folder: {lab['path']}")
+        source = ROOT / lab["source"]
+        if source.suffix == ".mp4":
+            evidence = ROOT / lab["verification"]
+            result = json.loads(evidence.read_text())
+            checksum = hashlib.sha256(source.read_bytes()).hexdigest()
+            if (
+                result.get("passed") is not True
+                or result.get("video_sha256") != checksum
+            ):
+                errors.append(f"Video lacks a matching passing result: {lab['source']}")
     for path in files:
         if path.suffix == ".md":
             content = re.sub(r"```.*?```", "", path.read_text(), flags=re.DOTALL)

@@ -4,7 +4,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Optimized feet + CoM tracked in MuJoCo: 5/5 swings; final CoM error 15.15 mm.
+Compare seed footsteps (gray), optimized footsteps/CoM (violet), and measured CoM (cyan). The plan stays fixed during execution; 5/5 swings completed.
 
 [Source recording / image](media/g1/optimized_feet/walk.mp4)
 

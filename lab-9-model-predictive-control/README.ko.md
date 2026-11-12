@@ -6,9 +6,9 @@ Full-NLP MPC와 single-QP RTI로 재계획하고 지연·모델 오차·관측 �
 
 ![Demo](media/gallery/hero.gif)
 
-5 N 측방 외란의 G1 RTI: 6.7초 완료, 최종 CoM 오차 0.922 mm.
+보라 구와 시간 표시 궤적은 현재 CoM 예측, 회색은 원래 계획입니다. 빨간 화살표는 5 N 외란입니다. 최종 CoM 오차 0.922 mm.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
+[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 
 ## 실행
 

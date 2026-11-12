@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import importlib.metadata
 import json
 import platform
@@ -13,9 +14,14 @@ from dataclasses import asdict, replace
 from pathlib import Path
 
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from lipm_optimizer import PlanningError, WalkingPlan, solve_walk
 from walking_artifacts import export_plan
 from walking_model import WalkConfig, WalkingSchedule, build_schedule
+
+from tools.walking_visuals import FPS as VIS_FPS
+from tools.walking_visuals import Overlay, WalkingVisualizer
 
 ROOT = Path(__file__).resolve().parents[2]
 LAB6_SRC = ROOT / "lab-6-whole-body-control" / "src"
@@ -195,12 +201,21 @@ def run(
     if video:
         import imageio.v2 as imageio
 
-        renderer = mujoco.Renderer(mj_model, height=480, width=640)
-        writer = imageio.get_writer(str(output / "walk.mp4"), fps=30, codec="libx264")
-        camera = mujoco.MjvCamera()
-        camera.distance = 2.5
-        camera.azimuth = 130
-        camera.elevation = -15
+        renderer = WalkingVisualizer(mj_model, 7)
+        writer = imageio.get_writer(
+            str(output / "walk.mp4"), fps=VIS_FPS, codec="libx264"
+        )
+        planned_path = np.array(
+            [
+                np.r_[reference.reference(t).com, cfg.com_height]
+                for t in np.linspace(0, gait.total_duration, 100)
+            ]
+        )
+        seed_feet = schedule.feet.copy()
+        optimized_feet = plan.feet.copy() if plan is not None else schedule.feet.copy()
+        seed_feet[:, 0] += cfg.foot_offset_x
+        optimized_feet[:, 0] += cfg.foot_offset_x
+
     elapsed = 0.0
     try:
         for tick in range(int(np.ceil(gait.total_duration / DT))):
@@ -265,10 +280,29 @@ def run(
                     },
                 )
             )
-            if writer is not None and tick % 33 == 0:
-                camera.lookat[:] = [actual[0], actual[1], 0.75]
-                renderer.update_scene(mj_data, camera=camera)
-                writer.append_data(renderer.render())
+            if writer is not None and elapsed + 1e-9 >= renderer.frames / VIS_FPS:
+                max_adjustment = (
+                    np.max(np.linalg.norm(optimized_feet - seed_feet, axis=1)) * 1000
+                )
+                writer.append_data(
+                    renderer.render(
+                        mj_data,
+                        Overlay(
+                            time=elapsed,
+                            com=actual,
+                            target=desired.com,
+                            path=planned_path,
+                            seed_feet=seed_feet,
+                            planned_feet=optimized_feet,
+                            values=[
+                                "Plan fixed before simulation",
+                                f"Foot adjustment: {max_adjustment:.1f} mm max",
+                                f"CoM error: {np.linalg.norm(actual[:2] - desired.com) * 1000:.1f} mm",
+                            ],
+                        ),
+                    )
+                )
+
             if mj_data.qpos[2] < 0.50 or not np.isfinite(mj_data.qpos).all():
                 failure = "fall or non-finite state"
                 break
@@ -282,7 +316,9 @@ def run(
             renderer.close()
     if rows:
         with (output / "telemetry.csv").open("w", newline="") as file:
-            csv_writer = csv.DictWriter(file, fieldnames=list(rows[0]))
+            csv_writer = csv.DictWriter(
+                file, fieldnames=list(rows[0]), lineterminator="\n"
+            )
             csv_writer.writeheader()
             csv_writer.writerows(rows)
     completed = sum(
@@ -340,6 +376,10 @@ def run(
         },
         "environment": environment_info(),
     }
+    if video:
+        report["video_sha256"] = hashlib.sha256(
+            (output / "walk.mp4").read_bytes()
+        ).hexdigest()
     (output / "summary.json").write_text(
         json.dumps(report, indent=2, ensure_ascii=False) + "\n"
     )

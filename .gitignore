@@ -1,0 +1,24 @@
+# Python cache와 가상 환경
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+.venv-ocp/
+venv/
+env/
+
+# 운영체제와 실행 로그
+.DS_Store
+Thumbs.db
+MUJOCO_LOG.TXT
+screenshots/
+
+# 외부 모델: tools/setup_env.sh로 설치
+lab-2-Ur5e-robotics-lab/models/mujoco_menagerie/
+lab-2-Ur5e-robotics-lab/models/Universal_Robots_ROS2_Description/
+third_party/
+
+# 에이전트의 로컬 상태는 학습 자료에 포함하지 않음
+.claude/
+.openclaw/

@@ -36,6 +36,6 @@ python lab-9-model-predictive-control/src/g1_mpc.py --mode rti --video
 
 Validated flat-ground profiles: **16 MPC/RTI · 24 observation · 12 whole-body tracking**.
 
-[Setup](docs/SETUP.md) · [Validation](docs/VALIDATION.md) · [Study concepts](docs/CONCEPTS.md)
+[Visual guide](docs/VISUAL_GUIDE.md) · [Setup](docs/SETUP.md) · [Validation](docs/VALIDATION.md) · [Study concepts](docs/CONCEPTS.md)
 
 Based on [M. Ozkan Ceylan’s robotics labs](https://github.com/ozkannceylan/mujoco-robotics-lab). [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Model licenses](THIRD_PARTY_NOTICES.md)

@@ -11,6 +11,7 @@ Usage:
 from __future__ import annotations
 
 import sys
+from collections.abc import Callable
 import time
 from pathlib import Path
 
@@ -19,6 +20,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import mujoco
 
 _SRC = Path(__file__).resolve().parent
 if str(_SRC) not in sys.path:
@@ -313,7 +315,9 @@ def _plot_tracking(result: dict, save_path: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-def run_capstone() -> dict:
+def run_capstone(
+    frame_callback: Callable[[mujoco.MjModel, mujoco.MjData, dict], None] | None = None,
+) -> dict:
     """Run the full slalom capstone demonstration.
 
     Returns a dict of results for use by the demo video recorder.
@@ -356,7 +360,7 @@ def run_capstone() -> dict:
 
     # 4. Execute
     print("\n[4/5] Executing trajectory...")
-    result = execute_trajectory(times, q_traj, qd_traj)
+    result = execute_trajectory(times, q_traj, qd_traj, frame_callback=frame_callback)
     rms = float(np.sqrt(np.mean((result["q_actual"] - result["q_desired"]) ** 2)))
     final_err = float(np.linalg.norm(result["q_actual"][-1] - configs[-1]))
     print(f"  RMS tracking: {rms:.4f} rad, final error: {final_err:.4f} rad")

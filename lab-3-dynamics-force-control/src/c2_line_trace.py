@@ -12,6 +12,7 @@ Demonstrates:
 from __future__ import annotations
 
 import sys
+from collections.abc import Callable
 from pathlib import Path
 from typing import Dict
 
@@ -33,6 +34,7 @@ from lab3_common import (
     clip_torques,
     get_mj_ee_site_id,
     get_table_surface_z,
+    get_topdown_rotation,
     load_mujoco_model,
     load_pinocchio_model,
 )
@@ -86,6 +88,8 @@ def run_line_trace(
     settle_time: float = 1.0,
     trace_duration: float = 4.0,
     post_time: float = 1.0,
+    descent_speed: float = 0.02,
+    frame_callback: Callable[[mujoco.MjModel, mujoco.MjData, dict], None] | None = None,
 ) -> Dict[str, np.ndarray]:
     """Run constant-force line tracing capstone demo.
 
@@ -99,10 +103,12 @@ def run_line_trace(
         xy_start: Start XY on table (2,).
         xy_end: End XY on table (2,).
         gains: HybridGains.
-        approach_height: Absolute pinch-site world Z used for the start pose.
+        approach_height: Absolute contact-probe center world Z used for the start pose.
         settle_time: Time to settle after contact (s).
         trace_duration: Time to trace the line (s).
         post_time: Time to hold at end (s).
+        descent_speed: Vertical approach speed in metres per second.
+        frame_callback: Read-only observer of each logged state, before stepping.
 
     Returns:
         Dict with: time, q, qd, tau, ee_pos, force_z, phase, xy_des.
@@ -110,11 +116,12 @@ def run_line_trace(
     if gains is None:
         gains = HybridGains()
 
-    pin_model, pin_data, ee_fid = load_pinocchio_model()
+    pin_model, pin_data, ee_fid = load_pinocchio_model(contact_probe=True)
     mj_model, mj_data = load_mujoco_model(SCENE_TABLE_PATH)
     site_id = get_mj_ee_site_id(mj_model)
     ee_body_ids, table_geom_id = get_ee_and_table_ids(mj_model)
     table_z = get_table_surface_z(mj_model)
+    R_des = get_topdown_rotation(pin_model, pin_data, ee_fid)
 
     # Generate line trajectory
     xy_traj, xyd_traj = generate_line_trajectory(
@@ -128,7 +135,9 @@ def run_line_trace(
     mj_data.qvel[:NUM_JOINTS] = 0.0
     mujoco.mj_forward(mj_model, mj_data)
 
-    total_duration = 15.0
+    if descent_speed <= 0:
+        raise ValueError("descent_speed must be positive")
+    total_duration = max(0.0, approach_height - table_z) / descent_speed + settle_time + trace_duration + post_time + 2.0
     n_steps = int(total_duration / DT)
 
     time_list = []
@@ -139,6 +148,9 @@ def run_line_trace(
     force_z_list = []
     phase_list = []
     xy_des_list = []
+    raw_force_list = []
+    orientation_list = []
+    unexpected_contact_list = []
 
     force_integral = 0.0
     fz_filtered = 0.0
@@ -151,12 +163,13 @@ def run_line_trace(
 
     approach_Kp = np.diag([800.0, 800.0, 800.0])
     approach_Kd = np.diag([80.0, 80.0, 80.0])
-    descent_speed = 0.05
 
     for i in range(n_steps):
         t = i * DT
         q = mj_data.qpos[:NUM_JOINTS].copy()
         qd = mj_data.qvel[:NUM_JOINTS].copy()
+
+        finished = False
 
         # Read and filter force
         fz_raw = read_contact_force_z(mj_model, mj_data, ee_body_ids, table_geom_id)
@@ -188,7 +201,12 @@ def run_line_trace(
             v_cur = J @ qd
             F = approach_Kp @ (x_target - x_cur) + approach_Kd @ (-v_cur)
             pin.computeGeneralizedGravity(pin_model, pin_data, q)
-            tau = J.T @ F + pin_data.g.copy()
+            J_rot = pin.getFrameJacobian(
+                pin_model, pin_data, ee_fid, pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
+            )[3:, :]
+            moment = gains.K_R * pin.log3(R_des @ pin_data.oMf[ee_fid].rotation.T)
+            moment -= gains.K_w * (J_rot @ qd)
+            tau = J.T @ F + J_rot.T @ moment + pin_data.g.copy()
 
         elif not settle_done:
             # PHASE 1: Settle — hold start position, let force stabilize
@@ -198,7 +216,7 @@ def run_line_trace(
             tau, force_integral = compute_hybrid_torque(
                 pin_model, pin_data, ee_fid,
                 q, qd, xy_start, None,
-                fz, force_integral, gains,
+                fz, force_integral, gains, R_des=R_des,
             )
 
             if t - contact_time >= settle_time:
@@ -216,7 +234,7 @@ def run_line_trace(
             tau, force_integral = compute_hybrid_torque(
                 pin_model, pin_data, ee_fid,
                 q, qd, xy_des_cur, xyd_cur,
-                fz, force_integral, gains,
+                fz, force_integral, gains, R_des=R_des,
             )
 
             if t_since_trace >= trace_duration:
@@ -230,20 +248,11 @@ def run_line_trace(
             tau, force_integral = compute_hybrid_torque(
                 pin_model, pin_data, ee_fid,
                 q, qd, xy_end, None,
-                fz, force_integral, gains,
+                fz, force_integral, gains, R_des=R_des,
             )
 
             if t - (trace_start_time + trace_duration) >= post_time:
-                tau = clip_torques(tau)
-                time_list.append(t)
-                q_list.append(q)
-                qd_list.append(qd)
-                tau_list.append(tau)
-                ee_pos_list.append(ee_pos)
-                force_z_list.append(fz)
-                phase_list.append(phase)
-                xy_des_list.append(xy_des_cur)
-                break
+                finished = True
 
         tau = clip_torques(tau)
         time_list.append(t)
@@ -255,6 +264,24 @@ def run_line_trace(
         phase_list.append(phase)
         xy_des_list.append(xy_des_cur)
 
+        angle = float(np.linalg.norm(pin.log3(R_des @ pin_data.oMf[ee_fid].rotation.T)))
+        unexpected = 0
+        for contact in mj_data.contact:
+            if table_geom_id not in (contact.geom1, contact.geom2):
+                continue
+            other = contact.geom2 if contact.geom1 == table_geom_id else contact.geom1
+            if mj_model.geom(int(other)).name != "contact_probe":
+                unexpected += 1
+        raw_force_list.append(fz_raw)
+        orientation_list.append(angle)
+        unexpected_contact_list.append(unexpected)
+        if frame_callback is not None:
+            frame_callback(mj_model, mj_data, {
+                "time": t, "phase": phase, "force_z": fz, "force_raw_z": fz_raw,
+                "ee_pos": ee_pos.copy(), "xy_des": xy_des_cur.copy(),
+            })
+        if finished:
+            break
         apply_arm_torques(mj_model, mj_data, tau)
         mujoco.mj_step(mj_model, mj_data)
 
@@ -274,6 +301,9 @@ def run_line_trace(
         "force_z": np.array(force_z_list),
         "phase": np.array(phase_list),
         "xy_des": np.array(xy_des_list),
+        "force_raw_z": np.array(raw_force_list),
+        "orientation_error": np.array(orientation_list),
+        "unexpected_contacts": np.array(unexpected_contact_list),
     }
 
 
@@ -305,6 +335,8 @@ def plot_line_trace(
 
     # --- Plot 1: Force vs time ---
     ax = axes[0]
+    if "force_raw_z" in results:
+        ax.plot(t, results["force_raw_z"], color="gray", linewidth=0.6, alpha=0.5, label="Raw contact force")
     colors = {0: "#9E9E9E", 1: "#2196F3", 2: "#4CAF50", 3: "#FF9800"}
     phase_labels = {0: "Approach", 1: "Settle", 2: "Trace", 3: "Hold"}
 

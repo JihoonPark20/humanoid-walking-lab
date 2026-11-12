@@ -6,9 +6,9 @@
 
 ![Demo](media/gallery/hero.gif)
 
-两步 FDDP 跟踪：3.0 s，最终足端误差 4.29 mm，无 flight/clipping tick。
+半透明机器人显示提前 0.25/0.50 s 的优化关节姿态。两步 FDDP feedback 跟踪：最终足端误差 4.29 mm，无 flight/clipping tick。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
+[实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 
 ## 运行
 

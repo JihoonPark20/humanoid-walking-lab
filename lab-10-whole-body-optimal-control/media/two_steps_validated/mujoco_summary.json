@@ -17,5 +17,6 @@
   "impact_state_overwrites": 0,
   "max_state_gap": 1.6183569102229642,
   "max_tangent_q_gap": 0.06828076319487668,
-  "min_pelvis_height_m": 0.7906008002984241
+  "min_pelvis_height_m": 0.7906008002984241,
+  "video_sha256": "fd9274a2013f763aa1d6a150bbc4df439f5dcc9436a1e0b820c05cfc5477c22b"
 }

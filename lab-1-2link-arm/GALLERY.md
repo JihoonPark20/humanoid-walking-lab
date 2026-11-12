@@ -4,9 +4,13 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Square trajectory tracking; original recorded demo.
+Complete square tracking: RMS error 0.008 mm; measurements from the recorded run.
 
 [Source recording / image](media/c1_draw_square.mp4)
+
+## Measurements
+
+- [media/c1_draw_square.json](media/c1_draw_square.json)
 
 ## Exercises
 

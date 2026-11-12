@@ -22,5 +22,6 @@
     "Travelled \u2265 1.0 m": true,
     "ZMP inside support > 90 %": true,
     "Torques within limits": true
-  }
+  },
+  "video_sha256": "a9acc76e65c6fd683225ee966c3e93db3978bdc3c1bc656486eea0f0c4417656"
 }

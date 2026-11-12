@@ -6,7 +6,7 @@ RRT* 충돌 회피 경로를 만들고 시간 매개화와 궤적 추종을 실�
 
 ![Demo](media/gallery/hero.gif)
 
-장애물 회피 동작. Clearance와 추종 오차를 함께 확인합니다.
+전체 slalom 4배속: 접촉 0회, 표본 최소 장애물 간격 30.5 mm. 영상과 동일 실행의 측정값입니다.
 
 [실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
 

@@ -6,9 +6,9 @@
 
 ![Demo](media/gallery/hero.gif)
 
-保持双脚接触的准静态重心转移。
+观察青色 CoM 圆环在绿色支撑区域内移向白色目标；橙色为接触 ZMP。CoM 转移 53.6 mm，足端漂移 ≤1.39 mm。
 
-[实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
+[实验与测量](GALLERY.md) · [学习笔记](docs/README.md) · [可视化指南](../docs/VISUAL_GUIDE.zh-CN.md)
 
 ## 运行
 

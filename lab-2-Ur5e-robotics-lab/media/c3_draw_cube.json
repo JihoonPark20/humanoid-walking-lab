@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": {
+    "rms_below_1mm": true,
+    "peak_below_5mm": true,
+    "complete": true
+  },
+  "rms_error_m": 8.790233595851292e-05,
+  "max_error_m": 0.00023434921159580464,
+  "max_torque_nm": 16.504877854808456,
+  "simulation_duration_s": 24.0,
+  "frames": 707,
+  "fps": 30,
+  "video_sha256": "fb27e2d27e1bc7f7882d3f940d474116b79033c1429588a53f725d70cc1aee3c"
+}

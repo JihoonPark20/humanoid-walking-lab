@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": {
+    "tracking": true,
+    "final_configuration": true,
+    "clearance": true,
+    "no_contacts": true
+  },
+  "rms_error_rad": 0.0005820822760545899,
+  "final_error_rad": 0.0001533567374485239,
+  "min_sampled_clearance_m": 0.03045310367225975,
+  "clearance_samples": 360,
+  "max_contact_count": 0,
+  "duration_s": 67.849,
+  "fps": 30,
+  "frames": 2036,
+  "video_sha256": "7aea371f7860f6e5a53639ecdce7d7da7ee0b477778b3db5e42d8f07fe6d7a65"
+}

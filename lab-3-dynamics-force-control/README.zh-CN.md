@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-接触面直线跟踪；1.5 倍速片段，请同时查看力误差图。
+刚性探针在平板（μ=0.05）上以 5 N 描绘 50 mm。完整过程、1 倍速；原始接触力合格率 93.1%，最大 XY 误差 0.335 mm。
 
 [实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
 
@@ -15,7 +15,7 @@
 [安装](../docs/SETUP.md)
 
 ```bash
-python lab-3-dynamics-force-control/src/c1_force_control.py
+python lab-3-dynamics-force-control/src/record_lab3_demo.py
 ```
 
 ```bash

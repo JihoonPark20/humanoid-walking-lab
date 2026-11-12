@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-三维立方体轨迹跟踪；原录像的 3 倍速播放。
+完整三维立方体跟踪、3 倍速：RMS 误差 0.088 mm；指标来自录像对应的运行。
 
 [实验与测量](GALLERY.md) · [学习笔记](docs/README.md)
 

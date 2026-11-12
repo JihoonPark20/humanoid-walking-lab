@@ -6,7 +6,7 @@
 
 ![Demo](media/gallery/hero.gif)
 
-3차원 큐브 추종. 기존 영상의 3배속 재생입니다.
+3차원 큐브 전체 추종 3배속: RMS 오차 0.088 mm. 녹화한 실행의 측정값입니다.
 
 [실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
 

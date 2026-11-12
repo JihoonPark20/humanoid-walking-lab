@@ -24,12 +24,19 @@ Gate criteria:
 
 from __future__ import annotations
 
+import hashlib
+import json
 import sys
 from pathlib import Path
 
 import mujoco
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import pinocchio as pin
+
+from tools.walking_visuals import FPS as VIS_FPS
+from tools.walking_visuals import Overlay, WalkingVisualizer
 
 _SRC_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(_SRC_DIR))
@@ -40,7 +47,6 @@ from lab5_common import (
     CTRL_STAND,
     LEG_JOINT_NAMES,
     MEDIA_DIR,
-    RENDER_FPS,
     RENDER_HEIGHT,
     RENDER_WIDTH,
     WAIST_JOINT_NAMES,
@@ -55,14 +61,14 @@ from m3c_static_ik import whole_body_ik
 # ---------------------------------------------------------------------------
 
 KP_SERVO: float = 500.0
-K_VEL: float = 40.0        # near-critical: 2*sqrt(500) ≈ 44.7, so ζ ≈ 0.89
+K_VEL: float = 40.0  # near-critical: 2*sqrt(500) ≈ 44.7, so ζ ≈ 0.89
 
-T_SETTLE: float = 1.0      # stand and settle
-T_SHIFT: float = 1.5       # smooth CoM shift
-T_HOLD: float = 2.0        # hold shifted position
+T_SETTLE: float = 1.0  # stand and settle
+T_SHIFT: float = 1.5  # smooth CoM shift
+T_HOLD: float = 2.0  # hold shifted position
 
 COM_SHIFT_Y: float = 0.05  # 5cm toward left foot (+Y)
-N_WAYPOINTS: int = 10      # IK waypoints along shift path
+N_WAYPOINTS: int = 10  # IK waypoints along shift path
 
 
 # ---------------------------------------------------------------------------
@@ -101,7 +107,9 @@ def precompute_trajectory(
         com_target[1] += s * COM_SHIFT_Y
 
         q_sol, converged, n_iters, errors = whole_body_ik(
-            model, data, q_prev,
+            model,
+            data,
+            q_prev,
             com_target=com_target,
             lf_target=lf_ref,
             rf_target=rf_ref,
@@ -112,8 +120,8 @@ def precompute_trajectory(
         print(
             f"    wp={i:2d} s={s:.1f}: {n_iters:3d} iters, "
             f"conv={converged}, "
-            f"com_err={errors['com_xy']*1000:.2f}mm, "
-            f"foot={max(errors['lf_pos'], errors['rf_pos'])*1000:.2f}mm"
+            f"com_err={errors['com_xy'] * 1000:.2f}mm, "
+            f"foot={max(errors['lf_pos'], errors['rf_pos']) * 1000:.2f}mm"
         )
 
         q_prev = q_sol  # warm-start next waypoint
@@ -209,18 +217,21 @@ def main() -> None:
     rf_ref_se3 = pin_data.oMf[rf_frame].copy()
     com_ref = pin_data.com[0].copy()
 
-    print(
-        f"  Pin CoM: [{com_ref[0]:.4f}, {com_ref[1]:.4f}, {com_ref[2]:.4f}]"
-    )
+    print(f"  Pin CoM: [{com_ref[0]:.4f}, {com_ref[1]:.4f}, {com_ref[2]:.4f}]")
 
     # ── Pre-compute IK trajectory ─────────────────────────────────────
     waypoints = precompute_trajectory(
-        pin_model, pin_data, pin_q_settled, com_ref, lf_ref_se3, rf_ref_se3,
+        pin_model,
+        pin_data,
+        pin_q_settled,
+        com_ref,
+        lf_ref_se3,
+        rf_ref_se3,
     )
 
     # Show key joint changes
     dq_final = waypoints[-1] - waypoints[0]
-    print(f"\n  IK joint changes (final - initial):")
+    print("\n  IK joint changes (final - initial):")
     for i, name in enumerate(LEG_JOINT_NAMES + WAIST_JOINT_NAMES):
         if abs(dq_final[i]) > 1e-4:
             print(
@@ -230,7 +241,6 @@ def main() -> None:
 
     # ── Phase 2+3: Shift + Hold ───────────────────────────────────────
     n_sim = int((T_SHIFT + T_HOLD) / dt)
-    render_every = max(1, int(1.0 / (RENDER_FPS * dt)))
 
     times: list[float] = []
     com_y_log: list[float] = []
@@ -239,12 +249,9 @@ def main() -> None:
     rf_drift_log: list[float] = []
 
     frames: list[np.ndarray] = []
-    renderer = mujoco.Renderer(mj_model, RENDER_HEIGHT, RENDER_WIDTH)
-    cam = mujoco.MjvCamera()
-    cam.distance = 2.0
-    cam.elevation = -15.0
-    cam.azimuth = 170.0
-    cam.lookat[:] = [0.0, 0.0, 0.6]
+    renderer = WalkingVisualizer(mj_model, 5)
+    target_com = com_init.copy()
+    target_com[1] += COM_SHIFT_Y
 
     screenshot_saved = False
 
@@ -278,27 +285,38 @@ def main() -> None:
         times.append(t)
         com_y_log.append(mj_data.subtree_com[0, 1])
         pelvis_z_log.append(mj_data.qpos[2])
-        lf_drift_log.append(
-            np.linalg.norm(mj_data.site_xpos[lf_site] - lf_init)
-        )
-        rf_drift_log.append(
-            np.linalg.norm(mj_data.site_xpos[rf_site] - rf_init)
-        )
+        lf_drift_log.append(np.linalg.norm(mj_data.site_xpos[lf_site] - lf_init))
+        rf_drift_log.append(np.linalg.norm(mj_data.site_xpos[rf_site] - rf_init))
 
-        if step % render_every == 0:
-            renderer.update_scene(mj_data, cam)
-            frames.append(renderer.render().copy())
+        if t + 1e-9 >= len(frames) / VIS_FPS:
+            actual_com = mj_data.subtree_com[0].copy()
+            frames.append(
+                renderer.render(
+                    mj_data,
+                    Overlay(
+                        time=t,
+                        com=actual_com,
+                        target=target_com,
+                        values=[
+                            f"Shift: {(actual_com[1] - com_init[1]) * 1000:.1f} / 50 mm",
+                            f"Foot drift: {max(lf_drift_log[-1], rf_drift_log[-1]) * 1000:.2f} mm",
+                        ],
+                    ),
+                )
+            )
 
         if not screenshot_saved and t >= T_SHIFT:
-            save_screenshot(mj_model, mj_data, MEDIA_DIR / "m3d_shifted.png")
+            from PIL import Image
+
+            Image.fromarray(frames[-1]).save(MEDIA_DIR / "m3d_shifted.png")
             screenshot_saved = True
 
         if step > 0 and step % int(0.5 / dt) == 0:
             shift = (mj_data.subtree_com[0, 1] - com_init[1]) * 1000
             print(
                 f"    t={t:.1f}s  s={s:.3f}  shift={shift:+.1f}mm  "
-                f"lf={lf_drift_log[-1]*1000:.2f}mm  "
-                f"rf={rf_drift_log[-1]*1000:.2f}mm  "
+                f"lf={lf_drift_log[-1] * 1000:.2f}mm  "
+                f"rf={rf_drift_log[-1] * 1000:.2f}mm  "
                 f"pz={mj_data.qpos[2]:.3f}"
             )
 
@@ -309,7 +327,7 @@ def main() -> None:
 
     writer = imageio.get_writer(
         str(MEDIA_DIR / "m3d_weight_shift.mp4"),
-        fps=RENDER_FPS,
+        fps=VIS_FPS,
         codec="libx264",
         output_params=["-pix_fmt", "yuv420p"],
     )
@@ -318,7 +336,7 @@ def main() -> None:
     writer.close()
     print(
         f"  Video: {MEDIA_DIR / 'm3d_weight_shift.mp4'} "
-        f"({len(frames)} frames, {len(frames)/RENDER_FPS:.1f}s)"
+        f"({len(frames)} frames, {len(frames) / VIS_FPS:.1f}s)"
     )
 
     # ── Analysis ──────────────────────────────────────────────────────
@@ -349,8 +367,11 @@ def main() -> None:
             label="CoM Y shift",
         )
         axes[0].axhline(
-            COM_SHIFT_Y * 1000, color="red", ls="--", alpha=0.5,
-            label=f"Target ({COM_SHIFT_Y*1000:.0f}mm)",
+            COM_SHIFT_Y * 1000,
+            color="red",
+            ls="--",
+            alpha=0.5,
+            label=f"Target ({COM_SHIFT_Y * 1000:.0f}mm)",
         )
         axes[0].axhline(40, color="orange", ls=":", alpha=0.5, label="Gate (40mm)")
         axes[0].set_ylabel("CoM Y shift [mm]")
@@ -370,9 +391,7 @@ def main() -> None:
         axes[1].grid(True, alpha=0.3)
 
         axes[2].plot(t_arr, np.array(pelvis_z_log), "g-", lw=1)
-        axes[2].axhline(
-            0.6, color="red", ls=":", alpha=0.5, label="Fall threshold"
-        )
+        axes[2].axhline(0.6, color="red", ls=":", alpha=0.5, label="Fall threshold")
         axes[2].set_ylabel("Pelvis Z [m]")
         axes[2].set_xlabel("Time [s]")
         axes[2].legend(fontsize=8)
@@ -386,11 +405,11 @@ def main() -> None:
         print(f"  Plot failed: {e}")
 
     # ── Gate summary ──────────────────────────────────────────────────
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("  M3d GATE RESULTS")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
     print(f"  {'Criterion':<50s} {'Value':<25s} {'Status'}")
-    print(f"{'-'*80}")
+    print(f"{'-' * 80}")
 
     sp = com_shift >= 40.0
     print(
@@ -424,8 +443,25 @@ def main() -> None:
     print(f"  {'Screenshot saved':<50s} {'m3d_shifted.png':<25s} PASS")
 
     all_pass = sp and lp and rp and hp
+    summary = {
+        "passed": bool(all_pass),
+        "com_shift_mm": float(com_shift),
+        "max_left_foot_drift_mm": float(max_lf),
+        "max_right_foot_drift_mm": float(max_rf),
+        "min_pelvis_height_m": float(min_pz),
+        "simulation_duration_s": T_SHIFT + T_HOLD,
+        "video_sha256": hashlib.sha256(
+            (MEDIA_DIR / "m3d_weight_shift.mp4").read_bytes()
+        ).hexdigest(),
+    }
+    (MEDIA_DIR / "m3d_weight_shift_summary.json").write_text(
+        json.dumps(summary, indent=2) + "\n"
+    )
+    if not all_pass:
+        raise SystemExit("Weight-shift recording failed its physical checks.")
+
     print(f"\n  {'OVERALL':<50s} {'':25s} {'ALL PASS' if all_pass else 'SOME FAIL'}")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
 
 
 if __name__ == "__main__":

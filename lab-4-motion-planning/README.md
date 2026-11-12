@@ -6,7 +6,7 @@ Plan collision-free motion with RRT*, then parameterize and track the trajectory
 
 ![Demo](media/gallery/hero.gif)
 
-Obstacle-avoiding arm motion; read clearance and tracking plots.
+Complete slalom at 4×: no contacts, sampled obstacle clearance ≥30.5 mm; metrics from the filmed run.
 
 [Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
 

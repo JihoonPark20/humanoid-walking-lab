@@ -42,10 +42,12 @@ def make_gif(source: Path, target: Path, entry: dict, width: int, fps: int) -> d
     duration = min(entry["duration_s"], metadata["duration"] - start)
     if start < 0 or duration <= 0 or entry["speed"] <= 0:
         raise ValueError(f"Invalid clip: {source}")
+    colors = entry.get("palette_colors", 96)
+    palette_stats = entry.get("palette_stats", "diff")
     filters = (
         f"setpts=(PTS-STARTPTS)/{entry['speed']},fps={fps},"
         f"scale={width}:-1:flags=lanczos,split[a][b];"
-        "[a]palettegen=max_colors=96:stats_mode=diff:reserve_transparent=0[p];"
+        f"[a]palettegen=max_colors={colors}:stats_mode={palette_stats}:reserve_transparent=0[p];"
         "[b][p]paletteuse=dither=none"
     )
     subprocess.run(
@@ -79,6 +81,8 @@ def make_gif(source: Path, target: Path, entry: dict, width: int, fps: int) -> d
         "speed": entry["speed"],
         "fps": fps,
         "frames": frames,
+        "palette_colors": colors,
+        "palette_stats": palette_stats,
         "size_bytes": target.stat().st_size,
     }
 
@@ -89,15 +93,27 @@ def build_lab(entry: dict, width: int, fps: int) -> dict:
     source = ROOT / entry["source"]
     assets = []
     if source.suffix == ".mp4":
+        evidence = ROOT / entry["verification"]
+        result = json.loads(evidence.read_text())
+        if result.get("passed") is not True or result.get("video_sha256") != digest(
+            source
+        ):
+            raise ValueError(
+                f"Video lacks a matching passing result; rerun its recorder: {source}"
+            )
         target = lab / "media" / "gallery" / "hero.gif"
         target.parent.mkdir(parents=True, exist_ok=True)
-        clip = make_gif(source, target, entry, width, fps)
+        clip = make_gif(
+            source, target, entry, entry.get("width", width), entry.get("fps", fps)
+        )
         assets.append(
             {
                 "source": entry["source"],
                 "sha256": digest(source),
                 "output": str(target.relative_to(ROOT)),
                 "clip": clip,
+                "verification": entry["verification"],
+                "verification_sha256": digest(evidence),
             }
         )
     else:

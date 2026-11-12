@@ -4,9 +4,15 @@
 
 ![Demo](media/gallery/hero.gif)
 
-Obstacle-avoiding arm motion; read clearance and tracking plots.
+Complete slalom at 4×: no contacts, sampled obstacle clearance ≥30.5 mm; metrics from the filmed run.
 
 [Source recording / image](media/lab4_simulation.mp4)
+
+## Measurements
+
+- [media/slalom_summary.json](media/slalom_summary.json)
+
+- [media/slalom.csv](media/slalom.csv)
 
 ## Exercises
 

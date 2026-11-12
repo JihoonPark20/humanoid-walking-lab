@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "kind": "reduced-model plan animation",
+  "validation": {
+    "dynamics_residual": 2.2698509738461325e-13,
+    "wrench_violation": 1.0507372331436403e-08,
+    "height_violation": 0.0,
+    "velocity_violation": 0.0,
+    "angular_violation": 0.0,
+    "boundary_residual": 3.7583969496340264e-16,
+    "valid": true
+  },
+  "plan_sha256": "b97313613ee401811b79fa39ebeeaba702573ec916e1e877ccf6be109a61c8c9",
+  "video_sha256": "8642b7e2c0a04ac452bab82e11fd65173ee169c98106df3a318944efc1385c37",
+  "duration_s": 5.699999999999999,
+  "force_arrow_m_per_n": 0.0015,
+  "frames": 172,
+  "fps": 30
+}

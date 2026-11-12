@@ -6,9 +6,9 @@ Control G1 walking with inverse-dynamics QP, contact wrenches and DCM tracking.
 
 ![Demo](media/gallery/hero.gif)
 
-DCM walking: 12 steps, 1.182 m; 1.5× playback.
+Watch the support hull switch between feet while DCM (violet) and contact ZMP (amber) evolve. 12 steps, 1.182 m; full run at 1×.
 
-[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
+[Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md) · [Visual guide](../docs/VISUAL_GUIDE.md)
 
 ## Run
 

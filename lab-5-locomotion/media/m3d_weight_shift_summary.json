@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "com_shift_mm": 53.56049159408866,
+  "max_left_foot_drift_mm": 0.6856687705203742,
+  "max_right_foot_drift_mm": 1.3900844141649886,
+  "min_pelvis_height_m": 0.7893706796895245,
+  "simulation_duration_s": 3.5,
+  "video_sha256": "d61d2914b51bc10e50d4d23dbb1b86c8c9d6e0e4f88e279b090f56f82b0988b8"
+}

@@ -36,6 +36,6 @@ python lab-9-model-predictive-control/src/g1_mpc.py --mode rti --video
 
 已验证平地配置：**MPC/RTI 16 个 · 观测实验 24 个 · 全身跟踪 12 个**。
 
-[安装](docs/SETUP.md) · [验证](docs/VALIDATION.md) · [通用概念](docs/CONCEPTS.md)
+[可视化指南](docs/VISUAL_GUIDE.zh-CN.md) · [安装](docs/SETUP.md) · [验证](docs/VALIDATION.md) · [通用概念](docs/CONCEPTS.md)
 
 基于 [M. Ozkan Ceylan 的 robotics labs](https://github.com/ozkannceylan/mujoco-robotics-lab)。 [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Model licenses](THIRD_PARTY_NOTICES.md)

@@ -6,9 +6,9 @@ Box-FDDP로 contact/impact Dynamics를 최적화하고 MuJoCo에서 추종합니
 
 ![Demo](media/gallery/hero.gif)
 
-두 걸음 FDDP 추종: 3.0초, 최종 발 오차 4.29 mm, flight·clipping 0 tick.
+반투명 로봇은 현재보다 0.25/0.50초 뒤의 최적화된 관절 자세입니다. 두 걸음 FDDP feedback 추종: 최종 발 오차 4.29 mm, flight·clipping 0 tick.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
+[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 
 ## 실행
 

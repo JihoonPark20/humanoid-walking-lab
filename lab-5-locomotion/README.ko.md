@@ -6,9 +6,9 @@ Floating-base 상태, CoM, Whole-body IK와 양발 접촉 균형을 익힙니다
 
 ![Demo](media/gallery/hero.gif)
 
-양발 접촉을 유지하는 준정적 무게 이동.
+초록 지지 영역 안에서 청록 CoM 원이 흰 목표로 이동하는 모습을 보세요. 주황은 접촉 ZMP입니다. CoM 이동 53.6 mm, 발 위치 변화 ≤1.39 mm.
 
-[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md)
+[실습과 측정 결과](GALLERY.md) · [학습 노트](docs/README.md) · [시각화 읽는 법](../docs/VISUAL_GUIDE.ko.md)
 
 ## 실행
 

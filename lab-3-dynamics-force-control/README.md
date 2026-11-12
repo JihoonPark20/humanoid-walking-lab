@@ -6,7 +6,7 @@ Learn RNEA, CRBA, gravity compensation, impedance and contact force control.
 
 ![Demo](media/gallery/hero.gif)
 
-Contact line tracing; excerpt at 1.5×. Inspect force-error plots as well.
+50 mm trace at 5 N with a rigid probe on a flat plate (μ=0.05). Full run, 1×; raw-force in-band 93.1%, max XY error 0.335 mm.
 
 [Exercises and measurements](GALLERY.md) · [Study notes](docs/README.md)
 
@@ -15,7 +15,7 @@ Contact line tracing; excerpt at 1.5×. Inspect force-error plots as well.
 [Setup](../docs/SETUP.md)
 
 ```bash
-python lab-3-dynamics-force-control/src/c1_force_control.py
+python lab-3-dynamics-force-control/src/record_lab3_demo.py
 ```
 
 ```bash

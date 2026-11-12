@@ -55,6 +55,8 @@ class HybridGains:
     K_p: float = 500.0     # Position stiffness (N/m) for XY
     K_d: float = 50.0      # Position damping (N·s/m) for XY
     K_fp: float = 5.0      # Force proportional gain
+    K_R: float = 60.0     # Orientation stiffness (Nm/rad)
+    K_w: float = 8.0      # Angular damping (Nm s/rad)
     K_fi: float = 10.0     # Force integral gain
     F_desired: float = 5.0  # Desired contact force (N), positive = into surface
 
@@ -66,9 +68,9 @@ class HybridGains:
 def read_contact_force_z(
     mj_model, mj_data, ee_body_ids: list[int], table_geom_id: int
 ) -> float:
-    """Read the Z-component of contact force between EE bodies and table.
+    """Read the world-Z contact force exerted by the table on EE bodies.
 
-    Sums normal contact forces from all contacts involving any EE body geom
+    Sums complete contact forces from all contacts involving any EE body geom
     and the table geom. Returns positive force when EE pushes into table
     (contact normal points upward, force pushes down).
 
@@ -88,13 +90,10 @@ def read_contact_force_z(
 
         # Check if this contact involves EE and table
         is_ee_table = False
-        ee_geom = -1
         if g1 == table_geom_id and mj_model.geom_bodyid[g2] in ee_body_ids:
             is_ee_table = True
-            ee_geom = g2
         elif g2 == table_geom_id and mj_model.geom_bodyid[g1] in ee_body_ids:
             is_ee_table = True
-            ee_geom = g1
 
         if not is_ee_table:
             continue
@@ -103,24 +102,12 @@ def read_contact_force_z(
         wrench = np.zeros(6)
         mujoco.mj_contactForce(mj_model, mj_data, i, wrench)
 
-        # Normal force is wrench[0], contact normal is frame[:3]
-        normal = c.frame[:3].copy()
-        normal_force = wrench[0]
+        # MuJoCo stores contact axes as rows; transform the entire force,
+        # including friction, into world coordinates before projecting onto Z.
+        world_force = c.frame.reshape(3, 3).T @ wrench[:3]
+        total_fz += world_force[2] if g1 == table_geom_id else -world_force[2]
 
-        # Project onto world Z: positive when pushing into table (downward)
-        # Contact normal points from geom1 to geom2
-        # Force is positive along normal direction
-        fz = normal_force * normal[2]
-
-        # If table is geom1, normal points away from table (upward),
-        # and positive force = EE pushing into table → fz > 0 means pressing
-        # If table is geom2, normal points toward table, flip sign
-        if g2 == table_geom_id:
-            fz = -fz
-
-        total_fz += fz
-
-    return abs(total_fz)
+    return float(total_fz)
 
 
 def get_ee_and_table_ids(mj_model):
@@ -172,6 +159,7 @@ def compute_hybrid_torque(
     F_measured: float,
     force_integral: float,
     gains: HybridGains,
+    R_des: np.ndarray | None = None,
 ) -> tuple[np.ndarray, float]:
     """Compute joint torques for hybrid position-force control.
 
@@ -188,6 +176,7 @@ def compute_hybrid_torque(
         F_measured: Measured contact force in Z (positive = pressing).
         force_integral: Accumulated force error integral.
         gains: HybridGains.
+        R_des: Optional world-frame tool orientation to hold during contact.
 
     Returns:
         Tuple of (joint_torques (6,), updated_force_integral).
@@ -235,7 +224,7 @@ def compute_hybrid_torque(
 
     F_force = np.zeros(3)
     # Negative Z force = push downward into table
-    F_force[2] = -(gains.K_fp * force_err + gains.K_fi * force_integral)
+    F_force[2] = -(gains.F_desired + gains.K_fp * force_err + gains.K_fi * force_integral)
 
     # Z-velocity damping to reduce contact chattering
     K_dz = 30.0
@@ -244,6 +233,12 @@ def compute_hybrid_torque(
     # Combined
     F_total = F_pos + F_force
     tau = J.T @ F_total + g
+    if R_des is not None:
+        J_rot = pin.getFrameJacobian(
+            pin_model, pin_data, ee_fid, pin.ReferenceFrame.LOCAL_WORLD_ALIGNED
+        )[3:, :]
+        moment = gains.K_R * pin.log3(R_des @ oMf.rotation.T) - gains.K_w * (J_rot @ qd)
+        tau += J_rot.T @ moment
 
     return tau, float(force_integral)
 
@@ -346,7 +341,7 @@ def compute_hybrid_torque_joint(
     force_integral = np.clip(force_integral, -max_integral, max_integral)
 
     F_force = np.zeros(3)
-    F_force[2] = -(gains.K_fp * force_err + gains.K_fi * force_integral)
+    F_force[2] = -(gains.F_desired + gains.K_fp * force_err + gains.K_fi * force_integral)
 
     K_dz = 30.0
     F_force[2] -= K_dz * v_cur[2]
@@ -378,7 +373,7 @@ def run_hybrid_force_sim(
         xy_des: Desired XY position on table (2,).
         q_start: Starting joint config. If None, solved via IK above xy_des.
         gains: HybridGains. Defaults to standard gains.
-        approach_height: Absolute pinch-site world Z used for the start pose.
+        approach_height: Absolute contact-probe center world Z used for the start pose.
         duration: Total sim duration (s).
 
     Returns:
@@ -388,7 +383,7 @@ def run_hybrid_force_sim(
     if gains is None:
         gains = HybridGains()
 
-    pin_model, pin_data, ee_fid = load_pinocchio_model()
+    pin_model, pin_data, ee_fid = load_pinocchio_model(contact_probe=True)
     mj_model, mj_data = load_mujoco_model(SCENE_TABLE_PATH)
     if q_start is None:
         q_start = compute_above_table_config(
